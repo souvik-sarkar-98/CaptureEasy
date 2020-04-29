@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="Dependencies/Apache POI Standalone Version 4.1.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/barcodes-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/font-asian-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/forms-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/httpclient-4.3.4.jar"/>
+	<classpathentry kind="lib" path="Dependencies/hyph-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/io-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jnativehook-2.1.0.jar"/>
+	<classpathentry kind="lib" path="Dependencies/kernel-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/layout-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="Dependencies/pdfa-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/sign-7.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/slf4j-api-1.7.13.jar"/>
+	<classpathentry kind="lib" path="Dependencies/java-json.jar"/>
+	<classpathentry kind="lib" path="Dependencies/commons-configuration-1.10.jar"/>
+	<classpathentry kind="lib" path="Dependencies/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="Dependencies/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

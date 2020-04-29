@@ -1,0 +1,245 @@
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\pause.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:189)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\power.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:248)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\document.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:294)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\view.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:349)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\save.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:406)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\delete.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:451)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\menu.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:526)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:23:02] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\settings.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:577)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\pause.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:189)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\power.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:248)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\document.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:294)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\view.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:349)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\delete.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:451)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\menu.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:526)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [28 Apr 2020 18:28:30] [Class: 'captureEasy.Resources.Library'  Method: 'logError'] 
+ Message: 'Exception in Icon loading: Image C:\Users\USER\Desktop\Icons\settings.png Not Available
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	captureEasy.UI.SensorGUI.<init>(SensorGUI.java:577)
+	captureEasy.Launch.Application.launch(Application.java:95)
+	captureEasy.Launch.Application.main(Application.java:22)
+
+'
+[ERROR] [29 Apr 2020 10:18:46]  
+ Message: 'Exception while saving frame location
+Exception Class : java.lang.NullPointerException
+Exception Messagenull
+Exception Cause : null
+
+StackTrace:
+	captureEasy.UI.Components.SettingsPanel$7.actionPerformed(SettingsPanel.java:392)
+	javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	java.awt.Component.processMouseEvent(Unknown Source)
+	javax.swing.JComponent.processMouseEvent(Unknown Source)
+	java.awt.Component.processEvent(Unknown Source)
+	java.awt.Container.processEvent(Unknown Source)
+	java.awt.Component.dispatchEventImpl(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Window.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	java.awt.EventQueue.access$500(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue.dispatchEvent(Unknown Source)
+	java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.run(Unknown Source)
+
+'
+ 
+[ERROR] [29 Apr 2020 19:06:26]  
+ Message: 'Exception while saving frame location
+Exception Class : java.util.NoSuchElementException
+Exception Message'SensorBTNPanelVisible' doesn't map to an existing object
+Exception Cause : null
+
+StackTrace:
+	org.apache.commons.configuration.AbstractConfiguration.getBoolean(AbstractConfiguration.java:644)
+	captureEasy.UI.Components.SettingsPanel$7.actionPerformed(SettingsPanel.java:390)
+	javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	java.awt.Component.processMouseEvent(Unknown Source)
+	javax.swing.JComponent.processMouseEvent(Unknown Source)
+	java.awt.Component.processEvent(Unknown Source)
+	java.awt.Container.processEvent(Unknown Source)
+	java.awt.Component.dispatchEventImpl(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Window.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	java.awt.EventQueue.access$500(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue.dispatchEvent(Unknown Source)
+	java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.run(Unknown Source)
+
+'
+ 
