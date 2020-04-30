@@ -46,12 +46,12 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 
 	public JPanel SettingsPane;
 	public JPanel SettingsPane_DocFolderPanel;
-	public JTextField SettingsPane_DocFolderPanel_textField_DocDestFolder;
+	public JTextField textField_DocDestFolder;
 	public JPanel SettingsPane_FramePanel;
 	public JCheckBox SettingsPane_Recordpanel_RecordFlag;
 	public JButton btnUpdateFrameLocation;
 	public static JLabel lblLocationx;
-	public JButton SettingsPane_Btnpanel_SaveBtn;
+	public JButton SaveBtn;
 	public JComboBox<?> comboBox_ImageFormat;
 	int Xlocation,Ylocation;
 	SensorGUI sen;
@@ -59,7 +59,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JButton CancelBtn;
 	public final ButtonGroup buttonGroup = new ButtonGroup();
 	public JCheckBox chckbxShowFilderNameField;
-	public JButton SettingsPane_DocFolderPanel_Chooser;
+	public JButton BtnFolderChooser;
 	public boolean BtnPanelState=property.getBoolean("SensorBTNPanelVisible",false);
 	public JCheckBox chckbxSetFoldernameMandatory;
 	public JRadioButton DocumentDestination;
@@ -76,6 +76,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsScrollPane.setLayout(null);
 		SettingsScrollPane.addMouseListener(this);
 		SettingsScrollPane.addMouseMotionListener(this);
+		loadSettingsTab();
 	}
 	public void loadSettingsTab()
 	{
@@ -95,15 +96,15 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			SettingsPane.add(SettingsPane_DocFolderPanel);
 			SettingsPane_DocFolderPanel.setLayout(null);
 			{
-				SettingsPane_DocFolderPanel_textField_DocDestFolder = new JTextField();
-				SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.WHITE);
-				SettingsPane_DocFolderPanel_textField_DocDestFolder.getDocument().addDocumentListener(new DocumentListener()
+				textField_DocDestFolder = new JTextField();
+				textField_DocDestFolder.setBackground(Color.WHITE);
+				textField_DocDestFolder.getDocument().addDocumentListener(new DocumentListener()
 				{
 					public void changedUpdate(DocumentEvent e) {
-						if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals(""))
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.PINK);
+						if(textField_DocDestFolder.getText().equals(""))
+							textField_DocDestFolder.setBackground(Color.PINK);
 						else 
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.WHITE);
+							textField_DocDestFolder.setBackground(Color.WHITE);
 
 						/*if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals("") && !btnUpdateFrameLocation.getText().equalsIgnoreCase("Update frame location"))
 							SettingsPane_Btnpanel_SaveBtn.setEnabled(false);
@@ -111,10 +112,10 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							SettingsPane_Btnpanel_SaveBtn.setEnabled(true);*/
 					}
 					public void insertUpdate(DocumentEvent e) {
-						if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals(""))
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.PINK);
+						if(textField_DocDestFolder.getText().equals(""))
+							textField_DocDestFolder.setBackground(Color.PINK);
 						else 
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.WHITE);
+							textField_DocDestFolder.setBackground(Color.WHITE);
 
 						/*if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals("") && !btnUpdateFrameLocation.getText().equalsIgnoreCase("Update frame location"))
 							SettingsPane_Btnpanel_SaveBtn.setEnabled(false);
@@ -122,10 +123,10 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							SettingsPane_Btnpanel_SaveBtn.setEnabled(true);*/
 					}
 					public void removeUpdate(DocumentEvent e) {
-						if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals(""))
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.PINK);
+						if(textField_DocDestFolder.getText().equals(""))
+							textField_DocDestFolder.setBackground(Color.PINK);
 						else 
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.WHITE);
+							textField_DocDestFolder.setBackground(Color.WHITE);
 
 						/*if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals("") && !btnUpdateFrameLocation.getText().equalsIgnoreCase("Update frame location"))
 							SettingsPane_Btnpanel_SaveBtn.setEnabled(false);
@@ -134,19 +135,19 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					}
 				});
 
-				SettingsPane_DocFolderPanel_textField_DocDestFolder.setBounds(25, 40, 335, 25);
-				SettingsPane_DocFolderPanel_textField_DocDestFolder.setFont(new Font("Tahoma", Font.PLAIN, 16));
-				SettingsPane_DocFolderPanel.add(SettingsPane_DocFolderPanel_textField_DocDestFolder);
-				SettingsPane_DocFolderPanel_textField_DocDestFolder.setColumns(20);
+				textField_DocDestFolder.setBounds(25, 40, 335, 25);
+				textField_DocDestFolder.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				SettingsPane_DocFolderPanel.add(textField_DocDestFolder);
+				textField_DocDestFolder.setColumns(20);
 			}
 			{
-				SettingsPane_DocFolderPanel_Chooser = new JButton();
-				SettingsPane_DocFolderPanel_Chooser.setBounds(373, 22, 29, 39);
-				SettingsPane_DocFolderPanel.add(SettingsPane_DocFolderPanel_Chooser);
-				SettingsPane_DocFolderPanel_Chooser.setToolTipText("Choose file");
-				SettingsPane_DocFolderPanel_Chooser.setBackground(Color.WHITE);
-				Dimension Size1=SettingsPane_DocFolderPanel_Chooser.getSize();
-				SettingsPane_DocFolderPanel_Chooser.addActionListener(new ActionListener(){
+				BtnFolderChooser = new JButton();
+				BtnFolderChooser.setBounds(373, 22, 29, 39);
+				SettingsPane_DocFolderPanel.add(BtnFolderChooser);
+				BtnFolderChooser.setToolTipText("Choose file");
+				BtnFolderChooser.setBackground(Color.WHITE);
+				Dimension Size1=BtnFolderChooser.getSize();
+				BtnFolderChooser.addActionListener(new ActionListener(){
 					private JFileChooser fileChooser;
 
 					@Override
@@ -161,13 +162,13 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 						int option = fileChooser.showOpenDialog(new Frame());
 						if(option == JFileChooser.APPROVE_OPTION){
-							SettingsPane_DocFolderPanel_textField_DocDestFolder.setText(fileChooser.getSelectedFile().getPath());
+							textField_DocDestFolder.setText(fileChooser.getSelectedFile().getPath());
 							ActionGUI.dialog.setAlwaysOnTop(true);
 						}else {
-							if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals(""))
+							if(textField_DocDestFolder.getText().equals(""))
 							{
 								new PopUp("ERROR","error","No Folder Selected","Ok, I understood","");
-								SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.PINK);
+								textField_DocDestFolder.setBackground(Color.PINK);
 							}
 							else
 								new PopUp("WARNING","warning","No Folder Selected","Ok, I understood","");
@@ -175,12 +176,12 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 				});
-				SettingsPane_DocFolderPanel_Chooser.setMargin(new Insets(2, 2, 2, 2));
+				BtnFolderChooser.setMargin(new Insets(2, 2, 2, 2));
 				BufferedImage master1;
 				try {
 					master1 = ImageIO.read(new File(uploadIcon));
 					Image scaled1 = master1.getScaledInstance(Size1.width, Size1.height, java.awt.Image.SCALE_SMOOTH);
-					SettingsPane_DocFolderPanel_Chooser.setIcon(new ImageIcon(scaled1));
+					BtnFolderChooser.setIcon(new ImageIcon(scaled1));
 				} catch (IOException e1) {
 					logError(e1," Exception occurec file not found "+uploadIcon);
 				}
@@ -191,8 +192,12 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					chckbxShowFilderNameField = new JCheckBox("Show folder name field");
 					chckbxShowFilderNameField.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
+							System.out.println(chckbxShowFilderNameField.isSelected());
+
+							SettingsPane_DocFolderPanel.add(chckbxSetFoldernameMandatory);
 							if(chckbxShowFilderNameField.isSelected())
 							{
+								
 								chckbxSetFoldernameMandatory.setSelected(false);
 								chckbxSetFoldernameMandatory.setVisible(true);
 							}
@@ -216,7 +221,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			SettingsPane_DocFolderPanel.add(chckbxSetFoldernameMandatory);
 			chckbxSetFoldernameMandatory.setSelected(false);
 			chckbxSetFoldernameMandatory.setVisible(false);
-			SettingsPane_DocFolderPanel.add(chckbxSetFoldernameMandatory);
 			
 			DocumentDestination = new JRadioButton("Update document destination folder ");
 			DocumentDestination.addActionListener(new ActionListener() {
@@ -259,10 +263,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 				btnUpdateFrameLocation.setBackground(UIManager.getColor("CheckBox.background"));
 				btnUpdateFrameLocation.setMargin(new Insets(2, 10, 2, 10));
 				btnUpdateFrameLocation.addActionListener(new ActionListener() {
-
-
-					
-
 					public void actionPerformed(ActionEvent arg0) {
 						if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Done"))
 						{
@@ -278,6 +278,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						}
 						else
 						{
+							SensorGUI.isExpandable=true;
 							btnUpdateFrameLocation.setBackground(UIManager.getColor("CheckBox.background"));
 							PopUp window=new PopUp("INSTRUCTION","INFO","To "+btnUpdateFrameLocation.getText().toLowerCase()+", drag the green frame to your preferred location and set frame expansion then click Done.","Ok, I Understood","");
 							window.setVisible(true);
@@ -320,12 +321,12 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 				SettingsPane.add(SettingsPane_Btnpanel);
 				SettingsPane_Btnpanel.setLayout(null);
 				{
-					SettingsPane_Btnpanel_SaveBtn = new JButton("Save");
-					if(SettingsPane_DocFolderPanel_textField_DocDestFolder.getText().equals(""))
+					SaveBtn = new JButton("Save");
+					if(textField_DocDestFolder.getText().equals(""))
 						//SettingsPane_Btnpanel_SaveBtn.setEnabled(false);
-						SettingsPane_Btnpanel_SaveBtn.addActionListener(new ActionListener() {
+						SaveBtn.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								String DocPath_Current=SettingsPane_DocFolderPanel_textField_DocDestFolder.getText();
+								String DocPath_Current=textField_DocDestFolder.getText();
 								String DocPath_Previous=property.getString("DocPath");
 								boolean showFolderNameField_Current=chckbxShowFilderNameField.isSelected();
 								boolean showFolderNameField_Previous=property.getBoolean("showFolderNameField",false);
@@ -371,7 +372,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location"))
 										btnUpdateFrameLocation.setBackground(Color.PINK);
 									if(DocPath_Current.equals(""))
-										SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.PINK);
+										textField_DocDestFolder.setBackground(Color.PINK);
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
 
@@ -388,7 +389,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 											property.setProperty("Xlocation",String.valueOf(Xlocation));
 										if(Ylocation!=0 &&Math.abs(Ylocation-Yvalue_Prev)>0)
 											property.setProperty("Ylocation",String.valueOf(Ylocation));
-										if(!BtnPanelState==property.getBoolean("SensorBTNPanelVisible"))
+										if(!BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false))
 											property.setProperty("SensorBTNPanelVisible",BtnPanelState);
 									}
 									catch(Exception pp){
@@ -408,6 +409,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								        @Override
 								        public void actionPerformed(ActionEvent e) {
 								        	window.dispose();
+								        	PopUp.control=true;
 								        }
 								      }).start();
 									
@@ -415,7 +417,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									{
 										ActionGUI.dialog.dispose();
 										ActionGUI.leaveControl=true;
-										Application.sensor.play();
+										try{Application.sensor.play();}catch(Exception rr){rr.printStackTrace();};
 										if(xv!=null && yv!=null)
 										{
 											new SensorGUI();
@@ -439,27 +441,34 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 
 											if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.isSelected())
 												ActionGUI.savePanel.textField_Filename.setColumns(16);
-											else 
+											else /*if(ActionGUI.savePanel)*/
 												ActionGUI.savePanel.textField_Filename.setColumns(22);
-
 											
-										
 										}
+										
 										if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.getText().equalsIgnoreCase("Rename selected file")&& !SavePanel.chckbxOverwriteSelectedFile.isSelected())
 											ActionGUI.savePanel.btnDone.setVisible(true);
-										if(ActionPanel.panel_4!=null)
-											ActionGUI.redirectingTabID=2;
-										else
+										
 											ActionGUI.redirectingTabID=0;
 
+											
 										}catch(Exception e58){}
 										
 										TabbledPanel.setSelectedIndex(ActionGUI.redirectingTabID);
 										
-										if(ActionGUI.savePanel!=null && !ActionGUI.savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
+										if(ActionGUI.savePanel.saveLoaded && !ActionGUI.savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
 										{
 											ActionGUI.savePanel.btnDone.setVisible(true);
 											ActionGUI.savePanel.textField_ParFol.setBackground(Color.WHITE);
+										}
+										if(ActionGUI.savePanel.saveLoaded && ActionGUI.savePanel.lblChooseFile.isVisible())
+										{
+											ActionGUI.savePanel.lblParFol.setVisible(false);
+											ActionGUI.savePanel.textField_ParFol.setVisible(false);
+										}
+										if(ActionGUI.savePanel.saveLoaded && SavePanel.chckbxOverwriteSelectedFile.isVisible())
+										{
+											ActionGUI.savePanel.textField_Filename.setColumns(16);
 										}
 										ActionGUI.redirectingTabID=0;
 									}
@@ -467,12 +476,12 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								}
 							}
 						});
-					SettingsPane_Btnpanel_SaveBtn.setBackground(Color.BLUE);
-					SettingsPane_Btnpanel_SaveBtn.setForeground(Color.BLACK);
-					SettingsPane_Btnpanel_SaveBtn.setBorder(new LineBorder(new Color(0, 0, 0)));
-					SettingsPane_Btnpanel_SaveBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
-					SettingsPane_Btnpanel_SaveBtn.setBounds(100, 5, 100, 25);
-					SettingsPane_Btnpanel.add(SettingsPane_Btnpanel_SaveBtn);
+					SaveBtn.setBackground(Color.BLUE);
+					SaveBtn.setForeground(Color.BLACK);
+					SaveBtn.setBorder(new LineBorder(new Color(0, 0, 0)));
+					SaveBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+					SaveBtn.setBounds(100, 5, 100, 25);
+					SettingsPane_Btnpanel.add(SaveBtn);
 				}
 				CancelBtn = new JButton("Cancel");
 				CancelBtn.addActionListener(new ActionListener() {
@@ -492,7 +501,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						{
 							ActionGUI.dialog.dispose();
 							ActionGUI.leaveControl=true;
-							Application.sensor.play();
+							try{Application.sensor.play();}catch(Exception e){};
 							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 						}
 					}

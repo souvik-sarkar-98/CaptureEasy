@@ -76,7 +76,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton rdbtnYes;
 	public static JRadioButton rdbtnNo;
-	private JLabel lblDoYouWant;
+	public JLabel lblDoYouWant;
 	public JCheckBox chckbxSelectExistingDocument;
 	private JTabbedPane TabbledPanel;
 	
@@ -618,16 +618,16 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					{
 						new PopUp("ERROR","error","'DocPath' is unavailable in '"+new File(PropertyFilePath).getName()+"'.Please update this property.","Okay","").setVisible(true);
 						TabbledPanel.setSelectedIndex(TabbledPanel.getTabCount()-1);
-						ActionGUI.settingsPanel.SettingsPane_DocFolderPanel_textField_DocDestFolder.setBackground(Color.PINK);
+						ActionGUI.settingsPanel.textField_DocDestFolder.setBackground(Color.PINK);
 					}
 					else
 					{
-						if(ActionPanel.panel_4!=null)
+						/*if(ActionPanel.panel_4!=null)
 						{
 							ActionGUI.actionPanel.rdbtnContinuePreviousWork.setEnabled(false);
 							ActionGUI.actionPanel.rdbtnDeletePreviousWork.setEnabled(false);
 						}
-						ActionPanel.panel_4=null;
+						ActionPanel.panel_4=null;*/
 						textField_ParFol.setBackground(Color.WHITE);
 						SavePanel.setVisible(false);
 						panel_Save_Buttons.setVisible(false);
@@ -696,7 +696,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 								}
 								ActionGUI.dialog.dispose();
 								ActionGUI.leaveControl=true;
-								Application.sensor.play();
+								try{Application.sensor.play();}catch(Exception e){};
 								try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 							}
 
@@ -715,7 +715,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			public void actionPerformed(ActionEvent e) {
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				Application.sensor.play();
+				try{Application.sensor.play();}catch(Exception r){};
 				try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 			}
 		});
@@ -724,7 +724,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 
 		btnDone.setText("Okay");
 		saveLoaded=true;
-
+		exitbtn.setVisible(false);
 	}
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
@@ -757,14 +757,23 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	{
 		try{
 			newFileName = textField_Filename.getText();
+			String folder=textField_ParFol.getText();
 			if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 			{
 				btnDone.setVisible(false);
 				textField_Filename.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
-				System.out.println(PopUp.control);
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
 					new PopUp("ERROR","error", "A file name can not contain any of the following "
+							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+			}
+			else if (folder.contains(Character.toString('"')) || folder.contains("/") || folder.contains("\\") || folder.contains(":") || folder.contains("*") || folder.contains("?") || folder.contains("<") || folder.contains(">") || folder.contains("|")) 
+			{
+				btnDone.setVisible(false);
+				textField_ParFol.setBackground(Color.PINK);
+				//textField_Filename.requestFocusInWindow();
+				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
+					new PopUp("ERROR","error", "A folder name can not contain any of the following "
 							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
 			}
 			else if (rdbtnSavePDF.isSelected() && (new File(getSubFolders(property.getString("DocPath"),textField_ParFol.getText()) + "\\" + newFileName + ".pdf")).exists()) 
@@ -800,6 +809,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				btnDone.setVisible(true);
 				textField_Filename.setBackground(Color.WHITE);
 				//textField_Filename.requestFocusInWindow();
+				textField_ParFol.setBackground(Color.WHITE);
 
 			}
 			if(textField_Filename.getText().equalsIgnoreCase(""))
@@ -809,6 +819,5 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			logError(e,"Exception Occured");
 
 		}
-		exitbtn.setEnabled(false);
 	}
 }

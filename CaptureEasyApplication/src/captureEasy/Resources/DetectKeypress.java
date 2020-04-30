@@ -41,7 +41,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			{
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				Application.sensor.play();
+				try{Application.sensor.play();}catch(Exception es){};
 			}
 		}
 		else if(key==29 && e.getKeyCode() ==56 && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)

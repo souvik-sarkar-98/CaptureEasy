@@ -56,7 +56,7 @@ public class SensorGUI extends Library{
 	public static PopUp window;
 	public JLabel label_Settings;
 
-
+	public static boolean isExpandable=true;
 	Dimension size= new Dimension(50,50);
 	public JLabel label_Menu;
 	public static JLabel label_Count;
@@ -471,7 +471,7 @@ public class SensorGUI extends Library{
 		label_Menu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(ActionGUI.leaveControl && label_Menu.isEnabled()){
+				if(isExpandable && label_Menu.isEnabled()){
 					if( button_panel.isVisible())
 					{
 						frame.setSize(new Dimension(54, 110));
@@ -567,15 +567,21 @@ public class SensorGUI extends Library{
 	String toolText;
 	public void play()
 	{
+		try{
+		isExpandable=true;
 		frame.setSize(new Dimension(54, 500));
 		Main_panel.setSize(new Dimension(54, 500));
 		button_panel.setVisible(true);
+	}catch(Exception e){}
 	}
 	public void pause()
 	{
+		try{
+		isExpandable=false;
 		frame.setSize(new Dimension(54, 110));
 		Main_panel.setSize(new Dimension(54, 110));
 		button_panel.setVisible(false);
+		}catch(Exception e){}
 	}
 	
 
@@ -583,7 +589,7 @@ public class SensorGUI extends Library{
 	public static void closeApplication()
 	{
 		try{ActionGUI.dialog.dispose();
-		Application.sensor.play();
+		try{Application.sensor.play();}catch(Exception e){};
 		}catch(Exception e5){}
 		frame.dispose();
 		SharedResources.stopThread=true;

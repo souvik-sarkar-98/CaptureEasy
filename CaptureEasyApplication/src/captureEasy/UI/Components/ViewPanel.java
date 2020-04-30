@@ -120,11 +120,11 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 						if(Label_FullView.isEnabled())
 						{
 							try {
-								if(ActionPanel.panel_4==null)
+								//if(ActionPanel.panel_4==null)
 								{
 									ActionGUI.dialog.dispose();
 									ActionGUI.leaveControl=true;
-									Application.sensor.play();
+									try{Application.sensor.play();}catch(Exception e){};
 								}
 								Desktop.getDesktop().open(files[imgId]);
 							} catch (IOException e1) {}			
@@ -269,7 +269,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 					{
 						ActionGUI.dialog.dispose();
 						ActionGUI.leaveControl=true;
-						Application.sensor.play();
+						try{Application.sensor.play();}catch(Exception e){};
 					}
 				}
 			});

@@ -26,7 +26,7 @@ import org.json.JSONException;
 import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SoftwareUpdate;
-import captureEasy.UI.Components.ActionPanel;
+//import captureEasy.UI.Components.ActionPanel;
 
 import captureEasy.UI.Components.ManageDocumentPanel;
 import captureEasy.UI.Components.SavePanel;
@@ -49,7 +49,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			+ "margin-right: 1px;"
 			+ "width: 70px\">";
 	public static final String POST_HTML = "</p></html>";
-	public static ActionPanel actionPanel;
+	//public static ActionPanel actionPanel;
 	public static SettingsPanel settingsPanel;
 	public ManageDocumentPanel documentPanel;
 	public static ViewPanel viewPanel;
@@ -63,10 +63,10 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	public static int redirectingTabID=0;
 
 
-//	@SuppressWarnings({ })
+	//	@SuppressWarnings({ })
 	public ActionGUI(List<String> tabs)
 	{
-		Application.sensor.pause();
+		try{Application.sensor.pause();}catch(Exception e){}
 		this.tabs=tabs;
 		leaveControl=false;
 		dialog=new JDialog();
@@ -118,6 +118,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 						savePanel.textField_Filename.requestFocusInWindow();
 						savePanel.rdbtnNewDoc.setEnabled(false);
 						savePanel.btnDone.setVisible(false);
+						savePanel.exitbtn.setVisible(true);
 					}
 				}
 				else if(tabs.get(i).equalsIgnoreCase("View"))
@@ -141,7 +142,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 						TabbledPanel.setSelectedIndex(0);
 						documentPanel.lblCross.setEnabled(true);
 					}
-					
+
 				}
 				else if(tabs.get(i).equalsIgnoreCase("Settings"))
 				{
@@ -153,7 +154,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 						TabbledPanel.setSelectedIndex(0);
 						settingsPanel.CancelBtn.setEnabled(true);
 					}
-					
+
 				}
 				else if(tabs.get(i).equalsIgnoreCase("Update"))
 				{
@@ -163,9 +164,9 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				}
 				else
 				{
-					actionPanel=new ActionPanel(TabbledPanel);
+					/*actionPanel=new ActionPanel(TabbledPanel);
 					TabbledPanel.addTab("", null, actionPanel.ActionPanel, null);
-					TabbledPanel.setTitleAt(i, PRE_HTML + "Action" + POST_HTML);
+					TabbledPanel.setTitleAt(i, PRE_HTML + "Action" + POST_HTML);*/
 				}
 
 			}
@@ -200,10 +201,13 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				savePanel.textField_ParFol.setVisible(false);
 				savePanel.textField_Filename.setColumns(22);
 			}
-			if(!savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
+			System.out.println(savePanel.textField_Filename);
+			if(savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
 			{
-				savePanel.btnDone.setVisible(true);
+				savePanel.btnDone.setVisible(false);
 			}
+			savePanel.lblDoYouWant.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			savePanel.lblDoYouWant.setToolTipText("Do you want to continue with current screenshots ?");
 			savePanel.textField_Filename.requestFocusInWindow();
 			dialog.getRootPane().setDefaultButton(savePanel.btnDone);
 		}
@@ -255,16 +259,16 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 		else if(tabName.contains("Manage"))
 		{
-			
+
 			try{
 				documentPanel.loadDocumentsTab();
 				documentPanel.DocumentScrollPane.add(documentPanel.panel_Selection);
 				documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
 				documentPanel.showRootFile();
-				
+
 			}catch(Exception e){
 				logError(e,"Exception occured while loading Manage documents tab");
-				}
+			}
 
 		}
 		else if(tabName.contains("Settings"))
@@ -274,29 +278,27 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			{
 				settingsPanel.loadSettingsTab();
 				settingsPanel.SettingsScrollPane.add(settingsPanel.SettingsPane);
+				settingsPanel.loadSettingsTab=true;
 			}
-			String path=property.getString("DocPath");
-			settingsPanel.SettingsPane_DocFolderPanel_textField_DocDestFolder.setText(path);
-			if(!"".equals(path))
+			settingsPanel.textField_DocDestFolder.setText(property.getString("DocPath",""));
+			settingsPanel.chckbxShowFilderNameField.setSelected(property.getBoolean("showFolderNameField",false));
+			if(property.getBoolean("showFolderNameField",false))
 			{
-				settingsPanel.chckbxShowFilderNameField.setSelected(property.getBoolean("showFolderNameField",false));
-				if(property.getBoolean("showFolderNameField",false))
-				{
-					settingsPanel.chckbxSetFoldernameMandatory.setVisible(true);
-					settingsPanel.chckbxSetFoldernameMandatory.setSelected(property.getBoolean("setFolderNameMandatory",false));
-				}
-				if(!settingsPanel.chckbxShowFilderNameField.isSelected())
-				{
-					settingsPanel.chckbxSetFoldernameMandatory.setVisible(false);
-					settingsPanel.chckbxSetFoldernameMandatory.setSelected(false);
-				}
-				settingsPanel.comboBox_ImageFormat.setSelectedItem(property.getString("ImageFormat","png"));
-				SettingsPanel.lblLocationx.setText("Location : ( "+property.getInteger("Xlocation",screensize.width-160)+" , "+property.getInteger("Ylocation",screensize.height/2+100)+" )");
+				settingsPanel.chckbxSetFoldernameMandatory.setVisible(true);
+				settingsPanel.chckbxSetFoldernameMandatory.setSelected(property.getBoolean("setFolderNameMandatory",false));
 			}
-			ActionGUI.tagDrop=false;
+			if(!settingsPanel.chckbxShowFilderNameField.isSelected())
+			{
+				settingsPanel.chckbxSetFoldernameMandatory.setVisible(false);
+				settingsPanel.chckbxSetFoldernameMandatory.setSelected(false);
+			}
+			SettingsPanel.lblLocationx.setText("Location : ( "+property.getInteger("Xlocation",screensize.width-160)+" , "+property.getInteger("Ylocation",screensize.height/2+100)+" )");
 			settingsPanel.SettingsPane_Recordpanel_RecordFlag.setSelected(Boolean.valueOf(property.getString("ScreenRecording")));
+			settingsPanel.comboBox_ImageFormat.setSelectedItem(property.getString("ImageFormat","png"));
+			ActionGUI.tagDrop=false;
 			settingsPanel.comboBox_CaptureKey.setSelectedItem(property.getString("CaptureKey","PrtSc"));
-			dialog.getRootPane().setDefaultButton(settingsPanel.SettingsPane_Btnpanel_SaveBtn);
+			dialog.getRootPane().setDefaultButton(settingsPanel.SaveBtn);
+
 		}
 		else if(tabName.contains("Update"))
 		{
@@ -307,7 +309,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					window.setVisible(true);
 					window.lblIcon.setBounds(20, 45,50,50);
 				}
-				
+
 			}).start();;*/
 			SoftwareUpdate su= new SoftwareUpdate();
 			try {
@@ -325,17 +327,17 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				}
 				else
 				{
-				updatePanel.loadUpdated();
-				updatePanel.lblLastUpdatedOn.setText(" Last updated on : "+versionInfo.getString("LasUpdateDate"));
-				updatePanel.lblTime.setText(" Time : "+versionInfo.getString("LasUpdateTime"));
-				updatePanel.lblCurrentVersion.setText(" Current version : "+versionInfo.getString("CurrentVersion"));
-				
+					updatePanel.loadUpdated();
+					updatePanel.lblLastUpdatedOn.setText(" Last updated on : "+versionInfo.getString("LasUpdateDate"));
+					updatePanel.lblTime.setText(" Time : "+versionInfo.getString("LasUpdateTime"));
+					updatePanel.lblCurrentVersion.setText(" Current version : "+versionInfo.getString("CurrentVersion"));
+
 				}
 
 			} catch (JSONException e) {
 				logError(e,"Exception occured while checking for updates");
 			}
-			
+
 
 		}
 	}

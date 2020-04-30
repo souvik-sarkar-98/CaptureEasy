@@ -65,7 +65,7 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 			public void actionPerformed(ActionEvent arg0) {
 				ActionGUI.leaveControl=true;
 				ActionGUI.dialog.dispose();
-				Application.sensor.play();
+				try{Application.sensor.play();}catch(Exception e){};
 				
 			}
 		});
@@ -169,7 +169,7 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 			public void actionPerformed(ActionEvent arg0) {
 				ActionGUI.leaveControl=true;
 				ActionGUI.dialog.dispose();
-				Application.sensor.play();
+				try{Application.sensor.play();}catch(Exception e){};
 				
 			}
 		});

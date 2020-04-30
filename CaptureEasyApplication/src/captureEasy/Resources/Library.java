@@ -253,8 +253,6 @@ public class Library extends SharedResources
 			ActionGUI.dialog.setVisible(true);
 			ActionGUI.settingsPanel.DocumentDestination.setText("Set document destination folder");
 			ActionGUI.settingsPanel.btnUpdateFrameLocation.setText("Set frame location");
-			ActionGUI.settingsPanel.SettingsPane_DocFolderPanel_textField_DocDestFolder.setEnabled(true);
-			ActionGUI.settingsPanel.SettingsPane_DocFolderPanel_Chooser.setEnabled(true);
 			ActionGUI.tagDrop=false;
 		}
 		SensorGUI.frame.setLocation(10000,10000);
@@ -600,6 +598,8 @@ public class Library extends SharedResources
 						{
 							SensorGUI.window.dispose();
 							SensorGUI.window=null;
+							PopUp.control=true;
+							
 						}
 					}catch(Exception e){}
 				}

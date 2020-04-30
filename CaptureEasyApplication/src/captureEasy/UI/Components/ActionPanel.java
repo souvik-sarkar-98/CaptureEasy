@@ -1,4 +1,4 @@
-package captureEasy.UI.Components;
+/*package captureEasy.UI.Components;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -182,7 +182,7 @@ public class ActionPanel extends Library implements MouseListener,MouseMotionLis
 				{
 					ActionGUI.dialog.dispose();
 					ActionGUI.leaveControl=true;
-					Application.sensor.play();
+					try{Application.sensor.play();}catch(Exception e){};
 					try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e){}
 					panel_4=null;
 				}
@@ -193,7 +193,7 @@ public class ActionPanel extends Library implements MouseListener,MouseMotionLis
 					property.setProperty("TempPath", createTemp());					
 					ActionGUI.dialog.dispose();
 					ActionGUI.leaveControl=true;
-					Application.sensor.play();
+					try{Application.sensor.play();}catch(Exception e){};
 					try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e){}
 					panel_4=null;
 				}
@@ -249,3 +249,4 @@ public class ActionPanel extends Library implements MouseListener,MouseMotionLis
 	}
 
 }
+*/

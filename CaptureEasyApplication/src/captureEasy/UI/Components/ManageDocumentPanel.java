@@ -151,7 +151,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 				{
 					ActionGUI.dialog.dispose();
 					ActionGUI.leaveControl=true;
-					Application.sensor.play();
+					try{Application.sensor.play();}catch(Exception e){};
 				}
 			}
 		});
