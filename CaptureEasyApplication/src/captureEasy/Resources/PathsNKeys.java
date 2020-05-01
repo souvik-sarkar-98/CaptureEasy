@@ -13,11 +13,16 @@ public class PathsNKeys{
 	/**
 	 *@ Property file path
 	 */
-	public final static String PropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"/Resources/Properties/main.properties");
-	public final static String versionInfoFilePath=Library.createFolder(System.getProperty("user.dir")+"/Resources/Properties/App.properties");
+	public final static String PropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"/Resources/Properties/Application.properties");
+	public final static String versionInfoFilePath=Library.createFolder(System.getProperty("user.dir")+"/Resources/Properties/SoftwareUpdate.properties");
 	public final static String Log4jPropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"/Resources/Properties/Log4j.properties");
 	public final static String restartJarPath= System.getProperty("user.dir")+"/Resources/lib/Jars/RestartApplication.jar";
 	public final static String sourceJarPath =Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Jars\\SRC.jar");
+	/****
+	 * Never ever change this(tempFilePath)
+	 */
+	public final static String tempFilePath=Library.createFolder(System.getProperty("user.dir")+"/temp.properties");
+	
 
 	
 

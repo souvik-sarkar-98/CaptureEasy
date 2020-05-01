@@ -17,7 +17,6 @@ import javax.swing.event.DocumentListener;
 
 import captureEasy.Resources.Library;
 import captureEasy.Resources.PathsNKeys;
-
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;

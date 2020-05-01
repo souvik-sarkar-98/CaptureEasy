@@ -57,7 +57,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	List<String> tabs;
 	int i;
 	private boolean loadSaveTab=false;
-	private UpdatePanel updatePanel;
+	public static UpdatePanel updatePanel;
 	public static int xDialog,yDialog, xyDialog,xxDialog;
 	public static boolean leaveControl=true,tagDrop=true;
 	public static int redirectingTabID=0;

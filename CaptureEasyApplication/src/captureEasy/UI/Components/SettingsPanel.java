@@ -417,7 +417,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									{
 										ActionGUI.dialog.dispose();
 										ActionGUI.leaveControl=true;
-										try{Application.sensor.play();}catch(Exception rr){rr.printStackTrace();};
+										try{Application.sensor.play();}catch(Exception rr){};
 										if(xv!=null && yv!=null)
 										{
 											new SensorGUI();

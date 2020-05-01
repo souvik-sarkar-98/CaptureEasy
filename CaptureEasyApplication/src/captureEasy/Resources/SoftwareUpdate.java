@@ -12,10 +12,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
 import captureEasy.UI.Components.UpdatePanel;
@@ -23,6 +26,7 @@ import captureEasy.UI.Components.UpdatePanel;
 public class SoftwareUpdate extends Library {
 	public JSONObject JSONObj;
 	private double currentProgress;
+	public static  boolean doUpdate=true,isInstalled=true;
 
 	public SoftwareUpdate() {
 		try {
@@ -32,12 +36,12 @@ public class SoftwareUpdate extends Library {
 				this.JSONObj = null;
 				new PopUp("ERROR","error","Internet not available","Okay","").setVisible(true);
 			} 
-		} catch (JSONException|IOException e) {
+		} catch (Exception e) {
 			logError(e,"Exception Occured on connecting web server...")	;	
-			} 
+		} 
 	}
 
-	private static String GET(String url) throws IOException {
+	private static String GET(String url) throws Exception {
 		InputStream is = (new URL(url)).openStream();
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 		StringBuilder sb = new StringBuilder();
@@ -100,12 +104,12 @@ public class SoftwareUpdate extends Library {
 		BufferedInputStream bis = new BufferedInputStream(httpConnection.getInputStream());
 		byte[] buffer = new byte[1024];
 		int count = 0;
-		
+
 		while ((count = bis.read(buffer, 0, 1024)) != -1) {
 			downloadedFileSize += count;
 			currentProgress = downloadedFileSize / completeFileSize * 100;
 			fis.write(buffer, 0, count);
-			UpdatePanel.lblprogressflag.setText("Downloaded "+Math.round(currentProgress)+"%");
+			try{UpdatePanel.lblprogressflag.setText("Downloaded "+Math.round(currentProgress)+"%");}catch(Exception e){}
 		} 
 		fis.close();
 		bis.close();
@@ -118,34 +122,111 @@ public class SoftwareUpdate extends Library {
 			return null;
 		}
 	}
+	static SoftwareUpdate u;
+	static String downloadedFilePath;
 	public static void startDownload() {
 		new Thread(() -> {		
 			try {
-				
-				SoftwareUpdate u=new SoftwareUpdate();
-				String downloadedFilePath = u.downloadUpdate(downloadFolderPath);
-				UpdatePanel.lblprogressflag.setText("Download Completed");
-				PopUp p=new PopUp("PERMISSION","info","Download Completed. Do you want to restart application now? ","Yes","No");
-				p.setVisible(true);
-				p.btnNewButton.addActionListener(new ActionListener(){
 
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						try {
-							Runtime.getRuntime().exec("java -jar "+restartJarPath+" "+downloadedFilePath+" "+sourceJarPath+" "+property.getString("ApplicationPath"));
-							SensorGUI.closeApplication(); 						
-						} catch (IOException e) {
-							e.printStackTrace();
-						} 
-					}
-				});
-				
-				
+				u=new SoftwareUpdate();
+				downloadedFilePath = u.downloadUpdate(downloadFolderPath);
+				if(downloadedFilePath!=null)
+				{
+					try{UpdatePanel.lblprogressflag.setText("Download Completed");}catch(Exception e){}
+					PopUp p=new PopUp("PERMISSION","info","Download Completed. Do you want to restart application now? ","Yes","No");
+					p.setVisible(true);
+					p.btnNewButton.addActionListener(new ActionListener(){
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							isInstalled=true;
+							doRestart(downloadedFilePath);	
+						}
+					});
+					p.btnNo.addActionListener(new ActionListener(){
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							isInstalled=false;
+						}
+					});
+					
+				}
+				else
+					new PopUp("DOWNLOAD FAILED","error","Download failed !! Please try Again.","Okay","").setVisible(true);
 			} catch (IOException | JSONException e) {
-				e.printStackTrace();
+				logError(e,e.getClass().getName()+" Occured. Update Failed. ");
+				new PopUp("UPDATE FAILED","error",e.getClass().getName()+"Occured. Update failed !! Please try Again.","Okay","").setVisible(true);
 			}
-			
-			}).start();
-		
+
+		}).start();
+
 	}
-}
+	public static void doRestart(String downloadedFilePath)
+	{
+		try {
+
+			if(new File(property.getString("TempPath")).listFiles().length>0)
+			{
+				Properties tempProp =new Properties();
+				tempProp.setProperty("TempPath", property.getString("TempPath"));
+				File tempFile = new File(tempFilePath);									
+				tempProp.store(new FileOutputStream(tempFile,false), "This is temporary file. will be deleted shortly");
+				
+			}
+			Runtime.getRuntime().exec("java -jar "+restartJarPath+" "+downloadedFilePath+" "+sourceJarPath+" "+property.getString("ApplicationPath"));
+			versionInfo.setProperty("CurrentVersion",u.JSONObj.getString("tag_name"));
+			SensorGUI.closeApplication(); 						
+		} catch (IOException | JSONException e) {
+			e.printStackTrace();
+		} 
+	}
+	public void autoUpdate()
+	{
+		new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				while (!stopThread)
+				{
+					try{
+						Thread.sleep(10000);
+						if(doUpdate==false && isInstalled==false)
+						{
+							PopUp p=new PopUp("INFORMATION","info","Latest Version "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"is already downloaded. To install please click Yes","Yes","No");
+							p.setVisible(true);
+							//PopUp.control=false;
+							p.btnNewButton.addActionListener(new ActionListener(){
+								@Override
+								public void actionPerformed(ActionEvent arg0) {
+									doRestart(downloadedFilePath);
+								}
+							});
+						}
+						else if( doUpdate&& checkForUpdates())
+						{
+							doUpdate=false;
+							do{Thread.sleep(100);}while(!ActionGUI.leaveControl);
+							PopUp p=new PopUp("PERMISSION","info","A new version of this application is available. Do you want to download it now?\nName : "+JSONObj.getString("name")+"\nVersion : "+JSONObj.getString("tag_name"),"Yes","No");
+							p.setVisible(true);
+							//PopUp.control=false;
+							p.btnNewButton.addActionListener(new ActionListener(){
+
+								@Override
+								public void actionPerformed(ActionEvent arg0) {
+									startDownload();
+								}
+							});
+							p.btnNo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									SoftwareUpdate.doUpdate=true;
+
+								}
+							});
+							System.out.println("okk");
+
+						}
+						Thread.sleep(versionInfo.getInteger("UpdateFrequency",3600000));
+					}catch(Exception w){}
+				}
+			}
+		}).start();	
+	}}

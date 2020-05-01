@@ -67,7 +67,7 @@ public class Library extends SharedResources
 		System.setProperty("logfilename", logFolderPath + "/Error.log");
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
 		String exceptionClass="\nException Class : "+e.getClass().getName()+"\n";
-		String exceptionMessage="Exception Message"+e.getMessage()+"\n";
+		String exceptionMessage="Exception Message : "+e.getMessage()+"\n";
 		String exceptionCause="Exception Cause : "+e.getCause();
 		String stack="\n\nStackTrace:";
 		StackTraceElement[] trace=e.getStackTrace();
@@ -594,7 +594,7 @@ public class Library extends SharedResources
 						SensorGUI.frame.setAlwaysOnTop(true);
 					}catch(Exception w){}
 					try{
-						if(ActionGUI.dialog !=null && SensorGUI.window!=null && ActionGUI.dialog.isVisible())
+						if(ActionGUI.dialog !=null && SensorGUI.window!=null && ActionGUI.dialog.isVisible() )
 						{
 							SensorGUI.window.dispose();
 							SensorGUI.window=null;
@@ -602,6 +602,8 @@ public class Library extends SharedResources
 							
 						}
 					}catch(Exception e){}
+					System.out.println(SoftwareUpdate.doUpdate);
+
 				}
 			}
 		}).start();

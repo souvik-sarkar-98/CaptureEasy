@@ -203,7 +203,7 @@ public class SensorGUI extends Library{
 		lebel_Power.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(ActionGUI.leaveControl)
+				//if(ActionGUI.leaveControl)
 				{
 					PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
 					p.btnNewButton.addActionListener(new ActionListener() {
@@ -261,6 +261,10 @@ public class SensorGUI extends Library{
 					
 					ActionGUI.dialog.setVisible(true);
 				}
+				else
+				{
+					ActionGUI.dialog.setAlwaysOnTop(true);
+				}
 			}
 		});
 		try {
@@ -312,9 +316,11 @@ public class SensorGUI extends Library{
 					
 
 					ActionGUI.dialog.setVisible(true);
-					
-
 					}
+				}
+				else
+				{
+					ActionGUI.dialog.setAlwaysOnTop(true);
 				}
 			}
 		});
@@ -373,6 +379,10 @@ public class SensorGUI extends Library{
 						
 					}
 				}
+				else
+				{
+					ActionGUI.dialog.setAlwaysOnTop(true);
+				}
 			}
 		});
 		try{
@@ -415,6 +425,10 @@ public class SensorGUI extends Library{
 							}
 						});
 					}
+				}
+				else
+				{
+					ActionGUI.dialog.setAlwaysOnTop(true);
 				}
 			}
 		});
@@ -471,7 +485,7 @@ public class SensorGUI extends Library{
 		label_Menu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(isExpandable && label_Menu.isEnabled()){
+				if(label_Menu.isEnabled()){
 					if( button_panel.isVisible())
 					{
 						frame.setSize(new Dimension(54, 110));
@@ -485,12 +499,8 @@ public class SensorGUI extends Library{
 						Main_panel.setSize(new Dimension(54, 500));
 						button_panel.setVisible(true);
 						label_Menu.setToolTipText("Click here to collapse");
-
 					}
-					
-
 				}
-
 			}
 		});
 		label_Menu.setToolTipText("Click here to expand");
@@ -537,10 +547,12 @@ public class SensorGUI extends Library{
 					
 					new ActionGUI(tabs);
 					
-					ActionGUI.dialog.setVisible(true);
-					
+					ActionGUI.dialog.setVisible(true);	
 				}
-
+				else
+				{
+					ActionGUI.dialog.setAlwaysOnTop(true);
+				}
 			}
 		});
 		label_Settings.setToolTipText("Click Here for settings");
@@ -568,20 +580,20 @@ public class SensorGUI extends Library{
 	public void play()
 	{
 		try{
-		isExpandable=true;
+		/*//isExpandable=true;
 		frame.setSize(new Dimension(54, 500));
 		Main_panel.setSize(new Dimension(54, 500));
-		button_panel.setVisible(true);
+		button_panel.setVisible(true);*/
 	}catch(Exception e){}
 	}
 	public void pause()
 	{
-		try{
-		isExpandable=false;
+		/*try{
+		//isExpandable=false;
 		frame.setSize(new Dimension(54, 110));
 		Main_panel.setSize(new Dimension(54, 110));
 		button_panel.setVisible(false);
-		}catch(Exception e){}
+		}catch(Exception e){}*/
 	}
 	
 

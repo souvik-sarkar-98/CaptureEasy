@@ -2,6 +2,7 @@ package captureEasy.Launch;
 import captureEasy.Resources.DetectKeypress;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SharedResources;
+import captureEasy.Resources.SoftwareUpdate;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
@@ -10,6 +11,8 @@ import captureEasy.UI.SensorGUI;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 import org.jnativehook.GlobalScreen;
 
 public class Application extends Library{
@@ -18,14 +21,25 @@ public class Application extends Library{
 
 	public static void main(String args[]) throws Exception
 	{
-		SharedResources.init();
 		new Application().launch();
 	}
 	public void launch() 
 	{	
+		SharedResources.init();
 		if(!new File(createFolder(PropertyFilePath)).exists() || property.getString("DocPath","").replaceAll("\\s", "").equals(""))
 		{
 			property.setProperty("TempPath",createTemp());
+			File tempFile=new File(tempFilePath);
+			if(tempFile.exists())
+			{
+				Properties tempProp = new Properties();
+				try {
+					tempProp.load(new FileReader(tempFile));
+					if(tempProp.getProperty("TempPath")!=null)
+						property.setProperty("TempPath", tempProp.getProperty("TempPath"));
+				} catch (IOException e) {}
+				tempFile.delete();
+			}
 			List<String> tabs=new ArrayList<String>();
 			tabs.add("Settings");
 			new ActionGUI(tabs);
@@ -65,15 +79,9 @@ public class Application extends Library{
 			TempNeeded=false;
 			 */
 		}
-
-
-
+		new File(tempFilePath).delete();
 		if (new File(createFolder(PropertyFilePath)).exists()/* && IsEmpty(createFolder(TempFolder))*/)
 		{
-			/*if(TempNeeded)
-			{
-				updateProperty(TempFilePath,"TempPath",createFolder(System.getProperty("user.dir")+"/Resources/bin/Temp/"+new Random().nextInt(1000000000)));
-			}*/
 			GlobalScreen.addNativeKeyListener(new DetectKeypress());
 			try {
 				GlobalScreen.registerNativeHook();
@@ -88,6 +96,7 @@ public class Application extends Library{
 			sensor.sensor_panel.setEnabled(true);
 			updateUI();
 			clearTempImages(20000);
+			new SoftwareUpdate().autoUpdate();
 		}
 	}
 }
