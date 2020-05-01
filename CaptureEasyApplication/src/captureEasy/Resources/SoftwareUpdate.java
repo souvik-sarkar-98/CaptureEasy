@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Properties;
 
 import org.json.JSONArray;
@@ -174,7 +176,10 @@ public class SoftwareUpdate extends Library {
 			}
 			Runtime.getRuntime().exec("java -jar "+restartJarPath+" "+downloadedFilePath+" "+sourceJarPath+" "+property.getString("ApplicationPath"));
 			versionInfo.setProperty("CurrentVersion",u.JSONObj.getString("tag_name"));
-			SensorGUI.closeApplication(); 						
+			versionInfo.setProperty("LasUpdateDate", LocalDate.now());
+			versionInfo.setProperty("LasUpdateTime", LocalTime.now());
+
+			SensorGUI.closeApplication(true); 						
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		} 
@@ -193,7 +198,6 @@ public class SoftwareUpdate extends Library {
 						{
 							PopUp p=new PopUp("INFORMATION","info","Latest Version "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"is already downloaded. To install please click Yes","Yes","No");
 							p.setVisible(true);
-							//PopUp.control=false;
 							p.btnNewButton.addActionListener(new ActionListener(){
 								@Override
 								public void actionPerformed(ActionEvent arg0) {

@@ -6,7 +6,7 @@ import captureEasy.Resources.SoftwareUpdate;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
-
+import captureEasy.UI.SplashScreen;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,7 +25,11 @@ public class Application extends Library{
 	}
 	public void launch() 
 	{	
+		SplashScreen sp=new SplashScreen();
+		sp.frame.setVisible(true);
 		SharedResources.init();
+		sp.lblVersion.setText("Version : "+versionInfo.getString("CurrentVersion","Base"));
+		try{Thread.sleep(3000);}catch(Exception e){}
 		if(!new File(createFolder(PropertyFilePath)).exists() || property.getString("DocPath","").replaceAll("\\s", "").equals(""))
 		{
 			property.setProperty("TempPath",createTemp());
@@ -40,6 +44,7 @@ public class Application extends Library{
 				} catch (IOException e) {}
 				tempFile.delete();
 			}
+			SplashScreen.displaySplash=false;
 			List<String> tabs=new ArrayList<String>();
 			tabs.add("Settings");
 			new ActionGUI(tabs);

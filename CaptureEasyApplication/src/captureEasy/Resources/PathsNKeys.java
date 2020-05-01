@@ -44,6 +44,10 @@ public class PathsNKeys{
 	public final static String redbuttonIcon=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/redbutton.png");
 	public final static String informationIcon=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/information.png");
 	public final static String leftarrowIcon=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/left_arrow.png");
+	public final static String logoIcon1=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/logo1.png");
+	public final static String logoIcon2=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/logo2.png");
+	public final static String logoIcon3=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/logo3.png");
+	public final static String logoIcon4=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/logo4.png");
 	public final static String menuIcon=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/menu.png");
 	public final static String openIcon=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/open.png");
 	public final static String pauseIcon=Library.createFolder(System.getProperty("user.dir")+"/Resources/lib/Icons/pause.png");

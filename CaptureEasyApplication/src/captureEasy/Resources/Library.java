@@ -52,6 +52,7 @@ import com.itextpdf.layout.element.Paragraph;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
+import captureEasy.UI.SplashScreen;
 import captureEasy.UI.Components.SavePanel;
 
 
@@ -602,8 +603,7 @@ public class Library extends SharedResources
 							
 						}
 					}catch(Exception e){}
-					System.out.println(SoftwareUpdate.doUpdate);
-
+					SplashScreen.displaySplash=false;
 				}
 			}
 		}).start();

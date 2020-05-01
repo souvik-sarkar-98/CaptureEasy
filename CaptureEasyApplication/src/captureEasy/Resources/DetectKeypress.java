@@ -20,7 +20,6 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
-		System.out.println(NativeKeyEvent.getKeyText(e.getKeyCode()) +"  Pressed");
 		String captureKey=property.getString("CaptureKey","PrtSc");
 		if(captureKey.equalsIgnoreCase("PrtSc"))
 			captureKey="Print Screen";

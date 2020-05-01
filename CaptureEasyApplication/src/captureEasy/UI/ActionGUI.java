@@ -328,9 +328,9 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				else
 				{
 					updatePanel.loadUpdated();
-					updatePanel.lblLastUpdatedOn.setText(" Last updated on : "+versionInfo.getString("LasUpdateDate"));
-					updatePanel.lblTime.setText(" Time : "+versionInfo.getString("LasUpdateTime"));
-					updatePanel.lblCurrentVersion.setText(" Current version : "+versionInfo.getString("CurrentVersion"));
+					updatePanel.lblLastUpdatedOn.setText(" Last updated on : "+versionInfo.getString("LasUpdateDate","Data not available"));
+					updatePanel.lblTime.setText(" Time : "+versionInfo.getString("LasUpdateTime","Data not available"));
+					updatePanel.lblCurrentVersion.setText(" Current version : "+versionInfo.getString("CurrentVersion","Base"));
 
 				}
 
