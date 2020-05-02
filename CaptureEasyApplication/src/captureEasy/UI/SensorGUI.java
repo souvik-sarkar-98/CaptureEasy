@@ -85,7 +85,7 @@ public class SensorGUI extends Library{
             @Override
             public void windowClosing(WindowEvent e)
             {
-            	closeApplication(false);                
+            	closeApplication(true);                
             }
         });
 		frame.addWindowFocusListener(new WindowFocusListener() {	
@@ -208,7 +208,7 @@ public class SensorGUI extends Library{
 					PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
 					p.btnNewButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							closeApplication(false);
+							closeApplication(true);
 						}
 							
 					});
@@ -598,7 +598,7 @@ public class SensorGUI extends Library{
 	
 
 
-	public static void closeApplication(boolean restart)
+	public static void closeApplication(boolean  confirm)
 	{
 		try{ActionGUI.dialog.dispose();
 		try{Application.sensor.play();}catch(Exception e){};
@@ -629,9 +629,8 @@ public class SensorGUI extends Library{
 			e1.printStackTrace();
 		}
 		try {
-			Runtime.getRuntime().exec("Taskkill /f /PID "+getPID());
-			if(restart)
-				Runtime.getRuntime().exec("Taskkill /f /im javaw.exe");
+			if(confirm)
+				Runtime.getRuntime().exec("Taskkill /f /PID "+getPID());
 
 		} catch (IOException e) {} 
 	}

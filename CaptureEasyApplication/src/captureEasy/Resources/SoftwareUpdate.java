@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,6 +16,7 @@ import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Properties;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +34,7 @@ public class SoftwareUpdate extends Library {
 
 	public SoftwareUpdate() {
 		try {
+			System.out.println(versionInfo.getString( "URL",gitHubBaseURL));
 			if (isReachableByPing()) {
 				this.JSONObj = new JSONObject(GET(versionInfo.getString( "URL",gitHubBaseURL)));
 			} else {
@@ -135,7 +138,7 @@ public class SoftwareUpdate extends Library {
 				if(downloadedFilePath!=null)
 				{
 					try{UpdatePanel.lblprogressflag.setText("Download Completed");}catch(Exception e){}
-					PopUp p=new PopUp("PERMISSION","info","Download Completed. Do you want to restart application now? ","Yes","No");
+					PopUp p=new PopUp("PERMISSION","info","Download Completed. Do you want to restart application now? It will take near about 20 seconds. ","Yes","No");
 					p.setVisible(true);
 					p.btnNewButton.addActionListener(new ActionListener(){
 						@Override
@@ -174,16 +177,65 @@ public class SoftwareUpdate extends Library {
 				tempProp.store(new FileOutputStream(tempFile,false), "This is temporary file. will be deleted shortly");
 				
 			}
-			Runtime.getRuntime().exec("java -jar "+restartJarPath+" "+downloadedFilePath+" "+sourceJarPath+" "+property.getString("ApplicationPath"));
-			versionInfo.setProperty("CurrentVersion",u.JSONObj.getString("tag_name"));
-			versionInfo.setProperty("LasUpdateDate", LocalDate.now());
-			versionInfo.setProperty("LasUpdateTime", LocalTime.now());
-
-			SensorGUI.closeApplication(true); 						
+			prepareRestartScript(downloadedFilePath);
+			 File f=new File(restartScript);
+			 
+			if(f.exists())
+			{
+				SensorGUI.closeApplication(false); 	
+				versionInfo.setProperty("CurrentVersion",u.JSONObj.getString("tag_name"));
+				versionInfo.setProperty("LasUpdateDate", LocalDate.now());
+				versionInfo.setProperty("LasUpdateTime", LocalTime.now());
+				//String [] command = {"cmd","/c","start",f.getAbsolutePath()};
+				Runtime.getRuntime().exec("Wscript.exe "+ScheduleScript+" "+restartScript);	
+			}
+			else
+			{
+				new PopUp("ERROR","error","Restart Script nor created","Ok","").setVisible(true);
+			}
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		} 
 	}
+	public static void prepareRestartScript(String downloadedfilepath)
+	{
+		 try{    
+			 new File(restartScript).createNewFile();
+
+	           FileWriter fw=new FileWriter(restartScript);    
+	           fw.write(
+	           "@echo off"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"echo           PLEASE DON'T CLOSE THIS WINDOW. IT WILL TAKE ONLY 5 SECONDS."+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"echo           		   	KILLING ALL JAVA PROCESS "+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"Taskkill /f /im javaw.exe"+System.getProperty("line.separator")
+	           +"Taskkill /f /im javaw.exe"+System.getProperty("line.separator")
+	           +"timeout 3"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"echo           		   	   DELETING OLD JARS"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"del "+sourceJarPath+System.getProperty("line.separator")
+	           +"timeout 2"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"echo           		   	    COPYING NEW JARS"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"copy "+downloadedfilepath+" "+sourceJarPath+System.getProperty("line.separator")
+	           +"timeout 1"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"echo           		   	  RESTARTING APPLICATION"+System.getProperty("line.separator")
+	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
+	           +"START "+versionInfo.getString("ApplicationPath")+System.getProperty("line.separator")
+	           +"exit"+System.getProperty("line.separator")
+
+	        		   );
+	           fw.close();   
+	          }catch(Exception e){
+	        	  logError(e,"Exception occured while preparing restart script");	
+	        	  }  
+	}
+	
 	public void autoUpdate()
 	{
 		new Thread(new Runnable(){
@@ -225,7 +277,6 @@ public class SoftwareUpdate extends Library {
 
 								}
 							});
-							System.out.println("okk");
 
 						}
 						Thread.sleep(versionInfo.getInteger("UpdateFrequency",3600000));
