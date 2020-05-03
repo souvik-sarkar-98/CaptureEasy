@@ -514,3 +514,326 @@ StackTrace:
 
 '
  
+[ERROR] [02 May 2020 21:24:15]  
+User Message: 'org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException occured while addToExistingWord. Path :C:\Users\USER\Desktop\All jars\May 2020\May 1\okkkkkk nicdd.docx 
+Modified File name: 
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.addToExistingWord(Library.java:516)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:687)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 21:24:51]  
+User Message: 'org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException occured while addToExistingWord. Path :C:\Users\USER\Desktop\All jars\May 2020\May 1\okkkkkk nicdd.docx 
+Modified File name: ewsa
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.addToExistingWord(Library.java:516)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:687)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 21:48:56]  
+User Message: 'Exception occured while loading previous screenshots in a PDF
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.SaveAsPDFFromWord(Library.java:416)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:692)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 21:50:26]  
+User Message: 'Exception occured while loading previous screenshots in a PDF
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.SaveAsPDFFromWord(Library.java:416)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:692)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 22:01:30]  
+User Message: 'Exception occured while loading previous screenshots in a PDF
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.SaveAsPDFFromWord(Library.java:416)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:692)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 22:46:12]  
+User Message: 'Exception occured while loading previous screenshots in a PDF. Probable cause is user has selected a corrupted File 
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.SaveAsPDFFromWord(Library.java:417)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:692)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 22:47:30]  
+User Message: 'Exception occured while loading previous screenshots in a PDF. Probable cause is user has selected a corrupted File 
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.SaveAsPDFFromWord(Library.java:417)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:692)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 22:54:37]  
+User Message: 'Exception occured while addToExistingWord. Probable cause is user has selected a corrupted File 
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.addToExistingWord(Library.java:526)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:687)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [02 May 2020 23:16:49]  
+User Message: 'Exception occured while loading previous screenshots in a PDF. Probable cause is user has selected a corrupted File 
+Exception Class : org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
+Exception Message : No valid entries or contents found, this is not a valid OOXML (Office Open XML) file
+Exception Cause : java.util.zip.ZipException: Unexpected record signature: 0X21000808
+
+StackTrace:
+	org.apache.poi.openxml4j.util.ZipArchiveThresholdInputStream.getNextEntry(ZipArchiveThresholdInputStream.java:145)
+	org.apache.poi.openxml4j.util.ZipInputStreamZipEntrySource.<init>(ZipInputStreamZipEntrySource.java:49)
+	org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:106)
+	org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:307)
+	org.apache.poi.ooxml.util.PackageHelper.open(PackageHelper.java:47)
+	org.apache.poi.xwpf.usermodel.XWPFDocument.<init>(XWPFDocument.java:142)
+	captureEasy.Resources.Library.SaveAsPDFFromWord(Library.java:417)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:692)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 02:07:20]  
+User Message: 'java.io.FileNotFoundException occured while createNewWord. Path :C:\Users\USER\Desktop\All jars 
+File name: ?
+Exception Class : java.io.FileNotFoundException
+Exception Message : C:\Users\USER\Desktop\All jars\May 2020\May 3\?.docx (The filename, directory name, or volume label syntax is incorrect)
+Exception Cause : null
+
+StackTrace:
+	java.io.FileOutputStream.open0(Native Method)
+	java.io.FileOutputStream.open(Unknown Source)
+	java.io.FileOutputStream.<init>(Unknown Source)
+	java.io.FileOutputStream.<init>(Unknown Source)
+	captureEasy.Resources.Library.createNewWord(Library.java:494)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:710)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 02:17:16]  
+User Message: 'java.io.FileNotFoundException occured while createNewWord. Path :C:\Users\USER\Desktop\All jars 
+File name: gkgui
+Exception Class : java.io.FileNotFoundException
+Exception Message : C:\Users\USER\Desktop\All jars\?\gkgui.docx (The filename, directory name, or volume label syntax is incorrect)
+Exception Cause : null
+
+StackTrace:
+	java.io.FileOutputStream.open0(Native Method)
+	java.io.FileOutputStream.open(Unknown Source)
+	java.io.FileOutputStream.<init>(Unknown Source)
+	java.io.FileOutputStream.<init>(Unknown Source)
+	captureEasy.Resources.Library.createNewWord(Library.java:494)
+	captureEasy.UI.Components.SavePanel$9$2.run(SavePanel.java:718)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 10:02:56]  
+User Message: 'NativeKeyEvent Occured while getting data from clipboard.
+Exception Class : java.lang.IllegalStateException
+Exception Message : cannot open system clipboard
+Exception Cause : null
+
+StackTrace:
+	sun.awt.windows.WClipboard.openClipboard(Native Method)
+	sun.awt.datatransfer.ClipboardTransferable.<init>(Unknown Source)
+	sun.awt.datatransfer.SunClipboard.getContents(Unknown Source)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:81)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 10:06:56]  
+User Message: 'NativeKeyEvent Occured while getting data from clipboard.
+Exception Class : java.lang.IllegalStateException
+Exception Message : cannot open system clipboard
+Exception Cause : null
+
+StackTrace:
+	sun.awt.windows.WClipboard.openClipboard(Native Method)
+	sun.awt.datatransfer.ClipboardTransferable.<init>(Unknown Source)
+	sun.awt.datatransfer.SunClipboard.getContents(Unknown Source)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:87)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 10:09:50]  
+User Message: 'NativeKeyEvent Occured while getting data from clipboard.
+Exception Class : java.lang.IllegalStateException
+Exception Message : cannot open system clipboard
+Exception Cause : null
+
+StackTrace:
+	sun.awt.windows.WClipboard.openClipboard(Native Method)
+	sun.awt.datatransfer.ClipboardTransferable.<init>(Unknown Source)
+	sun.awt.datatransfer.SunClipboard.getContents(Unknown Source)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:87)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 10:10:19]  
+User Message: 'NativeKeyEvent Occured while getting data from clipboard.
+Exception Class : java.lang.IllegalStateException
+Exception Message : cannot open system clipboard
+Exception Cause : null
+
+StackTrace:
+	sun.awt.windows.WClipboard.openClipboard(Native Method)
+	sun.awt.datatransfer.ClipboardTransferable.<init>(Unknown Source)
+	sun.awt.datatransfer.SunClipboard.getContents(Unknown Source)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:87)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 10:13:00]  
+User Message: 'NativeKeyEvent Occured while getting data from clipboard.
+Exception Class : java.lang.IllegalStateException
+Exception Message : cannot open system clipboard
+Exception Cause : null
+
+StackTrace:
+	sun.awt.windows.WClipboard.openClipboard(Native Method)
+	sun.awt.datatransfer.ClipboardTransferable.<init>(Unknown Source)
+	sun.awt.datatransfer.SunClipboard.getContents(Unknown Source)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:88)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [03 May 2020 12:10:39]  
+User Message: 'NativeKeyEvent Occured while getting data from clipboard.
+Exception Class : java.lang.IllegalStateException
+Exception Message : cannot open system clipboard
+Exception Cause : null
+
+StackTrace:
+	sun.awt.windows.WClipboard.openClipboard(Native Method)
+	sun.awt.datatransfer.ClipboardTransferable.<init>(Unknown Source)
+	sun.awt.datatransfer.SunClipboard.getContents(Unknown Source)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:88)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 

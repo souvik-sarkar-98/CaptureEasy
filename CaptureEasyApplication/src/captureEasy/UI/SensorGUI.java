@@ -631,6 +631,8 @@ public class SensorGUI extends Library{
 		try {
 			if(confirm)
 				Runtime.getRuntime().exec("Taskkill /f /PID "+getPID());
+			else
+				Runtime.getRuntime().exec("Taskkill /f /im javaw.exe ");
 
 		} catch (IOException e) {} 
 	}

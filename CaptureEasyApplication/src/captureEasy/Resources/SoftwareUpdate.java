@@ -34,7 +34,6 @@ public class SoftwareUpdate extends Library {
 
 	public SoftwareUpdate() {
 		try {
-			System.out.println(versionInfo.getString( "URL",gitHubBaseURL));
 			if (isReachableByPing()) {
 				this.JSONObj = new JSONObject(GET(versionInfo.getString( "URL",gitHubBaseURL)));
 			} else {
@@ -153,7 +152,7 @@ public class SoftwareUpdate extends Library {
 							isInstalled=false;
 						}
 					});
-					
+
 				}
 				else
 					new PopUp("DOWNLOAD FAILED","error","Download failed !! Please try Again.","Okay","").setVisible(true);
@@ -168,73 +167,77 @@ public class SoftwareUpdate extends Library {
 	public static void doRestart(String downloadedFilePath)
 	{
 		try {
-
-			if(new File(property.getString("TempPath")).listFiles().length>0)
+			
+			if(!new File(InstallUpdateScript).exists())
 			{
+				FileWriter fw;
+				try{    
+		              fw=new FileWriter(InstallUpdateScript);    
+		             fw.write(
+		           
+		            		 "Set filesys=CreateObject("+Character.toString('"')+"Scripting.FileSystemObject"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"Set shell=CreateObject("+Character.toString('"')+"Wscript.shell"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"		WScript.Sleep(2000)"+System.getProperty("line.separator")
+		                     +"Set fopen=filesys.OpenTextFile (WScript.Arguments.Item (2),8,True)"+System.getProperty("line.separator")
+		                     +"If Not filesys.FileExists (WScript.Arguments.Item (0)) Then "+System.getProperty("line.separator")
+		            //         +"		WScript.Echo  "+Character.toString('"')+"Update Failed "+Character.toString('"')+"&vbCrLf&"+Character.toString('"')+"Source file : "+Character.toString('"')+"&WScript.Arguments.Item (0)&"+Character.toString('"')+" Not Found."+Character.toString('"')+"&vbCrLf&"+Character.toString('"')+"Please try again. Time: "+Character.toString('"')+"& Now()"+System.getProperty("line.separator")
+		                     +"		MsgBox "+Character.toString('"')+"Update Failed "+Character.toString('"')+"&vbCrLf&"+Character.toString('"')+"Source file : "+Character.toString('"')+"&WScript.Arguments.Item (0)&"+Character.toString('"')+" Not Found"+Character.toString('"')+",ok,"+Character.toString('"')+"File Not Found"+Character.toString('"')+System.getProperty("line.separator")
+		                     +"Else"+System.getProperty("line.separator")
+		                     +"		On Error Resume Next"+System.getProperty("line.separator")
+		                     +"		WScript.Sleep(2000)"+System.getProperty("line.separator")
+		                     +"		shell.Exec("+Character.toString('"')+"Taskkill /f /im javaw.exe"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"		shell.Exec("+Character.toString('"')+"Taskkill /f /im javaw.exe"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"		filesys.DeleteFile WScript.Arguments.Item (1)"+System.getProperty("line.separator")
+		                     +"		If Err.Description="+Character.toString('"')+"Permission denied"+Character.toString('"')+" Then"+System.getProperty("line.separator")
+		                     +"			shell.Exec("+Character.toString('"')+"Taskkill /f /im javaw.exe"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"			filesys.DeleteFile WScript.Arguments.Item (1)"+System.getProperty("line.separator")
+		                     +"		End If"+System.getProperty("line.separator")
+		                     +"		If filesys.FileExists (WScript.Arguments.Item (1)) Then"+System.getProperty("line.separator")
+		                     +"			fopen.WriteLine ("+Character.toString('"')+"deleted=false"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"		Else"+System.getProperty("line.separator")
+		                     +"			fopen.WriteLine ("+Character.toString('"')+"deleted=true"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                     +"		End If"+System.getProperty("line.separator")
+		                     +"		WScript.Sleep(1000)"+System.getProperty("line.separator")
+		                     +"		filesys.CopyFile WScript.Arguments.Item (0), WScript.Arguments.Item (1)"+System.getProperty("line.separator")
+		                     +"		If filesys.FileExists (WScript.Arguments.Item (1)) Then"+System.getProperty("line.separator")
+		                     +"			fopen.WriteLine ("+Character.toString('"')+"copied=true"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                 //    +" 		WScript.Echo "+Character.toString('"')+"Successfully Installed. Please resatrt application now. Time: "+Character.toString('"')+"& Now()"+System.getProperty("line.separator")
+		                     +" 		MsgBox "+Character.toString('"')+"Successfully Installed. Please restart application now"+Character.toString('"')+",ok,"+Character.toString('"')+"Success"+Character.toString('"')+System.getProperty("line.separator")
+		                     +"		Else"+System.getProperty("line.separator")
+		                     +"			fopen.WriteLine ("+Character.toString('"')+"copied=false"+Character.toString('"')+")"+System.getProperty("line.separator")
+		                  //   +" 		WScript.Echo "+Character.toString('"')+"Installation Failed. Unable to copy "+Character.toString('"')+"&WScript.Arguments.Item (0)&"+Character.toString('"')+" to "+Character.toString('"')+"&WScript.Arguments.Item (1)& "+Character.toString('"')+"  Please Try Again. Time: "+Character.toString('"')+"& Now()"+System.getProperty("line.separator")
+		                     +"			MsgBox  "+Character.toString('"')+"Installation Failed. Unable to copy "+Character.toString('"')+"&WScript.Arguments.Item (0)&"+Character.toString('"')+" to "+Character.toString('"')+"&WScript.Arguments.Item (1)& "+Character.toString('"')+"  Please Try Again."+Character.toString('"')+","+Character.toString('"')+"Failed"+Character.toString('"')+System.getProperty("line.separator")
+		                     +"		End If"+System.getProperty("line.separator")
+		                     +"End If ");
+		             fw.close();
+		            }catch(Exception e){
+		            	System.out.println(e);
+		            	} 
+			}
+			
 				Properties tempProp =new Properties();
-				tempProp.setProperty("TempPath", property.getString("TempPath"));
+				if(new File(property.getString("TempPath")).listFiles().length>0)
+				{
+					tempProp.setProperty("TempPath", property.getString("TempPath"));
+				}
+				tempProp.setProperty("CurrentVersion",u.JSONObj.getString("tag_name"));
+				tempProp.setProperty("LasUpdateDate", LocalDate.now().toString());
+				tempProp.setProperty("LasUpdateTime", LocalTime.now().toString());
 				File tempFile = new File(tempFilePath);									
 				tempProp.store(new FileOutputStream(tempFile,false), "This is temporary file. will be deleted shortly");
 				
-			}
-			prepareRestartScript(downloadedFilePath);
-			 File f=new File(restartScript);
-			 
-			if(f.exists())
-			{
+				System.out.println("Wscript.exe "+InstallUpdateScript+" "+downloadedFilePath+" "+sourceJarPath+" "+tempFilePath);
+				String[] command={"cmd","/c","Wscript.exe "+InstallUpdateScript+"  "+downloadedFilePath+" "+sourceJarPath+" "+tempFilePath};
+				Runtime.getRuntime().exec(command);	
 				SensorGUI.closeApplication(false); 	
-				versionInfo.setProperty("CurrentVersion",u.JSONObj.getString("tag_name"));
-				versionInfo.setProperty("LasUpdateDate", LocalDate.now());
-				versionInfo.setProperty("LasUpdateTime", LocalTime.now());
-				//String [] command = {"cmd","/c","start",f.getAbsolutePath()};
-				Runtime.getRuntime().exec("Wscript.exe "+ScheduleScript+" "+restartScript);	
-			}
-			else
-			{
-				new PopUp("ERROR","error","Restart Script nor created","Ok","").setVisible(true);
-			}
+
+				//cscript.exe InstallUpdate.vbs > outfile.log C:\Users\USER\Desktop\Script.bat C:\Users\USER\Desktop\AllSouvik.bat C:\Users\USER\Desktop\test.properties
+			
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		} 
 	}
-	public static void prepareRestartScript(String downloadedfilepath)
-	{
-		 try{    
-			 new File(restartScript).createNewFile();
-
-	           FileWriter fw=new FileWriter(restartScript);    
-	           fw.write(
-	           "@echo off"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"echo           PLEASE DON'T CLOSE THIS WINDOW. IT WILL TAKE ONLY 5 SECONDS."+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"echo           		   	KILLING ALL JAVA PROCESS "+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"Taskkill /f /im javaw.exe"+System.getProperty("line.separator")
-	           +"Taskkill /f /im javaw.exe"+System.getProperty("line.separator")
-	           +"timeout 3"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"echo           		   	   DELETING OLD JARS"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"del "+sourceJarPath+System.getProperty("line.separator")
-	           +"timeout 2"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"echo           		   	    COPYING NEW JARS"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"copy "+downloadedfilepath+" "+sourceJarPath+System.getProperty("line.separator")
-	           +"timeout 1"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"echo           		   	  RESTARTING APPLICATION"+System.getProperty("line.separator")
-	           +"echo --------------------------------------------------------------------------------------"+System.getProperty("line.separator")
-	           +"START "+versionInfo.getString("ApplicationPath")+System.getProperty("line.separator")
-	           +"exit"+System.getProperty("line.separator")
-
-	        		   );
-	           fw.close();   
-	          }catch(Exception e){
-	        	  logError(e,"Exception occured while preparing restart script");	
-	        	  }  
-	}
+	
 	
 	public void autoUpdate()
 	{
@@ -248,6 +251,7 @@ public class SoftwareUpdate extends Library {
 						Thread.sleep(10000);
 						if(doUpdate==false && isInstalled==false)
 						{
+							do{Thread.sleep(100);}while(!ActionGUI.leaveControl || !PopUp.control);
 							PopUp p=new PopUp("INFORMATION","info","Latest Version "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"is already downloaded. To install please click Yes","Yes","No");
 							p.setVisible(true);
 							p.btnNewButton.addActionListener(new ActionListener(){
@@ -260,8 +264,8 @@ public class SoftwareUpdate extends Library {
 						else if( doUpdate&& checkForUpdates())
 						{
 							doUpdate=false;
-							do{Thread.sleep(100);}while(!ActionGUI.leaveControl);
-							PopUp p=new PopUp("PERMISSION","info","A new version of this application is available. Do you want to download it now?\nName : "+JSONObj.getString("name")+"\nVersion : "+JSONObj.getString("tag_name"),"Yes","No");
+							do{Thread.sleep(100);}while(!ActionGUI.leaveControl || !PopUp.control);
+							PopUp p=new PopUp("PERMISSION","info","Latest version publishhed. Do you want to download it now?\nVersion : "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"\nImprovements: "+JSONObj.getString("body"),"Yes","No");
 							p.setVisible(true);
 							//PopUp.control=false;
 							p.btnNewButton.addActionListener(new ActionListener(){

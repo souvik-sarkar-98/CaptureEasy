@@ -20,7 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -177,7 +176,6 @@ public class Library extends SharedResources
 
 				if (! new File(path).exists())
 				{
-
 					if(FilenameUtils.getExtension(path).equals(""))
 					{
 						new File(path).mkdir();
@@ -246,16 +244,6 @@ public class Library extends SharedResources
 	public static int c=0;
 	public static boolean captureScreen() {
 		String Imageformat=property.getString("ImageFormat","png").toLowerCase();
-		if(Imageformat==null)
-		{
-			List<String> tabs=new ArrayList<String>();
-			tabs.add("Settings");
-			new ActionGUI(tabs);
-			ActionGUI.dialog.setVisible(true);
-			ActionGUI.settingsPanel.DocumentDestination.setText("Set document destination folder");
-			ActionGUI.settingsPanel.btnUpdateFrameLocation.setText("Set frame location");
-			ActionGUI.tagDrop=false;
-		}
 		SensorGUI.frame.setLocation(10000,10000);
 		try {
 			BufferedImage image ;
@@ -395,7 +383,8 @@ public class Library extends SharedResources
 	{
 		Document document = null;
 		File f = null;
-		String extractedPath=createFolder(System.getProperty("user.dir")+"\\CaptureEasy\\ExtractedImages");
+		boolean exceptionFlag=false;
+		String extractedPath=extractedFile;
 		String tempPath = property.getString("TempPath");
 		try {
 			if(SavePanel.chckbxOverwriteSelectedFile.isSelected()==true)
@@ -421,19 +410,30 @@ public class Library extends SharedResources
 					XWPFPictureData pic=iterator.next();		
 					SavePanel.lblUpdatingFiles.setText("Getting previous file "+i+"."+ pic.suggestFileExtension());
 					ImageIO.write(ImageIO.read(new ByteArrayInputStream(pic.getData())), pic.suggestFileExtension(), 
-							new File(System.getProperty("user.dir")+"\\CaptureEasy\\ExtractedImages\\"+pic.getFileName().replace("image", "")));
+							new File(extractedFile+"\\"+pic.getFileName().replace("image", "")));
 					SharedResources.progress=(int)Math.round(((Double.valueOf(i))/Double.valueOf(picture.size()))*100);
 					i++;
 				}
+				
 				SharedResources.progress=0;
 				SavePanel.ProgressBar.setValue(0);
 				SavePanel.panel_Progress.repaint();
 				SavePanel.lblUpdatingFiles.setText("Storing previous files..");
 				loadImages(extractedPath,document,f.getName(),"previous");
 			}catch(Exception e1){
-				logError(e1,"Exception occured while loading previous screenshots in a PDF");
-				new PopUp("ERROR","error",e1.getClass().getName()+" occured while loading  previous screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
-
+				exceptionFlag= true;
+				if(e1.getMessage().equalsIgnoreCase("No valid entries or contents found, this is not a valid OOXML (Office Open XML) file"))
+				{
+					logError(e1,"Exception occured while loading previous screenshots in a PDF. Probable cause is user has selected a corrupted File ");
+					new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+					
+				}
+				else
+				{
+					logError(e1,"Exception occured while loading previous screenshots in a PDF");
+					new PopUp("ERROR","error",e1.getClass().getName()+" occured while loading  previous screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+				}
+				
 			}
 			SharedResources.progress=0;
 			SavePanel.ProgressBar.setValue(0);
@@ -445,7 +445,7 @@ public class Library extends SharedResources
 			SavePanel.lblUpdatingFiles.setText("Saving "+fileName+".pdf");
 			SavePanel.lblUpdatingFiles.setText(""+fileName+".pdf"+" is ready to use.");
 
-			if(SavePanel.rdbtnNo.isSelected())
+			if(!exceptionFlag && SavePanel.rdbtnNo.isSelected())
 			{
 				Library.c=0;
 				property.setProperty("TempPath", createTemp());
@@ -546,10 +546,16 @@ public class Library extends SharedResources
 			}
 		}
 		catch(Exception e){
-			logError(e,e.getClass().getName()+" occured while addToExistingWord. Path :"+filePath+" \nModified File name: "+fileName);
-
-			new PopUp("ERROR","error",e.getClass().getName()+" occured while addToExistingWord. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
-
+			if(e.getMessage().equalsIgnoreCase("No valid entries or contents found, this is not a valid OOXML (Office Open XML) file"))
+			{
+				logError(e,"Exception occured while addToExistingWord. Probable cause is user has selected a corrupted File ");
+				new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+			}
+			else
+			{
+				logError(e,e.getClass().getName()+" occured while addToExistingWord. Path :"+filePath+" \nModified File name: "+fileName);
+				new PopUp("ERROR","error",e.getClass().getName()+" occured while addToExistingWord. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+			}	
 		}
 	}
 

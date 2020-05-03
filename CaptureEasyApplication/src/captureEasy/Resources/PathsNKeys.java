@@ -7,22 +7,22 @@ public class PathsNKeys{
 	 */
 	public final static String logFolderPath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Logs");
 	public final static String tempFolderPath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\bin\\Temp");
-	public final static String baseDocumentFolderPath=Library.createFolder(System.getProperty("user.home")+"\\Documents");
-	public final static	String downloadFolderPath =Library. createFolder(String.valueOf(System.getProperty("user.dir")) + "\\Resources\\Downloads");
+	public final static String baseDocumentFolderPath=System.getProperty("user.dir")+"\\Documents";
+	public final static	String downloadFolderPath =Library. createFolder(System.getProperty("user.dir") + "\\Resources\\Downloads");
 	public final static String libraryFolderPath =Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib");
+	public final static String extractedFile =Library.createFolder(System.getProperty("user.dir")+"\\Resources\\bin\\ExtractedImages");
 	/**
 	 *@ Property file path
 	 */
 	public final static String PropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Properties\\Application.properties");
 	public final static String versionInfoFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Properties\\SoftwareUpdate.properties");
 	public final static String Log4jPropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Properties\\Log4j.properties");
-	public final static String restartScript= Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Scripts\\RestartScript.bat");
-	public final static String ScheduleScript= Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Scripts\\ScheduleScript.vbs");
-	public final static String sourceJarPath =Library.createFolder(System.getProperty("user.dir")+"/Resources\\lib\\Jars\\SRC.jar");
+	public final static String InstallUpdateScript= Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Scripts\\InstallUpdate.vbs");
+	public final static String sourceJarPath =Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Jars\\SRC.jar");
 	/****
 	 * Never ever change this(tempFilePath)
 	 */
-	public final static String tempFilePath=Library.createFolder(System.getProperty("user.dir")+"\\temp.properties");
+	public final static String tempFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\bin\\temp.properties");
 	
 
 	

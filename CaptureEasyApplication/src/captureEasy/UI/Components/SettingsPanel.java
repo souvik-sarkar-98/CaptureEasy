@@ -64,7 +64,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JCheckBox chckbxSetFoldernameMandatory;
 	public JRadioButton DocumentDestination;
 	public JPanel SettingsScrollPane;
-	public boolean loadSettingsTab=false;
+	public boolean loadSettingsTab=false,isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
 	public SettingsPanel(JTabbedPane TabbledPanel)
 	{
@@ -192,7 +192,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					chckbxShowFilderNameField = new JCheckBox("Show folder name field");
 					chckbxShowFilderNameField.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							System.out.println(chckbxShowFilderNameField.isSelected());
 
 							SettingsPane_DocFolderPanel.add(chckbxSetFoldernameMandatory);
 							if(chckbxShowFilderNameField.isSelected())
@@ -278,6 +277,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						}
 						else
 						{
+							isframeupdateTouched=true;
 							SensorGUI.isExpandable=true;
 							btnUpdateFrameLocation.setBackground(UIManager.getColor("CheckBox.background"));
 							PopUp window=new PopUp("INSTRUCTION","INFO","To "+btnUpdateFrameLocation.getText().toLowerCase()+", drag the green frame to your preferred location and set frame expansion then click Done.","Ok, I Understood","");
@@ -325,6 +325,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					if(textField_DocDestFolder.getText().equals(""))
 						//SettingsPane_Btnpanel_SaveBtn.setEnabled(false);
 						SaveBtn.addActionListener(new ActionListener() {
+
 							public void actionPerformed(ActionEvent e) {
 								String DocPath_Current=textField_DocDestFolder.getText();
 								String DocPath_Previous=property.getString("DocPath");
@@ -378,6 +379,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 
 								else
 								{
+									isframeupdateTouched=false;
 									property.setProperty("DocPath",DocPath_Current);
 									property.setProperty("showFolderNameField",showFolderNameField_Current);
 									property.setProperty("setFolderNameMandatory",setFoldernameMandatory_Current);
@@ -497,10 +499,23 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							}
 						})*/;
 						}
+						else if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Done"))
+						{
+							PopUp window = new PopUp("ERROR","error","Please click Done before cancel !!","Ok, I understood","");
+							window.setVisible(true);
+							btnUpdateFrameLocation.setBackground(Color.PINK);
+							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+						}
 						else
 						{
 							ActionGUI.dialog.dispose();
 							ActionGUI.leaveControl=true;
+							if(isframeupdateTouched)
+							{
+								new SensorGUI();
+								SensorGUI.frame.setVisible(true);
+								SensorGUI.frame.setAlwaysOnTop(true);
+							}
 							try{Application.sensor.play();}catch(Exception e){};
 							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 						}
@@ -539,7 +554,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			lblNewLabel.setBounds(12, 41, 92, 16);
 			panel.add(lblNewLabel);
 
-			String[] captureKey={"PrtSc","Ctrl+ALT","Ctrl+Shift","F7","F8","F9"};
+			String[] captureKey={"PrtSc","ALT+Prtsc","Ctrl+ALT","Ctrl+Shift","F7","F8","F9"};
 			comboBox_CaptureKey = new JComboBox<Object>(captureKey);
 			
 			comboBox_CaptureKey.addActionListener(new ActionListener() {

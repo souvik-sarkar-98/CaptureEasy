@@ -1,6 +1,4 @@
 package captureEasy.UI;
-import java.awt.EventQueue;
-
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -52,30 +50,7 @@ public class PopUp extends JDialog{
 	 */
 	static Timer timer=null;
 	public JLabel lblIcon;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-
-				try {
-					//\n\n                  Loading ...
-					PopUp window = new PopUp("INFORMATION","error","","Done","Cancel");
-					window.setVisible(true);
-					//window.lblIcon.setBounds(20, 45,50,50);
-					window.getRootPane().setDefaultButton(window.btnNewButton);
-					/*new Timer(3000, new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							window.dispose();
-						}
-					}).start();*/
-
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the application.
@@ -244,10 +219,12 @@ public class PopUp extends JDialog{
 		{
 			public void changedUpdate(DocumentEvent e) {}
 			public void insertUpdate(DocumentEvent e) {
-				txtrExceptionOccuredPlease.setToolTipText(txtrExceptionOccuredPlease.getText());
+				if(txtrExceptionOccuredPlease.isEditable())
+					txtrExceptionOccuredPlease.setToolTipText(txtrExceptionOccuredPlease.getText());
 			}
 			public void removeUpdate(DocumentEvent e) {
-				txtrExceptionOccuredPlease.setToolTipText(txtrExceptionOccuredPlease.getText());
+				if(txtrExceptionOccuredPlease.isEditable())
+					txtrExceptionOccuredPlease.setToolTipText(txtrExceptionOccuredPlease.getText());
 			}
 		});
 		txtrExceptionOccuredPlease.setRows(5);
@@ -279,19 +256,22 @@ public class PopUp extends JDialog{
 		txtrExceptionOccuredPlease.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtrExceptionOccuredPlease.setColumns(18);
 		int len=text.length();
-		txtrExceptionOccuredPlease.setToolTipText(text);
+		//txtrExceptionOccuredPlease.setToolTipText(text);
+		String toolText="<html>";
 		try{
-			String toolText="<html>";
+			
 			if(len>50)
 			{
 				int i=0;
 				for(;i<(len/50);i++)
 					toolText=toolText+text.substring(i*50, 50*(i+1))+"<br>";
 				toolText=toolText+text.substring(i*50)+"</html>";
-				txtrExceptionOccuredPlease.setToolTipText(toolText);
+				
 			}
 		}catch(Exception e){}
-		try{
+		
+		txtrExceptionOccuredPlease.setToolTipText(toolText);
+		/*try{
 			String tt="<html>";
 			for(int i=0;i<len;i++)
 			{
@@ -300,7 +280,7 @@ public class PopUp extends JDialog{
 					tt=tt+"<br>";
 			}
 			txtrExceptionOccuredPlease.setToolTipText(tt+"</html>");
-		}catch(Exception e){}
+		}catch(Exception e){}*/
 		if(len>140)
 		{
 			text=text.substring(0, 140)+" "

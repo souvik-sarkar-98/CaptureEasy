@@ -115,7 +115,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					if(i==0)
 					{
 						TabbledPanel.setSelectedIndex(0);
-						savePanel.textField_Filename.requestFocusInWindow();
+						//savePanel.textField_Filename.requestFocusInWindow();
 						savePanel.rdbtnNewDoc.setEnabled(false);
 						savePanel.btnDone.setVisible(false);
 						savePanel.exitbtn.setVisible(true);
@@ -185,7 +185,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				savePanel.loadSaveTab();
 				savePanel.SaveScrollPane.add(savePanel.panel_Save_Buttons);
 				savePanel.SaveScrollPane.add(savePanel.SavePanel);
-				savePanel.btnDone.requestFocusInWindow();
+				//savePanel.btnDone.requestFocusInWindow();
 				if(i!=0 && loadSaveTab)
 					savePanel.exitbtn.setEnabled(false);
 			}
@@ -201,14 +201,18 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				savePanel.textField_ParFol.setVisible(false);
 				savePanel.textField_Filename.setColumns(22);
 			}
-			System.out.println(savePanel.textField_Filename);
 			if(savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
 			{
 				savePanel.btnDone.setVisible(false);
 			}
 			savePanel.lblDoYouWant.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			savePanel.lblDoYouWant.setToolTipText("Do you want to continue with current screenshots ?");
-			savePanel.textField_Filename.requestFocusInWindow();
+			//savePanel.textField_Filename.requestFocusInWindow();
+			if(savePanel.lblChooseFile.isVisible())
+			{
+				savePanel.lblParFol.setVisible(false);
+				savePanel.textField_ParFol.setVisible(false);
+			}
 			dialog.getRootPane().setDefaultButton(savePanel.btnDone);
 		}
 		else if(tabName.contains("View"))
@@ -297,7 +301,11 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			settingsPanel.comboBox_ImageFormat.setSelectedItem(property.getString("ImageFormat","png"));
 			ActionGUI.tagDrop=false;
 			settingsPanel.comboBox_CaptureKey.setSelectedItem(property.getString("CaptureKey","PrtSc"));
-			dialog.getRootPane().setDefaultButton(settingsPanel.SaveBtn);
+			if(!TabbledPanel.getTitleAt(0).contains("Settings"))
+			{
+				settingsPanel.btnUpdateFrameLocation.setEnabled(false);
+			}
+			
 
 		}
 		else if(tabName.contains("Update"))

@@ -42,8 +42,8 @@ public class Application extends Library{
 					if(tempProp.getProperty("TempPath")!=null)
 						property.setProperty("TempPath", tempProp.getProperty("TempPath"));
 				} catch (IOException e) {}
-				tempFile.delete();
 			}
+
 			SplashScreen.displaySplash=false;
 			List<String> tabs=new ArrayList<String>();
 			tabs.add("Settings");
@@ -85,6 +85,9 @@ public class Application extends Library{
 			 */
 		}
 		new File(tempFilePath).delete();
+		new File(tempFilePath).deleteOnExit();
+
+		//new File(tempFilePath)
 		if (new File(createFolder(PropertyFilePath)).exists()/* && IsEmpty(createFolder(TempFolder))*/)
 		{
 			GlobalScreen.addNativeKeyListener(new DetectKeypress());
