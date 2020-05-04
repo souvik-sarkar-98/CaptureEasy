@@ -79,7 +79,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	public JLabel lblDoYouWant;
 	public JCheckBox chckbxSelectExistingDocument;
 	private JTabbedPane TabbledPanel;
-	
+
 	public SavePanel(JTabbedPane TabbledPanel) 
 	{
 		this.TabbledPanel=TabbledPanel;
@@ -90,13 +90,13 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		SaveScrollPane.setVisible(true);
 		SaveScrollPane.setSize(new Dimension(438, 316));
 		SaveScrollPane.setBounds(12, 12, 438, 316);
-			
-		
+
+
 	}
-	
+
 	public void loadSaveTab()
 	{
-		
+
 		SavePanel = new JPanel();
 		SavePanel.setBorder(new MatteBorder(1, 1, 0, 1, (Color) new Color(0, 0, 0)));
 		SavePanel.setBounds(12, 12, 413, 250);
@@ -155,7 +155,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				chckbxOverwriteSelectedFile.setVisible(false);
 
 				btnDone.setVisible(false);
-				
+
 
 			}
 		});
@@ -199,7 +199,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				chckbxOverwriteSelectedFile.setVisible(false);
 
 				btnDone.setVisible(false);
-				
+
 			}
 		});
 		rdbtnExDoc.setText("Add to Existing Microsoft Word Document");
@@ -251,7 +251,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				chckbxOverwriteSelectedFile.setVisible(false);
 
 				btnDone.setVisible(false);
-				
+
 
 
 			}
@@ -324,7 +324,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				if (existingfilepath.equalsIgnoreCase("nullnull") || existingfilepath.equals("")) 
 				{
 					btnDone.setVisible(false);
-					
+
 					chckbxOverwriteSelectedFile.setVisible(false);
 					btnChooseFile.setBackground(Color.pink);
 					btnChooseFile.requestFocusInWindow();
@@ -355,7 +355,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						textField_Filename.setText("");
 						textField_Filename.requestFocusInWindow();
 						btnDone.setVisible(false);
-						
+
 
 					}
 					else 
@@ -444,7 +444,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						textField_Filename.setText("");
 						textField_Filename.requestFocusInWindow();
 						btnDone.setVisible(false);
-						
+
 					}
 				}
 				else
@@ -459,7 +459,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					textField_Filename.setText("");
 					textField_Filename.requestFocusInWindow();
 					btnDone.setVisible(false);
-					
+
 
 					if(renameFlag)
 					{
@@ -519,7 +519,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 
 			public void actionPerformed(ActionEvent arg0) {
 				PopUp pop=null;
-				
+
 				if(chckbxSelectExistingDocument.isSelected())
 				{
 					pop=new PopUp("Information","info","Please be noted that only images will be imported inside newly created PDF. Please untick the checkbox if you don't want to proceed further.","Ok, Fine","");
@@ -549,7 +549,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					chckbxOverwriteSelectedFile.setVisible(false);
 
 					btnDone.setVisible(false);
-					
+
 
 				}
 				else 
@@ -588,7 +588,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					chckbxOverwriteSelectedFile.setVisible(false);
 
 					btnDone.setVisible(false);
-					
+
 
 				}
 			}
@@ -628,119 +628,122 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		panel_Save_Buttons.add(btnDone);
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!lblChooseFile.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
+				if(ActionGUI.tabName.contains("Save"))
 				{
-					new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","").setVisible(true);
-					textField_Filename.setBackground(Color.PINK);
-				}
-				else if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
-				{
-					textField_Filename.setBackground(Color.PINK);
+					if(!lblChooseFile.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
+					{
+						new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","").setVisible(true);
+						textField_Filename.setBackground(Color.PINK);
+					}
+					else if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
+					{
+						textField_Filename.setBackground(Color.PINK);
 						new PopUp("ERROR","error", "A file name can not contain any of the following "
 								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
-				}
-				else if (textField_ParFol.getText().contains(Character.toString('"')) || textField_ParFol.getText().contains("/") || textField_ParFol.getText().contains("\\") || textField_ParFol.getText().contains(":") || textField_ParFol.getText().contains("*") || textField_ParFol.getText().contains("?") || textField_ParFol.getText().contains("<") || textField_ParFol.getText().contains(">") || textField_ParFol.getText().contains("|")) 
-				{
-					textField_ParFol.setBackground(Color.PINK);
+					}
+					else if (textField_ParFol.getText().contains(Character.toString('"')) || textField_ParFol.getText().contains("/") || textField_ParFol.getText().contains("\\") || textField_ParFol.getText().contains(":") || textField_ParFol.getText().contains("*") || textField_ParFol.getText().contains("?") || textField_ParFol.getText().contains("<") || textField_ParFol.getText().contains(">") || textField_ParFol.getText().contains("|")) 
+					{
+						textField_ParFol.setBackground(Color.PINK);
 						new PopUp("ERROR","error", "A Folder name can not contain any of the following "
 								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
-				}
-				else if(!lblChooseFile.isVisible() && !chckbxSelectExistingDocument.isSelected() && property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_ParFol.getText().replaceAll("\\s", "").equals(""))
-				{
-					new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please update settings to proceed further","Ok, I understood","").setVisible(true);
-					textField_ParFol.setBackground(Color.PINK);
-				}
-				
-				else
-				{
-					String value=property.getString("DocPath");
-					if(value==null || value.replaceAll("\\s", "").equals(""))
-					{
-						new PopUp("ERROR","error","'DocPath' is unavailable in '"+new File(PropertyFilePath).getName()+"'.Please update this property.","Okay","").setVisible(true);
-						TabbledPanel.setSelectedIndex(TabbledPanel.getTabCount()-1);
-						ActionGUI.settingsPanel.textField_DocDestFolder.setBackground(Color.PINK);
 					}
+					else if(!lblChooseFile.isVisible() && !chckbxSelectExistingDocument.isSelected() && property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_ParFol.getText().replaceAll("\\s", "").equals(""))
+					{
+						new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please update settings to proceed further","Ok, I understood","").setVisible(true);
+						textField_ParFol.setBackground(Color.PINK);
+					}
+
 					else
 					{
-						/*if(ActionPanel.panel_4!=null)
+						String value=property.getString("DocPath");
+						if(value==null || value.replaceAll("\\s", "").equals(""))
+						{
+							new PopUp("ERROR","error","'DocPath' is unavailable in '"+new File(PropertyFilePath).getName()+"'.Please update this property.","Okay","").setVisible(true);
+							TabbledPanel.setSelectedIndex(TabbledPanel.getTabCount()-1);
+							ActionGUI.settingsPanel.textField_DocDestFolder.setBackground(Color.PINK);
+						}
+						else
+						{
+							/*if(ActionPanel.panel_4!=null)
 						{
 							ActionGUI.actionPanel.rdbtnContinuePreviousWork.setEnabled(false);
 							ActionGUI.actionPanel.rdbtnDeletePreviousWork.setEnabled(false);
 						}
 						ActionPanel.panel_4=null;*/
-						textField_ParFol.setBackground(Color.WHITE);
-						SavePanel.setVisible(false);
-						panel_Save_Buttons.setVisible(false);
-						panel_Progress = new JPanel();
-						panel_Progress.setBorder(new MatteBorder(1, 1, 0, 1, (Color) new Color(0, 0, 0)));
-						panel_Progress.setBounds(12, 13, 413, 250);
-						panel_Progress.setLayout(null);
+							textField_ParFol.setBackground(Color.WHITE);
+							SavePanel.setVisible(false);
+							panel_Save_Buttons.setVisible(false);
+							panel_Progress = new JPanel();
+							panel_Progress.setBorder(new MatteBorder(1, 1, 0, 1, (Color) new Color(0, 0, 0)));
+							panel_Progress.setBounds(12, 13, 413, 250);
+							panel_Progress.setLayout(null);
 
-						JLabel lblProgressInformation = new JLabel("Progress Information");
-						lblProgressInformation.setBounds(110, 10, 194, 22);
-						lblProgressInformation.setFont(new Font("Tahoma", Font.BOLD, 18));
-						panel_Progress.add(lblProgressInformation);
+							JLabel lblProgressInformation = new JLabel("Progress Information");
+							lblProgressInformation.setBounds(110, 10, 194, 22);
+							lblProgressInformation.setFont(new Font("Tahoma", Font.BOLD, 18));
+							panel_Progress.add(lblProgressInformation);
 
-						JLabel lblPleaseWaitWhile = new JLabel("Please wait while we are preparing your document ...");
-						lblPleaseWaitWhile.setBounds(18, 45, 377, 20);
-						lblPleaseWaitWhile.setFont(new Font("Tahoma", Font.PLAIN, 16));
-						panel_Progress.add(lblPleaseWaitWhile);
+							JLabel lblPleaseWaitWhile = new JLabel("Please wait while we are preparing your document ...");
+							lblPleaseWaitWhile.setBounds(18, 45, 377, 20);
+							lblPleaseWaitWhile.setFont(new Font("Tahoma", Font.PLAIN, 16));
+							panel_Progress.add(lblPleaseWaitWhile);
 
-						//ProgressBar = new JProgressBar();
-						ProgressBar =new JCircularProgressBar().makeUI();
-						ProgressBar.setBounds(120, 75, 190, 170);
+							//ProgressBar = new JProgressBar();
+							ProgressBar =new JCircularProgressBar().makeUI();
+							ProgressBar.setBounds(120, 75, 190, 170);
 
-						panel_Update = new JPanel();
-						panel_Update.setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
-						panel_Update.setBounds(12, 259, 413, 46);
-						SaveScrollPane.add(panel_Update);
-						panel_Update.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+							panel_Update = new JPanel();
+							panel_Update.setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
+							panel_Update.setBounds(12, 259, 413, 46);
+							SaveScrollPane.add(panel_Update);
+							panel_Update.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-						lblUpdatingFiles = new JLabel();
-						panel_Update.add(lblUpdatingFiles);
-						lblUpdatingFiles.setFont(new Font("Tahoma", Font.PLAIN, 16));
-						panel_Progress.add(ProgressBar);
+							lblUpdatingFiles = new JLabel();
+							panel_Update.add(lblUpdatingFiles);
+							lblUpdatingFiles.setFont(new Font("Tahoma", Font.PLAIN, 16));
+							panel_Progress.add(ProgressBar);
 
-						panel_Progress.setVisible(true);
-						SaveScrollPane.add(panel_Progress);
-						new Thread(new Runnable(){
+							panel_Progress.setVisible(true);
+							SaveScrollPane.add(panel_Progress);
+							new Thread(new Runnable(){
 
-							@Override
-							public void run() {
-								do
-								{
-									ProgressBar.repaint();
-									ProgressBar.setValue(SharedResources.progress);
-									ProgressBar.repaint();
-								}while(SharedResources.progress!=100);
-							}  
-						}).start();;
-						new Thread(new Runnable(){
-							@Override
-							public void run() {
-								if(rdbtnNewDoc.isSelected())
-								{
-									createNewWord(property.getString("DocPath"),textField_Filename.getText(),textField_ParFol.getText());
+								@Override
+								public void run() {
+									do
+									{
+										ProgressBar.repaint();
+										ProgressBar.setValue(SharedResources.progress);
+										ProgressBar.repaint();
+									}while(SharedResources.progress!=100);
+								}  
+							}).start();;
+							new Thread(new Runnable(){
+								@Override
+								public void run() {
+									if(rdbtnNewDoc.isSelected())
+									{
+										createNewWord(property.getString("DocPath"),textField_Filename.getText(),textField_ParFol.getText());
+									}
+									else if(rdbtnExDoc.isSelected())
+									{
+										addToExistingWord(existingfilepath,textField_Filename.getText());
+									}
+									else if(rdbtnSavePDF.isSelected())
+									{
+										if(chckbxSelectExistingDocument.isSelected())
+											SaveAsPDFFromWord(existingfilepath,textField_Filename.getText());
+										else
+											SaveAsPDF(property.getString("DocPath"),textField_Filename.getText(),textField_ParFol.getText());
+
+									}
+									ActionGUI.dialog.dispose();
+									ActionGUI.leaveControl=true;
+									try{Application.sensor.play();}catch(Exception e){};
+									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
-								else if(rdbtnExDoc.isSelected())
-								{
-									addToExistingWord(existingfilepath,textField_Filename.getText());
-								}
-								else if(rdbtnSavePDF.isSelected())
-								{
-									if(chckbxSelectExistingDocument.isSelected())
-										SaveAsPDFFromWord(existingfilepath,textField_Filename.getText());
-									else
-										SaveAsPDF(property.getString("DocPath"),textField_Filename.getText(),textField_ParFol.getText());
-									
-								}
-								ActionGUI.dialog.dispose();
-								ActionGUI.leaveControl=true;
-								try{Application.sensor.play();}catch(Exception e){};
-								try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-							}
 
-						}).start();;
+							}).start();;
+						}
 					}
 				}
 			}
@@ -765,7 +768,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		btnDone.setText("Okay");
 		saveLoaded=true;
 		exitbtn.setVisible(false);
-		
+
 
 	}
 	@Override
@@ -803,7 +806,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 			{
 				btnDone.setVisible(false);
-				
+
 
 				textField_Filename.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
@@ -814,7 +817,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			else if (folder.contains(Character.toString('"')) || folder.contains("/") || folder.contains("\\") || folder.contains(":") || folder.contains("*") || folder.contains("?") || folder.contains("<") || folder.contains(">") || folder.contains("|")) 
 			{
 				btnDone.setVisible(false);
-				
+
 
 				textField_ParFol.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
@@ -825,7 +828,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			else if (rdbtnSavePDF.isSelected() && new File(getSubFolders(property.getString("DocPath"),textField_ParFol.getText()) + "\\" + newFileName + ".pdf").exists()) 
 			{
 				btnDone.setVisible(false);
-				
+
 				textField_Filename.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
 				if(ActionType.equalsIgnoreCase("Insert"))
@@ -839,7 +842,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			else if (!rdbtnSavePDF.isSelected() && (new File(getSubFolders(property.getString("DocPath"),textField_ParFol.getText()) + "\\" + newFileName + ".docx")).exists()) 
 			{
 				btnDone.setVisible(false);
-				
+
 				textField_Filename.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
 				if(ActionType.equalsIgnoreCase("Insert"))
@@ -862,7 +865,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			if(textField_Filename.getText().equalsIgnoreCase(""))
 			{
 				btnDone.setVisible(false);
-				
+
 			}
 		}catch(Exception e)
 		{

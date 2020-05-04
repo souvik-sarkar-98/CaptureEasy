@@ -38,7 +38,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 {
 	public static JDialog dialog;
 	public final JPanel contentPanel = new JPanel();
-
+	public String selectedTab="";
 	public JTabbedPane TabbledPanel;
 	public boolean finish=false;
 	public static final String PRE_HTML = "<html>"
@@ -173,11 +173,11 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 		TabbledPanel.setSelectedIndex(0);
 	}
-
+	public static String tabName;
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
-		String tabName=TabbledPanel.getTitleAt(TabbledPanel.getSelectedIndex()).toString();	
+		 tabName=TabbledPanel.getTitleAt(TabbledPanel.getSelectedIndex()).toString();	
 		if(tabName.contains("Save"))	
 		{
 			if(!savePanel.saveLoaded)
@@ -279,6 +279,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 		else if(tabName.contains("Settings"))
 		{	
+			selectedTab="Settings";
 			ActionGUI.tagDrop=false;
 			if(!settingsPanel.loadSettingsTab)
 			{
