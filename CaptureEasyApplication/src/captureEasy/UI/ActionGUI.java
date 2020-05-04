@@ -263,15 +263,17 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 		else if(tabName.contains("Manage"))
 		{
+			if(!documentPanel.isloaded)
+			{
+				try{
+					documentPanel.loadDocumentsTab();
+					documentPanel.DocumentScrollPane.add(documentPanel.panel_Selection);
+					documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
+					documentPanel.showRootFile();
 
-			try{
-				documentPanel.loadDocumentsTab();
-				documentPanel.DocumentScrollPane.add(documentPanel.panel_Selection);
-				documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
-				documentPanel.showRootFile();
-
-			}catch(Exception e){
-				logError(e,"Exception occured while loading Manage documents tab");
+				}catch(Exception e){
+					logError(e,"Exception occured while loading Manage documents tab");
+				}
 			}
 
 		}
@@ -305,7 +307,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			{
 				settingsPanel.btnUpdateFrameLocation.setEnabled(false);
 			}
-			
+
 
 		}
 		else if(tabName.contains("Update"))

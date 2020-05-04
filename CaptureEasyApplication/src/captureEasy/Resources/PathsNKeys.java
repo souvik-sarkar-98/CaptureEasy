@@ -7,7 +7,7 @@ public class PathsNKeys{
 	 */
 	public final static String logFolderPath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Logs");
 	public final static String tempFolderPath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\bin\\Temp");
-	public final static String baseDocumentFolderPath=System.getProperty("user.dir")+"\\Documents";
+	//public final static String baseDocumentFolderPath=System.getProperty("user.dir")+"\\Documents";
 	public final static	String downloadFolderPath =Library. createFolder(System.getProperty("user.dir") + "\\Resources\\Downloads");
 	public final static String libraryFolderPath =Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib");
 	public final static String extractedFile =Library.createFolder(System.getProperty("user.dir")+"\\Resources\\bin\\ExtractedImages");

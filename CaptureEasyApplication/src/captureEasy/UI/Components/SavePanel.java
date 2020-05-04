@@ -628,7 +628,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		panel_Save_Buttons.add(btnDone);
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(textField_Filename.getText().replaceAll("\\s", "").equals(""))
+				if(!lblChooseFile.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
 				{
 					new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","").setVisible(true);
 					textField_Filename.setBackground(Color.PINK);
@@ -720,7 +720,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 							public void run() {
 								if(rdbtnNewDoc.isSelected())
 								{
-									createNewWord(property.getString("DocPath",createFolder(baseDocumentFolderPath)),textField_Filename.getText(),textField_ParFol.getText());
+									createNewWord(property.getString("DocPath"),textField_Filename.getText(),textField_ParFol.getText());
 								}
 								else if(rdbtnExDoc.isSelected())
 								{
@@ -731,7 +731,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 									if(chckbxSelectExistingDocument.isSelected())
 										SaveAsPDFFromWord(existingfilepath,textField_Filename.getText());
 									else
-										SaveAsPDF(property.getString("DocPath",createFolder(baseDocumentFolderPath)),textField_Filename.getText(),textField_ParFol.getText());
+										SaveAsPDF(property.getString("DocPath"),textField_Filename.getText(),textField_ParFol.getText());
 									
 								}
 								ActionGUI.dialog.dispose();

@@ -66,6 +66,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JPanel SettingsScrollPane;
 	public boolean loadSettingsTab=false,isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
+	private JCheckBox chckbxAutoUpdate;
 	public SettingsPanel(JTabbedPane TabbledPanel)
 	{
 		this.TabbledPanel=TabbledPanel;
@@ -77,6 +78,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsScrollPane.addMouseListener(this);
 		SettingsScrollPane.addMouseMotionListener(this);
 		loadSettingsTab();
+		
 	}
 	public void loadSettingsTab()
 	{
@@ -247,9 +249,15 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						}
 					});
 					SettingsPane_Recordpanel_RecordFlag.setFont(new Font("Tahoma", Font.BOLD, 16));
-					SettingsPane_Recordpanel_RecordFlag.setBounds(116, 9, 180, 25);
+					SettingsPane_Recordpanel_RecordFlag.setBounds(10, 9, 180, 25);
 					SettingsPane_FramePanel.add(SettingsPane_Recordpanel_RecordFlag);
 				}
+				
+				chckbxAutoUpdate = new JCheckBox("Auto Update");
+				chckbxAutoUpdate.setSelected(true);
+				chckbxAutoUpdate.setFont(new Font("Tahoma", Font.BOLD, 16));
+				chckbxAutoUpdate.setBounds(230, 9, 138, 25);
+				SettingsPane_FramePanel.add(chckbxAutoUpdate);
 			}
 			{
 				JPanel SettingsPane_Locationpanel = new JPanel();
@@ -385,6 +393,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									property.setProperty("setFolderNameMandatory",setFoldernameMandatory_Current);
 									property.setProperty("ScreenRecording",ScreenRecording_Current);
 									property.setProperty("CaptureKey",CaptureKey_Current);
+									property.setProperty("autoupdate", chckbxAutoUpdate.isSelected());
 									try
 									{
 										if(Xlocation!=0&& Math.abs(Xlocation-Xvalue_Prev)>0)

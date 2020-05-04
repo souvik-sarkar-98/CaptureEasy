@@ -44,8 +44,8 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 		panel_Update.setLayout(null);
 		panel_Update.addMouseListener(this);
 		panel_Update.addMouseMotionListener(this);
-		/*loadUpdated();
-		panel_Update.add(panel_UpdateNo);*/
+		//loadUpdated();
+		//panel_Update.add(panel_UpdateNo);
 		
 	}
 	

@@ -112,6 +112,8 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 
 	public  JTabbedPane TabbledPanel;
 	public JPanel panel_Selection;
+
+	public boolean isloaded=false;
 	public ManageDocumentPanel(JTabbedPane TabbledPanel)
 	{
 		this.TabbledPanel=TabbledPanel;
@@ -128,114 +130,115 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 			DocumentScrollPane.addMouseListener(this);
 			DocumentScrollPane.addMouseMotionListener(this);
 			DocumentScrollPane.setLayout(null);
-
-			panel_Selection = new JPanel();
-			panel_Selection.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-			panel_Selection.setBounds(10, 10, 415, 40);
-			panel_Selection.setLayout(null);
-
-			lblCross = new JLabel("");
-			lblCross.setBounds(385, 8, 20, 20);
-			panel_Selection.add(lblCross);
-
-			lblCross.setToolTipText("Close window");
-			try {
-				lblCross.setIcon(new ImageIcon(ImageIO.read(new File(exitIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
-			} catch (IOException e1) {
-				logError(e1,"Exception in Icon loading: Image "+exitIcon+" Not Available");}
 		}
-		lblCross.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(lblCross.isEnabled())
-				{
-					ActionGUI.dialog.dispose();
-					ActionGUI.leaveControl=true;
-					try{Application.sensor.play();}catch(Exception e){};
-				}
-			}
-		});
-
-		label_SearchBtn = new JLabel("");
-		label_SearchBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-		});
-		label_SearchBtn.setToolTipText("Search ");
-		label_SearchBtn.setBounds(340, 8, 25, 25);
-		panel_Selection.add(label_SearchBtn);
-		try {
-			label_SearchBtn.setIcon(new ImageIcon(ImageIO.read(new File(searchIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e1) {
-			logError(e1,"Exception in Icon loading: Image "+searchIcon+" Not Available");
-		}
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField.setToolTipText("Enter search key");
-		textField.setBounds(235, 7, 100, 22);
-		panel_Selection.add(textField);
-		textField.setColumns(10);
-
-		label_delete = new JLabel("");
-		label_delete.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		label_delete.setToolTipText("Delete selected file");
-		label_delete.setBounds(195, 7, 25, 25);
-		panel_Selection.add(label_delete);
-		try {
-			label_delete.setIcon(new ImageIcon(ImageIO.read(new File(deleteIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e1) {
-			logError(e1,"Exception in Icon loading: Image "+deleteIcon+" Not Available");
-
-		}
-
-		label_rename = new JLabel("");
-		label_rename.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		label_rename.setToolTipText("Rename selected file");
-		label_rename.setBounds(160, 7, 25, 25);
-		try {
-			label_rename.setIcon(new ImageIcon(ImageIO.read(new File(renameIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e1) {
-			logError(e1,"Exception in Icon loading: Image "+renameIcon+" Not Available");
-		}
-		panel_Selection.add(label_rename);
-
-		label_createFolder = new JLabel("");
-		label_createFolder.setToolTipText("Create a new folder");
-		label_createFolder.setBounds(125, 7, 25, 25);
-		panel_Selection.add(label_createFolder);
-		try {
-			label_createFolder.setIcon(new ImageIcon(ImageIO.read(new File(createfolderIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-
-		} catch (IOException e1) {
-			logError(e1,"Exception in Icon loading: Image "+createfolderIcon+" Not Available");
-
-		}
-
-		label_Export = new JLabel("");
-		label_Export.setToolTipText("Export selected files to folder");
-		label_Export.setBounds(90, 7, 25, 25);
-		panel_Selection.add(label_Export);
-		try {
-			label_Export.setIcon(new ImageIcon(ImageIO.read(new File(exportIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-
-		} catch (IOException e1) {
-			logError(e1,"Exception in Icon loading: Image "+exportIcon+" Not Available");
-
-		}
+		
 
 	}
 
 	public void loadDocumentsTab() 
 	{
+		panel_Selection = new JPanel();
+		panel_Selection.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_Selection.setBounds(10, 10, 415, 40);
+		panel_Selection.setLayout(null);
+
+		lblCross = new JLabel("");
+		lblCross.setBounds(385, 8, 20, 20);
+		panel_Selection.add(lblCross);
+
+		lblCross.setToolTipText("Close window");
+		try {
+			lblCross.setIcon(new ImageIcon(ImageIO.read(new File(exitIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+exitIcon+" Not Available");}
+	
+	lblCross.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			if(lblCross.isEnabled())
+			{
+				ActionGUI.dialog.dispose();
+				ActionGUI.leaveControl=true;
+				try{Application.sensor.play();}catch(Exception e){};
+			}
+		}
+	});
+
+	label_SearchBtn = new JLabel("");
+	label_SearchBtn.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		}
+	});
+	label_SearchBtn.setToolTipText("Search ");
+	label_SearchBtn.setBounds(340, 8, 25, 25);
+	panel_Selection.add(label_SearchBtn);
+	try {
+		label_SearchBtn.setIcon(new ImageIcon(ImageIO.read(new File(searchIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
+	} catch (IOException e1) {
+		logError(e1,"Exception in Icon loading: Image "+searchIcon+" Not Available");
+	}
+	textField = new JTextField();
+	textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	textField.setToolTipText("Enter search key");
+	textField.setBounds(235, 7, 100, 22);
+	panel_Selection.add(textField);
+	textField.setColumns(10);
+
+	label_delete = new JLabel("");
+	label_delete.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+	});
+	label_delete.setToolTipText("Delete selected file");
+	label_delete.setBounds(195, 7, 25, 25);
+	panel_Selection.add(label_delete);
+	try {
+		label_delete.setIcon(new ImageIcon(ImageIO.read(new File(deleteIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
+	} catch (IOException e1) {
+		logError(e1,"Exception in Icon loading: Image "+deleteIcon+" Not Available");
+
+	}
+
+	label_rename = new JLabel("");
+	label_rename.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+	});
+	label_rename.setToolTipText("Rename selected file");
+	label_rename.setBounds(160, 7, 25, 25);
+	try {
+		label_rename.setIcon(new ImageIcon(ImageIO.read(new File(renameIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
+	} catch (IOException e1) {
+		logError(e1,"Exception in Icon loading: Image "+renameIcon+" Not Available");
+	}
+	panel_Selection.add(label_rename);
+
+	label_createFolder = new JLabel("");
+	label_createFolder.setToolTipText("Create a new folder");
+	label_createFolder.setBounds(125, 7, 25, 25);
+	panel_Selection.add(label_createFolder);
+	try {
+		label_createFolder.setIcon(new ImageIcon(ImageIO.read(new File(createfolderIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
+
+	} catch (IOException e1) {
+		logError(e1,"Exception in Icon loading: Image "+createfolderIcon+" Not Available");
+
+	}
+
+	label_Export = new JLabel("");
+	label_Export.setToolTipText("Export selected files to folder");
+	label_Export.setBounds(90, 7, 25, 25);
+	panel_Selection.add(label_Export);
+	try {
+		label_Export.setIcon(new ImageIcon(ImageIO.read(new File(exportIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
+
+	} catch (IOException e1) {
+		logError(e1,"Exception in Icon loading: Image "+exportIcon+" Not Available");
+
+	}
 		try{
 			panel_View = new JPanel();
 			panel_View.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -253,7 +256,9 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 
 					DefaultMutableTreeNode node =(DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
 					showChildren(node);
-					System.out.println((File)node.getUserObject());
+					System.out.println(/*(File)node.getUserObject()*/ tse.getPath());
+					System.out.println(tse.getPath().getLastPathComponent());
+
 				}
 			};
 
@@ -273,7 +278,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 				for (File file : files) {
 					if (file.isDirectory()) {
 						node.add(new DefaultMutableTreeNode(file));
-						System.out.println("Adding "+file.getPath());
+						//System.out.println("Adding "+file.getPath());
 					}
 				}
 				//
@@ -313,7 +318,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 				public void valueChanged(ListSelectionEvent lse) {
 					//int row = table.getSelectionModel().getLeadSelectionIndex();
 
-					//System.out.println(  );
+					////System.out.println(  );
 				}
 			};
 			table.addMouseListener(new MouseAdapter() {
@@ -342,7 +347,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 		{
 			TabbledPanel.setSelectedIndex(TabbledPanel.getTabCount()-1);
 		}
-
+		isloaded=true;
 		//lblCross.setEnabled(false);
 	}
 
@@ -436,7 +441,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
     Thanks to Hovercraft Full Of Eels for the SwingWorker fix. */
 	public void showChildren(final DefaultMutableTreeNode node) {
 		tree.setEnabled(false);
-		System.out.println(" Showing children " +node);
+		//System.out.println(" Showing children " +node);
 		SwingWorker<Void, File> worker = new SwingWorker<Void, File>() {
 			@Override
 			public Void doInBackground() {
@@ -476,9 +481,9 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 	}
 	/** Update the table on the EDT */
 	public void setTableData(final File[] files) {
-		System.out.println("Setting table Data");
+		//System.out.println("Setting table Data");
 		//	StackInfo info=new StackInfo(Thread.currentThread().getStackTrace());
-		//System.out.println(info.getCallSequence());
+		////System.out.println(info.getCallSequence());
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 
@@ -520,7 +525,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 	public void setColumnWidth(int column, int width) {
 		TableColumn tableColumn = table.getColumnModel().getColumn(column);
 		if (width<0) {
-			System.out.println((String)tableColumn.getHeaderValue());
+			//System.out.println((String)tableColumn.getHeaderValue());
 			// use the preferred width of the header..
 			JLabel label = new JLabel( (String)tableColumn.getHeaderValue() );
 			Dimension preferred = label.getPreferredSize();
@@ -560,8 +565,8 @@ class FileTableModel extends AbstractTableModel {
 	}
 	public Object getValueAt(int row, int column) {
 		//StackInfo s=new StackInfo(Thread.currentThread().getStackTrace());
-		System.out.println(row);
-		//System.out.println(s.getCallSequence());
+		//System.out.println(row);
+		////System.out.println(s.getCallSequence());
 		File file = files[row];
 
 		switch (column) {
@@ -575,7 +580,7 @@ class FileTableModel extends AbstractTableModel {
 			} catch (IOException e) {
 			}
 		default:
-			System.out.println("Logic Error "+row+"   "+column);
+			//System.out.println("Logic Error "+row+"   "+column);
 		}
 		return "";
 	}
@@ -585,7 +590,7 @@ class FileTableModel extends AbstractTableModel {
 	}
 
 	public Class<?> getColumnClass(int column) {
-		System.out.println(getColumnCount()+"    "+column);
+		//System.out.println(getColumnCount()+"    "+column);
 		switch (column) {
 		case 0:
 			return ImageIcon.class;
