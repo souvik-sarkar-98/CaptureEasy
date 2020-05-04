@@ -299,6 +299,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				settingsPanel.chckbxSetFoldernameMandatory.setVisible(false);
 				settingsPanel.chckbxSetFoldernameMandatory.setSelected(false);
 			}
+			settingsPanel.chckbxAutoUpdate.setSelected(property.getBoolean("autoupdate",false)); 
 			SettingsPanel.lblLocationx.setText("Location : ( "+property.getInteger("Xlocation",screensize.width-160)+" , "+property.getInteger("Ylocation",screensize.height/2+100)+" )");
 			settingsPanel.SettingsPane_Recordpanel_RecordFlag.setSelected(Boolean.valueOf(property.getString("ScreenRecording")));
 			settingsPanel.comboBox_ImageFormat.setSelectedItem(property.getString("ImageFormat","png"));

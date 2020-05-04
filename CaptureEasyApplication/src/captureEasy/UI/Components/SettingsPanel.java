@@ -66,7 +66,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JPanel SettingsScrollPane;
 	public boolean loadSettingsTab=false,isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
-	private JCheckBox chckbxAutoUpdate;
+	public JCheckBox chckbxAutoUpdate;
 	public SettingsPanel(JTabbedPane TabbledPanel)
 	{
 		this.TabbledPanel=TabbledPanel;
@@ -360,7 +360,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
 								
-								else if(BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false) && CaptureKey_Current.equals(CaptureKey_Prev) && DocPath_Current.equals(DocPath_Previous) && showFolderNameField_Current==showFolderNameField_Previous&& setFoldernameMandatory_Current==setFoldernameMandatory_Previous && ScreenRecording_Current.equals(ScreenRecording_Prev) && (Math.abs(Xvalue_Prev-Xlocation)==0 || Math.abs(Xvalue_Prev-Xlocation)==Xvalue_Prev) && (Math.abs(Yvalue_Prev-Ylocation)==0 || Math.abs(Yvalue_Prev-Xlocation)==Yvalue_Prev)  && ImageFormat_Current.equals(ImageFormat_Prev))
+								else if(chckbxAutoUpdate.isSelected()==property.getBoolean("autoupdate",false) && BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false) && CaptureKey_Current.equals(CaptureKey_Prev) && DocPath_Current.equals(DocPath_Previous) && showFolderNameField_Current==showFolderNameField_Previous&& setFoldernameMandatory_Current==setFoldernameMandatory_Previous && ScreenRecording_Current.equals(ScreenRecording_Prev) && (Math.abs(Xvalue_Prev-Xlocation)==0 || Math.abs(Xvalue_Prev-Xlocation)==Xvalue_Prev) && (Math.abs(Yvalue_Prev-Ylocation)==0 || Math.abs(Yvalue_Prev-Xlocation)==Yvalue_Prev)  && ImageFormat_Current.equals(ImageFormat_Prev))
 								{
 									PopUp window = new PopUp("ERROR","error","No changes have been made !!","Ok, I understood","");
 									window.setVisible(true);
