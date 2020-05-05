@@ -630,7 +630,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			public void actionPerformed(ActionEvent arg0) {
 				if(ActionGUI.tabName.contains("Save"))
 				{
-					if(!lblChooseFile.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
+					if(textField_Filename.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
 					{
 						new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","").setVisible(true);
 						textField_Filename.setBackground(Color.PINK);
