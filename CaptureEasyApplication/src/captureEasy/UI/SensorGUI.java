@@ -81,25 +81,25 @@ public class SensorGUI extends Library{
 		frame.setSize(new Dimension(54, 110));
 		frame.setAlwaysOnTop(true);
 		frame.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-            	closeApplication(true);                
-            }
-        });
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				closeApplication(true);                
+			}
+		});
 		frame.addWindowFocusListener(new WindowFocusListener() {	
-				public void windowGainedFocus(WindowEvent e) {	
-					System.out.println("Focus gained");
-				}
+			public void windowGainedFocus(WindowEvent e) {	
+				System.out.println("Focus gained");
+			}
 
-				@Override
-				public void windowLostFocus(WindowEvent arg0) {
-					System.out.println("Focus lost");
-				}
+			@Override
+			public void windowLostFocus(WindowEvent arg0) {
+				System.out.println("Focus lost");
+			}
 		});
 		//frame.addWindowStateListener();
-		
+
 		List<Image> icons = new ArrayList<Image>();
 		try {
 			icons.add(ImageIO.read(new File(taskbarIcon)));
@@ -111,9 +111,9 @@ public class SensorGUI extends Library{
 		} catch (IOException e2) {
 			logError(e2,"Exception occured while reading icon");
 		}
-		
-			SensorGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
-			frame.setAlwaysOnTop(true);
+
+		SensorGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
+		frame.setAlwaysOnTop(true);
 
 		frame.setBackground(new Color(0,0,0,0));
 		frame.addMouseListener(new MouseAdapter() {
@@ -174,7 +174,7 @@ public class SensorGUI extends Library{
 						Label_Pause.setIcon(new ImageIcon(ImageIO.read(new File(pauseIcon)).getScaledInstance(size.width,size.height, java.awt.Image.SCALE_SMOOTH)));
 						Label_Pause.setToolTipText("Click Here to Pause");
 						SharedResources.PauseThread=false;
-						
+
 					}catch (IOException e3) {
 						Label_Pause.setText("Pause"); 
 						logError(e3,"Exception in Icon loading: Image "+pauseIcon+" Not Available");}
@@ -210,7 +210,7 @@ public class SensorGUI extends Library{
 						public void actionPerformed(ActionEvent arg0) {
 							closeApplication(true);
 						}
-							
+
 					});
 					try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 				}
@@ -238,16 +238,7 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new Thread(new Runnable(){
-						@Override
-						public void run() {
-							window = new PopUp("INFORMATION","info","\n\n                  Loading ...","Close","");
-							window.setVisible(true);
-							window.lblIcon.setBounds(20, 45,50,50);
-						}
-						
-					}).start();;
-					
+					new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Document");
 					if(!IsEmpty(property.getString("TempPath")))
@@ -258,7 +249,7 @@ public class SensorGUI extends Library{
 					tabs.add("Settings");
 					frame.setAlwaysOnTop(false);
 					new ActionGUI(tabs);
-					
+
 					ActionGUI.dialog.setVisible(true);
 				}
 				else
@@ -289,33 +280,31 @@ public class SensorGUI extends Library{
 						PopUp p=new PopUp("INFORMATION","Info","You have nothing to view !! ","Ok, I understood","");
 						p.setVisible(true);
 						new Timer(1000, new ActionListener() {
-					        @Override
-					        public void actionPerformed(ActionEvent e) {
-					        	p.dispose();
-					        }
-					      }).start();
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								p.dispose();
+							}
+						}).start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
-						new Thread(new Runnable(){
-							@Override
-							public void run() {
-								window = new PopUp("INFORMATION","info","\n\n                  Loading ...","Close","");
-								window.setVisible(true);
-								window.lblIcon.setBounds(20, 45,50,50);
-							}
-							
-						}).start();;
-					List<String> tabs=new ArrayList<String>();
-					tabs.add("View");
-					tabs.add("Save");
-					tabs.add("Document");
-					tabs.add("Settings");
-					new ActionGUI(tabs);
-					
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+						List<String> tabs=new ArrayList<String>();
+						tabs.add("View");
+						tabs.add("Save");
+						tabs.add("Document");
+						tabs.add("Settings");
+						try {
+							//Thread.sleep(2000);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						new ActionGUI(tabs);
 
-					ActionGUI.dialog.setVisible(true);
+
+						ActionGUI.dialog.setVisible(true);
 					}
 				}
 				else
@@ -347,36 +336,29 @@ public class SensorGUI extends Library{
 						PopUp p= new PopUp("INFORMATION","Info","You have nothing to save !! ","Ok, I understood","");
 						p.setVisible(true);
 						new Timer(1000, new ActionListener() {
-					        @Override
-					        public void actionPerformed(ActionEvent e) {
-					        	p.dispose();
-					        }
-					      }).start();
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								p.dispose();
+							}
+						}).start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
-						new Thread(new Runnable(){
-							@Override
-							public void run() {
-								window = new PopUp("INFORMATION","info","\n\n                  Loading ...","Close","");
-								window.setVisible(true);
-								window.lblIcon.setBounds(20, 45,50,50);
-							}
-							
-						}).start();;
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+
 						List<String> tabs=new ArrayList<String>();
 						tabs.add("Save");
 						tabs.add("View");
 						tabs.add("Document");
 						tabs.add("Settings");
-						
+
 						new ActionGUI(tabs);
 						ActionGUI.dialog.setVisible(true);
 						ActionGUI.savePanel.textField_Filename.requestFocusInWindow();
 						ActionGUI.savePanel.rdbtnNewDoc.setEnabled(false);
 						ActionGUI.savePanel.btnDone.setVisible(false);
-						
+
 					}
 				}
 				else
@@ -407,11 +389,11 @@ public class SensorGUI extends Library{
 						PopUp p=new PopUp("INFORMATION","Info","You have nothing to delete !! ","Ok, I understood","");
 						p.setVisible(true);
 						new Timer(1000, new ActionListener() {
-					        @Override
-					        public void actionPerformed(ActionEvent e) {
-					        	p.dispose();
-					        }
-					      }).start();
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								p.dispose();
+							}
+						}).start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
@@ -525,16 +507,8 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new Thread(new Runnable(){
-						@Override
-						public void run() {
-							window = new PopUp("INFORMATION","info","\n\n                  Loading ...","Close","");
-							window.setVisible(true);
-							window.lblIcon.setBounds(20, 45,50,50);
-						}
-						
-					}).start();;
-					
+					new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Settings");
 					tabs.add("Update");
@@ -544,9 +518,9 @@ public class SensorGUI extends Library{
 						tabs.add("View");
 					}
 					tabs.add("Document");*/
-					
+
 					new ActionGUI(tabs);
-					
+
 					ActionGUI.dialog.setVisible(true);	
 				}
 				else
@@ -575,16 +549,16 @@ public class SensorGUI extends Library{
 		}
 		button_panel.setVisible(bool);	
 	}
-	
+
 	String toolText;
 	public void play()
 	{
 		try{
-		/*//isExpandable=true;
+			/*//isExpandable=true;
 		frame.setSize(new Dimension(54, 500));
 		Main_panel.setSize(new Dimension(54, 500));
 		button_panel.setVisible(true);*/
-	}catch(Exception e){}
+		}catch(Exception e){}
 	}
 	public void pause()
 	{
@@ -595,7 +569,7 @@ public class SensorGUI extends Library{
 		button_panel.setVisible(false);
 		}catch(Exception e){}*/
 	}
-	
+
 
 
 	public static void closeApplication(boolean  confirm)
@@ -622,7 +596,7 @@ public class SensorGUI extends Library{
 			property.setProperty("Comments",comm);
 			property.setProperty("TempCode",new File(property.getString("TempPath")).getName());
 		}
-		
+
 		try {
 			GlobalScreen.unregisterNativeHook();
 		} catch (NativeHookException e1) {

@@ -7,7 +7,6 @@ import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
 import captureEasy.UI.SplashScreen;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

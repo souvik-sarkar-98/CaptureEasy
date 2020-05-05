@@ -55,6 +55,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JComboBox<?> comboBox_ImageFormat;
 	int Xlocation,Ylocation;
 	SensorGUI sen;
+	PopUp pop;
 	public JComboBox<?> comboBox_CaptureKey;
 	public JButton CancelBtn;
 	public final ButtonGroup buttonGroup = new ButtonGroup();
@@ -568,9 +569,17 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			
 			comboBox_CaptureKey.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(ActionGUI.dialog.isVisible() && ActionGUI.tagDrop)
+					try{Thread.sleep(500);pop.dispose();}catch(Exception m){}
+					if(comboBox_CaptureKey.getSelectedItem().toString().equalsIgnoreCase("ALT+Prtsc") && ActionGUI.dialog.isVisible() && ActionGUI.tagDrop)
 					{
-						new PopUp("Information","info","Please pause the application while you are using "+comboBox_CaptureKey.getSelectedItem().toString()+" button for other use.","Ok,I'll Remember","").setVisible(true);
+						pop=new PopUp("Information","info","ALT+Prtsc will capture only focused window, So please make your target window focused.Press ALT key wait till frame disappears then press PrtSc key.","Ok,I'll Remember","");
+						pop.setVisible(true);
+					}
+					else if(ActionGUI.dialog.isVisible() && ActionGUI.tagDrop)
+					{
+						pop=new PopUp("Information","info","Please pause the applicaton while you are using "+comboBox_CaptureKey.getSelectedItem().toString()+" button for other use.","Ok,I'll Remember","");
+						pop.setVisible(true);
+
 					}
 					ActionGUI.tagDrop=true;
 				}
