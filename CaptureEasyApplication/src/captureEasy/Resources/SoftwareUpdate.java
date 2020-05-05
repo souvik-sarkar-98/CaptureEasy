@@ -244,11 +244,11 @@ public class SoftwareUpdate extends Library {
 
 			@Override
 			public void run() {
-				while (!stopThread && property.getBoolean("autoupdate",false))
+				while (!stopThread )
 				{
 					try{
 						Thread.sleep(10000);
-						if(doUpdate==false && isInstalled==false)
+						if(doUpdate==false && isInstalled==false && property.getBoolean("autoupdate",false))
 						{
 							do{Thread.sleep(100);}while(!ActionGUI.leaveControl || !PopUp.control);
 							PopUp p=new PopUp("INFORMATION","info","Latest Version "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"is already downloaded. To install please click Yes","Yes","No");
@@ -260,7 +260,7 @@ public class SoftwareUpdate extends Library {
 								}
 							});
 						}
-						else if( doUpdate&& checkForUpdates())
+						else if( doUpdate&& checkForUpdates() && property.getBoolean("autoupdate",false))
 						{
 							doUpdate=false;
 							do{Thread.sleep(100);}while(!ActionGUI.leaveControl || !PopUp.control);
@@ -280,7 +280,6 @@ public class SoftwareUpdate extends Library {
 
 								}
 							});
-
 						}
 						Thread.sleep(versionInfo.getInteger("UpdateFrequency",3600000));
 					}catch(Exception w){}
