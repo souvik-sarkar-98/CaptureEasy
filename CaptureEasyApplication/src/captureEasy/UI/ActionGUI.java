@@ -49,7 +49,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			+ "margin-right: 1px;"
 			+ "width: 70px\">";
 	public static final String POST_HTML = "</p></html>";
-	//public static ActionPanel actionPanel;
+	public static boolean tabLoaded=false;
 	public static SettingsPanel settingsPanel;
 	public ManageDocumentPanel documentPanel;
 	public static ViewPanel viewPanel;
@@ -115,7 +115,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					if(i==0)
 					{
 						TabbledPanel.setSelectedIndex(0);
-						//savePanel.textField_Filename.requestFocusInWindow();
+						savePanel.textField_Filename.requestFocusInWindow();
 						savePanel.rdbtnNewDoc.setEnabled(false);
 						savePanel.btnDone.setVisible(false);
 						savePanel.exitbtn.setVisible(true);
@@ -177,7 +177,12 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
-		 tabName=TabbledPanel.getTitleAt(TabbledPanel.getSelectedIndex()).toString();	
+		tabName=TabbledPanel.getTitleAt(TabbledPanel.getSelectedIndex()).toString();	
+		if(ActionGUI.dialog.isVisible())
+		{
+			tabLoaded=false;
+			new ToastMsg("Loading...",dialog.getBounds().x+savePanel.SaveScrollPane.getBounds().width/2+75,dialog.getBounds().y+savePanel.SaveScrollPane.getBounds().height/2).showToast(1);
+		}
 		if(tabName.contains("Save"))	
 		{
 			if(!savePanel.saveLoaded)
@@ -185,10 +190,11 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				savePanel.loadSaveTab();
 				savePanel.SaveScrollPane.add(savePanel.panel_Save_Buttons);
 				savePanel.SaveScrollPane.add(savePanel.SavePanel);
-				//savePanel.btnDone.requestFocusInWindow();
+				savePanel.btnDone.requestFocusInWindow();
 				if(i!=0 && loadSaveTab)
 					savePanel.exitbtn.setEnabled(false);
 			}
+
 			if(property.getBoolean("showFolderNameField",false))
 			{
 				savePanel.lblParFol.setVisible(true);
@@ -207,13 +213,14 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			}
 			savePanel.lblDoYouWant.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			savePanel.lblDoYouWant.setToolTipText("Do you want to continue with current screenshots ?");
-			//savePanel.textField_Filename.requestFocusInWindow();
+			savePanel.textField_Filename.requestFocusInWindow();
 			if(savePanel.lblChooseFile.isVisible())
 			{
 				savePanel.lblParFol.setVisible(false);
 				savePanel.textField_ParFol.setVisible(false);
 			}
 			dialog.getRootPane().setDefaultButton(savePanel.btnDone);
+			tabLoaded=true;
 		}
 		else if(tabName.contains("View"))
 		{
@@ -223,7 +230,9 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				viewPanel.ViewScrollPane.add(viewPanel.panel_Image);
 				viewPanel.ViewScrollPane.add(viewPanel.panel_Button);
 			}
-			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
+
+			if(property.getBoolean("showFolderNameField",false))
+				ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
 			if(ViewPanel.ImageLabel.getToolTipText()==null)
 				ViewPanel.imgId=ViewPanel.files.length-1;
@@ -260,6 +269,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			} catch (IOException e) {
 				logError(e,"Exception occured while loading imageviewer");
 			}
+			tabLoaded=true;
 		}
 		else if(tabName.contains("Manage"))
 		{
@@ -275,7 +285,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					logError(e,"Exception occured while loading Manage documents tab");
 				}
 			}
-
+			tabLoaded=true;
 		}
 		else if(tabName.contains("Settings"))
 		{	
@@ -310,7 +320,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				settingsPanel.btnUpdateFrameLocation.setEnabled(false);
 			}
 
-
+			tabLoaded=true;
 		}
 		else if(tabName.contains("Update"))
 		{
@@ -350,7 +360,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				logError(e,"Exception occured while checking for updates");
 			}
 
-
+			tabLoaded=true;
 		}
 	}
 

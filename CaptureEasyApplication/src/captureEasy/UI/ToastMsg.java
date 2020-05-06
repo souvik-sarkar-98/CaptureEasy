@@ -43,7 +43,7 @@ public class ToastMsg extends JFrame {
 	} 
 
 	// function to pop up the toast 
-	public void showToast() 
+	public void showToast(int terID) 
 	{ 
 		new Thread(new Runnable(){
 
@@ -52,12 +52,15 @@ public class ToastMsg extends JFrame {
 				try { 
 					w.setOpacity(1); 
 					w.setVisible(true); 
-					do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());					// make the message disappear slowly 
+					if (terID==0)
+						do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());		
+					else if(terID==1)
+						do{Thread.sleep(100);}while(!ActionGUI.tabLoaded);
+					
 					for (double d = 1.0; d > 0.2; d -= 0.1) { 
 						Thread.sleep(100); 
 						w.setOpacity((float)d); 
 					} 
-
 					// set the visibility to false 
 					w.setVisible(false); 
 					w.dispose();

@@ -238,7 +238,7 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+					new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Document");
 					if(!IsEmpty(property.getString("TempPath")))
@@ -289,7 +289,7 @@ public class SensorGUI extends Library{
 					}
 					else
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
 						List<String> tabs=new ArrayList<String>();
 						tabs.add("View");
 						tabs.add("Save");
@@ -345,7 +345,7 @@ public class SensorGUI extends Library{
 					}
 					else
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
 
 						List<String> tabs=new ArrayList<String>();
 						tabs.add("Save");
@@ -507,7 +507,7 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast();
+					new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
 
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Settings");
