@@ -181,7 +181,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		if(ActionGUI.dialog.isVisible())
 		{
 			tabLoaded=false;
-			new ToastMsg("Loading...",dialog.getBounds().x+savePanel.SaveScrollPane.getBounds().width/2+75,dialog.getBounds().y+savePanel.SaveScrollPane.getBounds().height/2).showToast(1);
+			new ToastMsg("Loading...",dialog.getBounds().x+430/2+75,dialog.getBounds().y+315/2).showToast(1);
 		}
 		if(tabName.contains("Save"))	
 		{
@@ -276,14 +276,25 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			if(!documentPanel.isloaded)
 			{
 				try{
-					documentPanel.loadDocumentsTab();
+					documentPanel.loadDocumentsTab(property.getString("DocPath",""));
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_Selection);
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
 					documentPanel.showRootFile();
-
 				}catch(Exception e){
 					logError(e,"Exception occured while loading Manage documents tab");
 				}
+			}
+			else if(SettingsPanel.DocPath_Previous!=null && !SettingsPanel.DocPath_Previous.equalsIgnoreCase(property.getString("DocPath")))
+			{
+				documentPanel.DocumentScrollPane.remove(documentPanel.panel_View);
+				documentPanel.loadDocumentsTab(property.getString("DocPath",""));
+				documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
+				documentPanel.showRootFile();
+			}
+			else if(ManageDocumentPanel.changed)
+			{
+				System.out.println("this is me");
+				/**/
 			}
 			tabLoaded=true;
 		}

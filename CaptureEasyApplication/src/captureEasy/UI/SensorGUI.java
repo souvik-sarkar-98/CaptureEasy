@@ -386,6 +386,7 @@ public class SensorGUI extends Library{
 				{
 					if(IsEmpty(property.getString("TempPath")))
 					{
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(2);
 						PopUp p=new PopUp("INFORMATION","Info","You have nothing to delete !! ","Ok, I understood","");
 						p.setVisible(true);
 						new Timer(1000, new ActionListener() {
@@ -534,7 +535,8 @@ public class SensorGUI extends Library{
 		try{
 			label_Settings.setIcon(new ImageIcon(ImageIO.read(new File(settingIcon)).getScaledInstance(size.width,size.height, java.awt.Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			label_Settings.setText("Settings");logError(e,"Exception in Icon loading: Image "+settingIcon+" Not Available");
+			label_Settings.setText("Settings");
+			logError(e,"Exception in Icon loading: Image "+settingIcon+" Not Available");
 		}
 		boolean bool=property.getBoolean("SensorBTNPanelVisible",false);
 		if(bool)

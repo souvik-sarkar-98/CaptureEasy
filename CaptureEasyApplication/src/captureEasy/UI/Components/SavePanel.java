@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -56,7 +55,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	public JButton btnChooseFile;
 	public static JCheckBox chckbxOverwriteSelectedFile;
 	public JLabel lblEnterFilename;
-	public JTextField textField_Filename;
+	public TextField textField_Filename;
 	public JPanel panel_Save_Buttons;
 	public JButton exitbtn;
 	public static JLabel label_Status;
@@ -72,7 +71,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	public static JLabel lblUpdatingFiles;
 	public JPanel panel_Update;
 	public JLabel lblParFol;
-	public JTextField textField_ParFol;
+	public TextField textField_ParFol;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton rdbtnYes;
 	public static JRadioButton rdbtnNo;
@@ -91,18 +90,17 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		SaveScrollPane.setSize(new Dimension(438, 316));
 		SaveScrollPane.setBounds(12, 12, 438, 316);
 
-
+		//loadSaveTab();
 	}
 
 	public void loadSaveTab()
 	{
-
 		SavePanel = new JPanel();
 		SavePanel.setBorder(new MatteBorder(1, 1, 0, 1, (Color) new Color(0, 0, 0)));
 		SavePanel.setBounds(12, 12, 413, 250);
 		SavePanel.addMouseListener(this);
 		SavePanel.addMouseMotionListener(this);
-		SavePanel.setPreferredSize(new Dimension(350, 100));
+		SavePanel.setPreferredSize(new Dimension(350, 263));
 		SavePanel.setLayout(null);
 		JLabel label = new JLabel("Please Select :  ");
 		label.setPreferredSize(new Dimension(400, 2));
@@ -278,7 +276,8 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		panel_Input.add(lblParFol);
 		lblParFol.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		textField_ParFol = new JTextField();
+		textField_ParFol = new TextField();
+		textField_ParFol.setPlaceholder("Enter Foldername");
 		textField_ParFol.setVisible(false);
 		panel_Input.add(textField_ParFol);
 		textField_ParFol.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -492,7 +491,8 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		panel_Input.add(lblEnterFilename);
 		lblEnterFilename.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		textField_Filename = new JTextField();
+		textField_Filename = new TextField();
+		textField_Filename.setPlaceholder("Enter Filename");
 		panel_Input.add(textField_Filename);
 		textField_Filename.setToolTipText("Enter Filename");
 		textField_Filename.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -641,15 +641,15 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						new PopUp("ERROR","error", "A file name can not contain any of the following "
 								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
 					}
-					else if (textField_ParFol.getText().contains(Character.toString('"')) || textField_ParFol.getText().contains("/") || textField_ParFol.getText().contains("\\") || textField_ParFol.getText().contains(":") || textField_ParFol.getText().contains("*") || textField_ParFol.getText().contains("?") || textField_ParFol.getText().contains("<") || textField_ParFol.getText().contains(">") || textField_ParFol.getText().contains("|")) 
+					else if (textField_ParFol.getText().contains(Character.toString('"')) || /*textField_ParFol.getText().contains("/") || textField_ParFol.getText().contains("\\") ||*/ textField_ParFol.getText().contains(":") || textField_ParFol.getText().contains("*") || textField_ParFol.getText().contains("?") || textField_ParFol.getText().contains("<") || textField_ParFol.getText().contains(">") || textField_ParFol.getText().contains("|")) 
 					{
 						textField_ParFol.setBackground(Color.PINK);
 						new PopUp("ERROR","error", "A Folder name can not contain any of the following "
-								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+								+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
 					}
 					else if(!lblChooseFile.isVisible() && !chckbxSelectExistingDocument.isSelected() && property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_ParFol.getText().replaceAll("\\s", "").equals(""))
 					{
-						new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please update settings to proceed further","Ok, I understood","").setVisible(true);
+						new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","").setVisible(true);
 						textField_ParFol.setBackground(Color.PINK);
 					}
 
@@ -806,24 +806,20 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 			{
 				btnDone.setVisible(false);
-
-
 				textField_Filename.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
 					new PopUp("ERROR","error", "A file name can not contain any of the following "
 							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
 			}
-			else if (folder.contains(Character.toString('"')) || folder.contains("/") || folder.contains("\\") || folder.contains(":") || folder.contains("*") || folder.contains("?") || folder.contains("<") || folder.contains(">") || folder.contains("|")) 
+			else if (folder.contains(Character.toString('"')) || /*folder.contains("/") || folder.contains("\\") ||*/ folder.contains(":") || folder.contains("*") || folder.contains("?") || folder.contains("<") || folder.contains(">") || folder.contains("|")) 
 			{
 				btnDone.setVisible(false);
-
-
 				textField_ParFol.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
 					new PopUp("ERROR","error", "A folder name can not contain any of the following "
-							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+							+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
 			}
 			else if (rdbtnSavePDF.isSelected() && new File(getSubFolders(property.getString("DocPath"),textField_ParFol.getText()) + "\\" + newFileName + ".pdf").exists()) 
 			{

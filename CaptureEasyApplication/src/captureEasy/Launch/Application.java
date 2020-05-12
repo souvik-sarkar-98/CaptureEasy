@@ -28,7 +28,7 @@ public class Application extends Library{
 		sp.frame.setVisible(true);
 		SharedResources.init();
 		sp.lblVersion.setText("Version : "+versionInfo.getString("CurrentVersion","Base"));
-		try{Thread.sleep(3000);}catch(Exception e){}
+		try{Thread.sleep(1000);}catch(Exception e){}
 		if(!new File(createFolder(PropertyFilePath)).exists() || property.getString("DocPath","").replaceAll("\\s", "").equals(""))
 		{
 			property.setProperty("TempPath",createTemp());

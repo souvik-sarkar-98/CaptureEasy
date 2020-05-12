@@ -25,7 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -46,7 +45,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 
 	public JPanel SettingsPane;
 	public JPanel SettingsPane_DocFolderPanel;
-	public JTextField textField_DocDestFolder;
+	public TextField textField_DocDestFolder;
 	public JPanel SettingsPane_FramePanel;
 	public JCheckBox SettingsPane_Recordpanel_RecordFlag;
 	public JButton btnUpdateFrameLocation;
@@ -56,6 +55,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	int Xlocation,Ylocation;
 	SensorGUI sen;
 	PopUp pop;
+	public static String DocPath_Previous=null;
 	public JComboBox<?> comboBox_CaptureKey;
 	public JButton CancelBtn;
 	public final ButtonGroup buttonGroup = new ButtonGroup();
@@ -99,7 +99,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			SettingsPane.add(SettingsPane_DocFolderPanel);
 			SettingsPane_DocFolderPanel.setLayout(null);
 			{
-				textField_DocDestFolder = new JTextField();
+				textField_DocDestFolder = new TextField();
+				textField_DocDestFolder.setPlaceholder("Select document destination folder");
 				textField_DocDestFolder.setBackground(Color.WHITE);
 				textField_DocDestFolder.getDocument().addDocumentListener(new DocumentListener()
 				{
@@ -337,7 +338,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 
 							public void actionPerformed(ActionEvent e) {
 								String DocPath_Current=textField_DocDestFolder.getText();
-								String DocPath_Previous=property.getString("DocPath");
+								DocPath_Previous=property.getString("DocPath");
 								boolean showFolderNameField_Current=chckbxShowFilderNameField.isSelected();
 								boolean showFolderNameField_Previous=property.getBoolean("showFolderNameField",false);
 								boolean setFoldernameMandatory_Current=chckbxSetFoldernameMandatory.isSelected();
@@ -360,7 +361,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									btnUpdateFrameLocation.setBackground(Color.PINK);
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
-								
 								else if(chckbxAutoUpdate.isSelected()==property.getBoolean("autoupdate",false) && BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false) && CaptureKey_Current.equals(CaptureKey_Prev) && DocPath_Current.equals(DocPath_Previous) && showFolderNameField_Current==showFolderNameField_Previous&& setFoldernameMandatory_Current==setFoldernameMandatory_Previous && ScreenRecording_Current.equals(ScreenRecording_Prev) && (Math.abs(Xvalue_Prev-Xlocation)==0 || Math.abs(Xvalue_Prev-Xlocation)==Xvalue_Prev) && (Math.abs(Yvalue_Prev-Ylocation)==0 || Math.abs(Yvalue_Prev-Xlocation)==Yvalue_Prev)  && ImageFormat_Current.equals(ImageFormat_Prev))
 								{
 									PopUp window = new PopUp("ERROR","error","No changes have been made !!","Ok, I understood","");
@@ -385,9 +385,15 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 										textField_DocDestFolder.setBackground(Color.PINK);
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
-
+								else if(!new File(textField_DocDestFolder.getText()).exists())
+								{
+									PopUp window = new PopUp("ERROR","error","Selected folder not exists. Please Select again","Ok, I understood","");
+									window.setVisible(true);
+									textField_DocDestFolder.setBackground(Color.PINK);
+								}
 								else
 								{
+									textField_DocDestFolder.setBackground(Color.WHITE);
 									isframeupdateTouched=false;
 									property.setProperty("DocPath",DocPath_Current);
 									property.setProperty("showFolderNameField",showFolderNameField_Current);
@@ -461,30 +467,27 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 										if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.getText().equalsIgnoreCase("Rename selected file")&& !SavePanel.chckbxOverwriteSelectedFile.isSelected())
 											ActionGUI.savePanel.btnDone.setVisible(true);
 										
-											ActionGUI.redirectingTabID=0;
-
 											
+											if(ActionGUI.savePanel.saveLoaded && !ActionGUI.savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
+											{
+												ActionGUI.savePanel.btnDone.setVisible(true);
+												ActionGUI.savePanel.textField_ParFol.setBackground(Color.WHITE);
+											}
+											if(ActionGUI.savePanel.saveLoaded && ActionGUI.savePanel.lblChooseFile.isVisible())
+											{
+												ActionGUI.savePanel.lblParFol.setVisible(false);
+												ActionGUI.savePanel.textField_ParFol.setVisible(false);
+											}
+											if(ActionGUI.savePanel.saveLoaded && SavePanel.chckbxOverwriteSelectedFile.isVisible())
+											{
+												ActionGUI.savePanel.textField_Filename.setColumns(16);
+											}											
 										}catch(Exception e58){}
 										
-										TabbledPanel.setSelectedIndex(ActionGUI.redirectingTabID);
 										
-										if(ActionGUI.savePanel.saveLoaded && !ActionGUI.savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
-										{
-											ActionGUI.savePanel.btnDone.setVisible(true);
-											ActionGUI.savePanel.textField_ParFol.setBackground(Color.WHITE);
-										}
-										if(ActionGUI.savePanel.saveLoaded && ActionGUI.savePanel.lblChooseFile.isVisible())
-										{
-											ActionGUI.savePanel.lblParFol.setVisible(false);
-											ActionGUI.savePanel.textField_ParFol.setVisible(false);
-										}
-										if(ActionGUI.savePanel.saveLoaded && SavePanel.chckbxOverwriteSelectedFile.isVisible())
-										{
-											ActionGUI.savePanel.textField_Filename.setColumns(16);
-										}
-										ActionGUI.redirectingTabID=0;
 									}
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e6){}
+									TabbledPanel.setSelectedIndex(0);
 								}
 							}
 						});

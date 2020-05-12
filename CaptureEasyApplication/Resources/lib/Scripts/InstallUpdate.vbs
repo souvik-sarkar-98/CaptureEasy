@@ -1,8 +1,7 @@
 Set filesys=CreateObject("Scripting.FileSystemObject")
 Set shell=CreateObject("Wscript.shell")
-WScript.Sleep(3000)
+		WScript.Sleep(2000)
 Set fopen=filesys.OpenTextFile (WScript.Arguments.Item (2),8,True)
-		
 If Not filesys.FileExists (WScript.Arguments.Item (0)) Then 
 		MsgBox "Update Failed "&vbCrLf&"Source file : "&WScript.Arguments.Item (0)&" Not Found",ok,"File Not Found"
 Else
@@ -24,7 +23,7 @@ Else
 		filesys.CopyFile WScript.Arguments.Item (0), WScript.Arguments.Item (1)
 		If filesys.FileExists (WScript.Arguments.Item (1)) Then
 			fopen.WriteLine ("copied=true")
- 		MsgBox "Successfully Installed. Please resatrt application now",ok,"Success"
+ 		MsgBox "Successfully Installed. Please restart application now",ok,"Success"
 		Else
 			fopen.WriteLine ("copied=false")
 			MsgBox  "Installation Failed. Unable to copy "&WScript.Arguments.Item (0)&" to "&WScript.Arguments.Item (1)& "  Please Try Again.","Failed"

@@ -53,15 +53,20 @@ public class ToastMsg extends JFrame {
 					w.setOpacity(1); 
 					w.setVisible(true); 
 					if (terID==0)
-						do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());		
+					{
+						do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+						for (double d = 1.0; d > 0.2; d -= 0.1) { 
+							Thread.sleep(100); 
+							w.setOpacity((float)d); 
+						} 
+					}
 					else if(terID==1)
 						do{Thread.sleep(100);}while(!ActionGUI.tabLoaded);
+					else
+					{
+						Thread.sleep(1000);
+					}
 					
-					for (double d = 1.0; d > 0.2; d -= 0.1) { 
-						Thread.sleep(100); 
-						w.setOpacity((float)d); 
-					} 
-					// set the visibility to false 
 					w.setVisible(false); 
 					w.dispose();
 				} 
@@ -72,6 +77,5 @@ public class ToastMsg extends JFrame {
 			}
 			
 		}).start();
-		System.out.println("Hiii");
 	} 
 } 

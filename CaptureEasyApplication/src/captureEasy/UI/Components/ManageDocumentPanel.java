@@ -5,9 +5,8 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,14 +17,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -34,11 +34,12 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
-
 import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
-
+import captureEasy.Resources.PathsNKeys;
 import captureEasy.UI.ActionGUI;
+import captureEasy.UI.PopUp;
+
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
@@ -51,8 +52,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import java.awt.event.MouseAdapter;
+import javax.swing.JTextField;
 
-public class ManageDocumentPanel extends Library implements MouseListener,MouseMotionListener{
+public class ManageDocumentPanel extends Library {
 
 
 
@@ -61,12 +63,13 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 
 	/** Main GUI container */
 	public JPanel gui;
-
+	public static boolean changed=false;
 	/** Directory listing */
 	/** Table model for File[]. */
 	public FileTableModel fileTableModel;
 	public boolean cellSizesSet = false;
-	public int rowIconPadding = 8;
+	//
+	public static int rowIconPadding = 8,pointer=-1;
 
 	/* File controls. */
 	public JButton openFile;
@@ -75,7 +78,6 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 
 	/* File details. */
 	public JLabel fileName;
-	public JTextField path;
 	public JLabel date;
 	public JLabel size;
 	public JCheckBox readable;
@@ -84,12 +86,11 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 	public JRadioButton isDirectory;
 	public JRadioButton isFile;
 	public DefaultMutableTreeNode root;
-
+	public File RFile;
 
 	public JPanel DocumentScrollPane;
-	public static List<String> monthList=new ArrayList<String>();
-	public static List<String> dayList=new ArrayList<String>();
-	public static ArrayList<ArrayList<File>> Filelist=new ArrayList<ArrayList<File>>();
+	//
+	public static List<String> pathTraverse=new ArrayList<String>();
 	File files;
 	public FileSystemView fileSystemView;
 	public Desktop desktop;
@@ -98,13 +99,13 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 	public DefaultTreeModel treeModel;
 	public JTree tree;
 	public JPanel panel_View;
-	public JTextField textField;
+	public TextField textField;
 	public JLabel lblCross;
 	public JLabel label_SearchBtn;
-	public JLabel label_delete;
-	public JLabel label_rename;
+	public JLabel label_Kebab;
+	public JLabel label_Forword;
 	public JLabel label_createFolder;
-	public JLabel label_Export;
+	public JLabel label_Back;
 	private JScrollPane ScrollPane_Table;
 	private JScrollPane scrollPane_Tree;
 	public TreeSelectionListener treeSelectionListener;
@@ -114,6 +115,17 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 	public JPanel panel_Selection;
 
 	public boolean isloaded=false;
+
+	private JPopupMenu popupMenu;
+
+	private JMenuItem menuItemAdd;
+
+	private JMenuItem menuItemRemove;
+
+	private JMenuItem menuItemRemoveAll;
+	public static JTextField textField_Path;
+	private JLabel label_refesh;
+	private JLabel label_refresh;
 	public ManageDocumentPanel(JTabbedPane TabbledPanel)
 	{
 		this.TabbledPanel=TabbledPanel;
@@ -127,19 +139,35 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 			DocumentScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 			DocumentScrollPane.setBackground(Color.WHITE);
 			DocumentScrollPane.setSize(new Dimension(437, 315));
-			DocumentScrollPane.addMouseListener(this);
-			DocumentScrollPane.addMouseMotionListener(this);
+			DocumentScrollPane.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e) {
+					ActionGUI.xxDialog = e.getX();
+					ActionGUI.xyDialog = e.getY();
+				}
+			});
+			DocumentScrollPane.addMouseMotionListener(new MouseAdapter(){
+				public void mouseDragged(MouseEvent arg0) {
+					ActionGUI.xDialog = arg0.getXOnScreen();
+					ActionGUI.yDialog = arg0.getYOnScreen();
+					ActionGUI.dialog.setLocation(ActionGUI.xDialog - ActionGUI.xxDialog, ActionGUI.yDialog - ActionGUI.xyDialog); 		
+				}
+			});
 			DocumentScrollPane.setLayout(null);
 		}
-		
+
+		/*
+		loadDocumentsTab(RFile.getAbsolutePath());
+		DocumentScrollPane.add(panel_Selection);
+		DocumentScrollPane.add(panel_View);
+		///*/
 
 	}
 
-	public void loadDocumentsTab() 
+	public void loadDocumentsTab(String Path) 
 	{
 		panel_Selection = new JPanel();
 		panel_Selection.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel_Selection.setBounds(10, 10, 415, 40);
+		panel_Selection.setBounds(10, 10, 415, 38);
 		panel_Selection.setLayout(null);
 
 		lblCross = new JLabel("");
@@ -148,101 +176,203 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 
 		lblCross.setToolTipText("Close window");
 		try {
-			lblCross.setIcon(new ImageIcon(ImageIO.read(new File(exitIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
+			lblCross.setIcon(new ImageIcon(ImageIO.read(new File(exitIcon)).getScaledInstance(18,18, java.awt.Image.SCALE_SMOOTH)));
 		} catch (IOException e1) {
 			logError(e1,"Exception in Icon loading: Image "+exitIcon+" Not Available");}
-	
-	lblCross.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			if(lblCross.isEnabled())
-			{
-				ActionGUI.dialog.dispose();
-				ActionGUI.leaveControl=true;
-				try{Application.sensor.play();}catch(Exception e){};
+
+		lblCross.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(lblCross.isEnabled())
+				{
+					ActionGUI.dialog.dispose();
+					ActionGUI.leaveControl=true;
+					try{Application.sensor.play();}catch(Exception e){};
+				}
 			}
+		});
+		textField_Path = new JTextField(Path);
+		textField_Path.setEditable(true);
+		textField_Path.setToolTipText(textField_Path.getText());
+		textField_Path.setBounds(63, 8, 135, 22);
+		panel_Selection.add(textField_Path);
+		textField_Path.setColumns(10);
+		label_refresh = new JLabel("");
+		label_refresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				textField_Path.setToolTipText(textField_Path.getText());
+				changed=new File(textField_Path.getText()).exists();
+					if(new File(textField_Path.getText()).exists())
+					{
+						/*textField_Path.setBackground(Color.WHITE);
+						DocumentScrollPane.remove(panel_View);
+					    loadDocumentsTab(textField_Path.getText());
+						DocumentScrollPane.add(panel_View);
+						showRootFile();*/
+					}
+					else
+						textField_Path.setBackground(Color.PINK);
+			}
+		});
+		label_refresh.setBounds(200, 8, 20, 22);
+		panel_Selection.add(label_refresh);
+		try {
+			label_refresh.setIcon(new ImageIcon(ImageIO.read(new File(refreshIcon)).getScaledInstance(18,18, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+refreshIcon+" Not Available");
 		}
-	});
 
-	label_SearchBtn = new JLabel("");
-	label_SearchBtn.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		textField = new TextField();
+		textField.setPlaceholder(" Search...");
+		textField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField.setToolTipText("Enter search key");
+		textField.setBounds(270, 8, 85, 22);
+		panel_Selection.add(textField);
+		textField.setColumns(10);
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(230, 230, 250));
+		panel.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
+		panel.setBounds(355, 8, 20, 22);
+		panel_Selection.add(panel);
+		panel.setLayout(null);
+
+		label_SearchBtn = new JLabel("");
+		label_SearchBtn.setBackground(new Color(255, 255, 204));
+		label_SearchBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!textField.getText().replaceAll("\\s", "").equals(""))
+				{
+					setTableData(search(textField.getText()));
+				}
+			}
+		});
+		label_SearchBtn.setBounds(1, 1, 20, 20);
+		panel.add(label_SearchBtn);
+		label_SearchBtn.setToolTipText("Search ");
+		try {
+			label_SearchBtn.setIcon(new ImageIcon(ImageIO.read(new File(searchIcon)).getScaledInstance(18,18, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+searchIcon+" Not Available");
 		}
-	});
-	label_SearchBtn.setToolTipText("Search ");
-	label_SearchBtn.setBounds(340, 8, 25, 25);
-	panel_Selection.add(label_SearchBtn);
-	try {
-		label_SearchBtn.setIcon(new ImageIcon(ImageIO.read(new File(searchIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-	} catch (IOException e1) {
-		logError(e1,"Exception in Icon loading: Image "+searchIcon+" Not Available");
-	}
-	textField = new JTextField();
-	textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	textField.setToolTipText("Enter search key");
-	textField.setBounds(235, 7, 100, 22);
-	panel_Selection.add(textField);
-	textField.setColumns(10);
 
-	label_delete = new JLabel("");
-	label_delete.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
+		label_Kebab = new JLabel("");
+		label_Kebab.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
+		label_Kebab.addMouseListener(new MouseAdapter(){
+			//public void mouseClicked()
+			{
+				
+			}
+		});
+		label_Kebab.setToolTipText("Click here to expand menu");
+		label_Kebab.setBounds(248, 9, 20, 20);
+		panel_Selection.add(label_Kebab);
+
+		try {
+			label_Kebab.setIcon(new ImageIcon(ImageIO.read(new File(kebabIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+kebabIcon+" Not Available");
+
 		}
-	});
-	label_delete.setToolTipText("Delete selected file");
-	label_delete.setBounds(195, 7, 25, 25);
-	panel_Selection.add(label_delete);
-	try {
-		label_delete.setIcon(new ImageIcon(ImageIO.read(new File(deleteIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-	} catch (IOException e1) {
-		logError(e1,"Exception in Icon loading: Image "+deleteIcon+" Not Available");
 
-	}
+		label_createFolder = new JLabel("");
+		label_createFolder.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		label_createFolder.setToolTipText("Create a new folder");
+		label_createFolder.setBounds(225, 9, 20, 20);
+		panel_Selection.add(label_createFolder);
+		try {
+			label_createFolder.setIcon(new ImageIcon(ImageIO.read(new File(createfolderIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
 
-	label_rename = new JLabel("");
-	label_rename.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+createfolderIcon+" Not Available");
+
 		}
-	});
-	label_rename.setToolTipText("Rename selected file");
-	label_rename.setBounds(160, 7, 25, 25);
-	try {
-		label_rename.setIcon(new ImageIcon(ImageIO.read(new File(renameIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-	} catch (IOException e1) {
-		logError(e1,"Exception in Icon loading: Image "+renameIcon+" Not Available");
-	}
-	panel_Selection.add(label_rename);
 
-	label_createFolder = new JLabel("");
-	label_createFolder.setToolTipText("Create a new folder");
-	label_createFolder.setBounds(125, 7, 25, 25);
-	panel_Selection.add(label_createFolder);
-	try {
-		label_createFolder.setIcon(new ImageIcon(ImageIO.read(new File(createfolderIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
+		label_Back = new JLabel("");
+		label_Back.setEnabled(false);
+		label_Back.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//pathTraverse
+				 if (pointer > 0) {
+						label_Forword.setEnabled(true);
+					 	pointer--;
+			            String path = pathTraverse.get(pointer);
+			            System.out.println(path + " Switch");
+			            setTableData(new File(path).listFiles());
+			            textField_Path.setText(path);
+			            panel_View.revalidate();
+			            panel_View.repaint();
+			        }
+				 else
+				 {
+						label_Back.setEnabled(false);
+				 }
+			}
+		});
+		label_Back.setToolTipText("Back");
+		label_Back.setBounds(9, 9, 20, 20);
+		panel_Selection.add(label_Back);
+		try {
+			label_Back.setIcon(new ImageIcon(ImageIO.read(new File(leftarrowIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+leftarrowIcon+" Not Available");
 
-	} catch (IOException e1) {
-		logError(e1,"Exception in Icon loading: Image "+createfolderIcon+" Not Available");
-
-	}
-
-	label_Export = new JLabel("");
-	label_Export.setToolTipText("Export selected files to folder");
-	label_Export.setBounds(90, 7, 25, 25);
-	panel_Selection.add(label_Export);
-	try {
-		label_Export.setIcon(new ImageIcon(ImageIO.read(new File(exportIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
-
-	} catch (IOException e1) {
-		logError(e1,"Exception in Icon loading: Image "+exportIcon+" Not Available");
-
-	}
+		}
+		
+		label_Forword = new JLabel("");
+		label_Forword.setEnabled(false);
+		label_Forword.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (pointer < pathTraverse.size()) {
+				 	pointer++;
+		            String path = pathTraverse.get(pointer);
+		            System.out.println(path + " Switch");
+		            setTableData(new File(path).listFiles());
+		            textField_Path.setText(path);
+		            panel_View.revalidate();
+		            panel_View.repaint();
+		        }
+			 else
+			 {
+					label_Forword.setEnabled(false);
+			 }
+			}
+		});
+		label_Forword.setToolTipText("Forword");
+		label_Forword.setBounds(37, 9, 20, 20);
+		try {
+			label_Forword.setIcon(new ImageIcon(ImageIO.read(new File(rightarrowIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+rightarrowIcon+" Not Available");
+		}
+		panel_Selection.add(label_Forword);
+		
+		label_refesh = new JLabel("");
+		label_refesh.setBackground(Color.WHITE);
+		label_refesh.setBounds(200, 8, 20, 22);
+		try {
+			label_refesh.setIcon(new ImageIcon(ImageIO.read(new File(refreshIcon)).getScaledInstance(20,22, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			logError(e1,"Exception in Icon loading: Image "+refreshIcon+" Not Available");
+		panel_Selection.add(label_refesh);
+		}
 		try{
 			panel_View = new JPanel();
 			panel_View.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-			panel_View.setBounds(10, 57, 415, 245);
+			panel_View.setBounds(10, 55, 415, 250);
 			fileSystemView = FileSystemView.getFileSystemView();
 			desktop = Desktop.getDesktop();
 
@@ -256,18 +386,15 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 
 					DefaultMutableTreeNode node =(DefaultMutableTreeNode)tse.getPath().getLastPathComponent();
 					showChildren(node);
-					System.out.println(/*(File)node.getUserObject()*/ tse.getPath());
-					System.out.println(tse.getPath().getLastPathComponent());
-
 				}
 			};
 
-			String DocUMENTpATH=property.getString("DocPath");
-			if(DocUMENTpATH==null || "".equals(DocUMENTpATH.replaceAll("\\s", "")))
+			String DocUMENTpATH=textField_Path.getText();
+			if(DocUMENTpATH==null || "".equals(DocUMENTpATH.replaceAll("\\s", "")) && !new File(DocUMENTpATH).exists())
 			{
 				throw new Exception();
 			}
-			File RFile=new File (DocUMENTpATH);
+			RFile=new File (DocUMENTpATH);
 
 			// show the file system roots.
 			File[] roots =new SingleRootFileSystemView(RFile).getRoots();
@@ -286,8 +413,8 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 			panel_View.setLayout(null);
 
 			splitPane_View = new JSplitPane();
-			splitPane_View.setBounds(5, 5, 405, 235);
-			splitPane_View.setDividerLocation(175);
+			splitPane_View.setBounds(5, 5, 405, 240);
+			splitPane_View.setDividerLocation(150);
 			panel_View.add(splitPane_View);
 			scrollPane_Tree = new JScrollPane();
 			splitPane_View.setLeftComponent(scrollPane_Tree);
@@ -310,15 +437,29 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 			table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			table.setAutoCreateRowSorter(true);
 			table.setShowVerticalLines(false);
+			popupMenu = new JPopupMenu();
+	        menuItemAdd = new JMenuItem("Add New Row");
+	        menuItemRemove = new JMenuItem("Remove Current Row");
+	        menuItemRemoveAll = new JMenuItem("Remove All Rows");
+	         
+	        /*menuItemAdd.addActionListener(this);
+	        menuItemRemove.addActionListener(this);
+	        menuItemRemoveAll.addActionListener(this);*/
+	         
+	        popupMenu.add(menuItemAdd);
+	        popupMenu.add(menuItemRemove);
+	        popupMenu.add(menuItemRemoveAll);
+
+			table.setComponentPopupMenu(popupMenu);
+			table.addMouseListener(new TableMouseListener(table));
 			table.getSelectionModel().addListSelectionListener(listSelectionListener);
 			ScrollPane_Table = new JScrollPane(table);
 			splitPane_View.setRightComponent(ScrollPane_Table);
 			listSelectionListener = new ListSelectionListener() {
 				@Override
 				public void valueChanged(ListSelectionEvent lse) {
-					//int row = table.getSelectionModel().getLeadSelectionIndex();
 
-					////System.out.println(  );
+					//System.out.println( row );
 				}
 			};
 			table.addMouseListener(new MouseAdapter() {
@@ -330,15 +471,27 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 						try {
 							desktop.open(((FileTableModel)table.getModel()).getFile(row));
 						} catch (IOException e1) {
+							new PopUp("ERROR","error",e1.getMessage().replace(((FileTableModel)table.getModel()).getFile(row).getPath(), ""),"Okay","").setVisible(true);
 							logError(e1,"Exception occured while opening file "+((FileTableModel)table.getModel()).getFile(row));
-
 						}
 					}
 					else if (e.getClickCount() == 2 && column==1) {
 						try {
 							desktop.open(((FileTableModel)table.getModel()).getFile(row));
 						} catch (IOException e1) {
-							logError(e1,"Exception occured while opening file "+((FileTableModel)table.getModel()).getFile(row));
+							new PopUp("ERROR","error",e1.getMessage().replace(((FileTableModel)table.getModel()).getFile(row).getPath(), ""),"Okay","").setVisible(true);
+							logError(e1,"Exception occured while opening file "+((FileTableModel)table.getModel()).getFile(row));						}
+					}
+					else if (e.getClickCount() == 1 && column==1) {
+						if(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).isDirectory())
+						{
+							setTableData(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).listFiles());
+							label_Back.setEnabled(true);
+				            textField_Path.setText(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).getAbsolutePath());
+				           /* for(int i=pointer;i<pathTraverse.size();i++)
+				            	pathTraverse.remove(i);*/
+				            pathTraverse.add(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).getAbsolutePath());
+							pointer++;
 						}
 					}
 				}
@@ -351,48 +504,7 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 		//lblCross.setEnabled(false);
 	}
 
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		ActionGUI.xDialog = arg0.getXOnScreen();
-		ActionGUI.yDialog = arg0.getYOnScreen();
-		ActionGUI.dialog.setLocation(ActionGUI.xDialog - ActionGUI.xxDialog, ActionGUI.yDialog - ActionGUI.xyDialog); 		
-	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		ActionGUI.xxDialog = e.getX();
-		ActionGUI.xyDialog = e.getY();
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 
 
 
@@ -407,23 +519,50 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 			Object object = treePath.getLastPathComponent();
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode)object;
 			File nodeFile = (File)node.getUserObject();
-
 			if (nodeFile==find) {
 				return treePath;
 			}
 		}
-		// not found!
 		return null;
 	}
-
-	public void showErrorMessage(String errorMessage, String errorTitle) {
-		JOptionPane.showMessageDialog(
-				panel_View,
-				errorMessage,
-				errorTitle,
-				JOptionPane.ERROR_MESSAGE
-				);
+	static List<File> fileList= new ArrayList<File>();
+	public File[] search(String key)
+	{
+		List<File> result= new ArrayList<File>();
+		try {
+			fileList.clear();
+			fileList(RFile);
+			for(File file:fileList)
+			{
+				if(file.getName().toLowerCase().contains(key.toLowerCase()))
+				{
+					result.add(file);
+					System.out.println(file.getAbsolutePath());
+				}
+			}
+			return result.toArray(new File[result.size()]);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
+	private void fileList(File file) throws IOException
+	{
+		File[] files= file.listFiles();
+		for(File f:files)
+		{
+			if(f.isDirectory())
+			{
+				fileList(f);
+			}
+			else
+			{
+				fileList.add(f);
+			}
+		}	
+	} 
+
+
 
 	public void showThrowable(Throwable t) {
 		t.printStackTrace();
@@ -457,6 +596,13 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 						}
 					}
 					setTableData(files);
+
+					label_Back.setEnabled(true);
+					textField_Path.setText(file.getAbsolutePath());
+					pathTraverse.add(file.getAbsolutePath());
+					/*for(int i=pointer;i<pathTraverse.size();i++)
+		            	pathTraverse.remove(i);*/
+					pointer++;
 				}
 				return null;
 			}
@@ -492,25 +638,19 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 				table.getSelectionModel().removeListSelectionListener(listSelectionListener);
 				fileTableModel.setFiles(files);
 				table.getSelectionModel().addListSelectionListener(listSelectionListener);
-				if (!cellSizesSet) {
+				if (files.length>0) {
 					Icon icon = fileSystemView.getSystemIcon(files[0]);
-
-					// size adjustment to better account for CaptureEasy\\Resources\\Icons
 					table.setRowHeight( icon.getIconHeight()+rowIconPadding );
-					/*table.getColumnModel().getColumn(0).setWidth(10);
-					table.getColumnModel().getColumn(1).setWidth(50);
-					table.getColumnModel().getColumn(2).setWidth(10);*/
-					/*setColumnWidth(0,-1);
-					setColumnWidth(1,-1);
-					setColumnWidth(2,-1);*/
-					setJTableColumnsWidth(table,200,10,50,10);
 					cellSizesSet = true;
 				}
+				setJTableColumnsWidth(table,200,10,50,10);
+
 			}
 		});
 	}
 	public static void setJTableColumnsWidth(JTable table, int tablePreferredWidth,
 			double... percentages) {
+
 		double total = 0;
 		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
 			total += percentages[i];
@@ -536,9 +676,6 @@ public class ManageDocumentPanel extends Library implements MouseListener,MouseM
 		tableColumn.setMaxWidth(width);
 		tableColumn.setMinWidth(width);
 	}
-
-
-
 }
 
 /** A TableModel to hold File[]. */
@@ -576,8 +713,9 @@ class FileTableModel extends AbstractTableModel {
 			return fileSystemView.getSystemDisplayName(file);	
 		case 2:
 			try {
-				return new ImageIcon(ImageIO.read(new File("C:/Users/USER/Desktop/Icons/open.png")).getScaledInstance(15,15, java.awt.Image.SCALE_SMOOTH));
+				return new ImageIcon(ImageIO.read(new File (PathsNKeys.openIcon)).getScaledInstance(15,15, java.awt.Image.SCALE_SMOOTH));
 			} catch (IOException e) {
+				Library.logError(e,"Exception in Icon loading: Image "+PathsNKeys.openIcon+" Not Available");
 			}
 		default:
 			//System.out.println("Logic Error "+row+"   "+column);
@@ -653,9 +791,9 @@ class FileTreeCellRenderer extends DefaultTreeCellRenderer {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
 		File file = (File)node.getUserObject();
 		label.setIcon(fileSystemView.getSystemIcon(file));
-		label.setText(fileSystemView.getSystemDisplayName(file));
-		//label.setToolTipText(file.getPath());
 
+
+		label.setText(fileSystemView.getSystemDisplayName(file));
 		if (selected) {
 			label.setBackground(backgroundSelectionColor);
 			label.setForeground(textSelectionColor);
@@ -663,7 +801,19 @@ class FileTreeCellRenderer extends DefaultTreeCellRenderer {
 			label.setBackground(backgroundNonSelectionColor);
 			label.setForeground(textNonSelectionColor);
 		}
-
 		return label;
+	}
+
+}
+class TableMouseListener extends MouseAdapter {
+	private JTable table;
+	public TableMouseListener(JTable table) {
+		this.table = table;
+	}
+	@Override
+	public void mousePressed(MouseEvent event) {
+		Point point = event.getPoint();
+		int currentRow = table.rowAtPoint(point);
+		table.setRowSelectionInterval(currentRow, currentRow);
 	}
 }
