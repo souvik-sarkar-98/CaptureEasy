@@ -14,6 +14,7 @@ public class PathsNKeys{
 	/**
 	 *@ Property file path
 	 */
+	
 	public final static String PropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Properties\\Application.properties");
 	public final static String versionInfoFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Properties\\SoftwareUpdate.properties");
 	public final static String Log4jPropertyFilePath=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\Properties\\Log4j.properties");

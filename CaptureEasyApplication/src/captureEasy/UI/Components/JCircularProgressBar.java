@@ -13,6 +13,7 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 
 public class JCircularProgressBar extends BasicProgressBarUI implements Runnable{
 
+	
 	public static JProgressBar progress;
 	@Override 
 	public Dimension getPreferredSize(JComponent c) {

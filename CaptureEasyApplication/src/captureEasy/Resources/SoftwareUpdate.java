@@ -32,6 +32,7 @@ public class SoftwareUpdate extends Library {
 	private double currentProgress;
 	public static  boolean doUpdate=true,isInstalled=true;
 
+	
 	public SoftwareUpdate() {
 		try {
 			this.JSONObj = new JSONObject(GET(versionInfo.getString( "URL",gitHubBaseURL))); 

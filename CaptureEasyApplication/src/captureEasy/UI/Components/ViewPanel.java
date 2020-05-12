@@ -26,6 +26,7 @@ import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 
 public class ViewPanel extends Library implements MouseListener,MouseMotionListener{
+	
 	public JPanel ViewScrollPane;
 	public JPanel panel_Image;
 	public static JLabel ImageLabel;

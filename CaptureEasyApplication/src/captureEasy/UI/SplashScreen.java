@@ -25,6 +25,7 @@ public class SplashScreen extends Library{
 	public JDialog frame;
 	public static boolean displaySplash=true;
 
+	
 	/**
 	 * Launch the application.
 	 */

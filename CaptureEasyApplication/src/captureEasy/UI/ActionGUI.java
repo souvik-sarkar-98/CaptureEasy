@@ -294,7 +294,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			else if(ManageDocumentPanel.changed)
 			{
 				System.out.println("this is me");
-				/**/
+				
 			}
 			tabLoaded=true;
 		}

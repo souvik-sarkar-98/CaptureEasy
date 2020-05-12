@@ -23,7 +23,7 @@ import captureEasy.UI.SensorGUI;
 
 public class DetectKeypress extends Library implements NativeKeyListener  {
 	int key=0;
-
+	//
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
 		String captureKey=property.getString("CaptureKey","PrtSc");

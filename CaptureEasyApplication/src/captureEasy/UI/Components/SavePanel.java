@@ -821,6 +821,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					new PopUp("ERROR","error", "A folder name can not contain any of the following "
 							+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
 			}
+			
 			else if (rdbtnSavePDF.isSelected() && new File(getSubFolders(property.getString("DocPath"),textField_ParFol.getText()) + "\\" + newFileName + ".pdf").exists()) 
 			{
 				btnDone.setVisible(false);

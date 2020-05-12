@@ -42,6 +42,7 @@ public class SensorGUI extends Library{
 
 	/**
 	 * 
+	 * 
 	 */
 	public static int xx,xy,x,y;
 	JPopupMenu popupMenu;

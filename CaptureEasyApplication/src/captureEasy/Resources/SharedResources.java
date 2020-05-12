@@ -18,6 +18,7 @@ import captureEasy.UI.PopUp;
 
 public class SharedResources extends PathsNKeys {
 
+	
 	public static Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Logger logger = Logger.getLogger(PathsNKeys.class);
 	public static boolean PauseThread=false;

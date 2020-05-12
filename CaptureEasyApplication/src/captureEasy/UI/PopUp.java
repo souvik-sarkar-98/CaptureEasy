@@ -34,9 +34,6 @@ import java.awt.event.ActionEvent;
 
 public class PopUp extends JDialog{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	int xx,xy;
 	public static boolean control=true;

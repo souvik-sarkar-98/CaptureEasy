@@ -6,7 +6,6 @@ import javax.swing.text.Document;
 
 @SuppressWarnings("serial")
 public class TextField extends JTextField {
-
     
     private String placeholder;
 

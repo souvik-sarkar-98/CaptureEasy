@@ -55,6 +55,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	int Xlocation,Ylocation;
 	SensorGUI sen;
 	PopUp pop;
+	
 	public static String DocPath_Previous=null;
 	public JComboBox<?> comboBox_CaptureKey;
 	public JButton CancelBtn;

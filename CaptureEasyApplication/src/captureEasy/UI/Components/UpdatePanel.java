@@ -19,6 +19,7 @@ import captureEasy.UI.ActionGUI;
 import javax.swing.JLabel;
 
 public class UpdatePanel extends Library implements MouseListener,MouseMotionListener{
+	
 	public JPanel panel_Update;
 	public JPanel panel_UpdateNo;
 	int saveTabIndex=0;

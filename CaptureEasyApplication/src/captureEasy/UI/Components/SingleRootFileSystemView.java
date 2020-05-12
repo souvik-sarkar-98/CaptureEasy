@@ -8,6 +8,7 @@ import javax.swing.filechooser.FileSystemView;
  */
 public class SingleRootFileSystemView extends FileSystemView
 {
+	
 
 	/** The root. */
 	File root;

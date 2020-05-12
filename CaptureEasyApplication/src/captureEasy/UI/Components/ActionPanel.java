@@ -21,6 +21,7 @@ import captureEasy.Resources.Library;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.SensorGUI;
 
+
 public class ActionPanel extends Library implements MouseListener,MouseMotionListener{
 	public JPanel ActionPanel;
 	public static JPanel panel_4;
