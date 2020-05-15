@@ -39,6 +39,7 @@ import captureEasy.Resources.Library;
 import captureEasy.Resources.PathsNKeys;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
+import captureEasy.UI.ToastMsg;
 
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
@@ -69,7 +70,7 @@ public class ManageDocumentPanel extends Library {
 	public FileTableModel fileTableModel;
 	public boolean cellSizesSet = false;
 	//
-	public static int rowIconPadding = 8,pointer=-1;
+	public int rowIconPadding = 8,pointer=-1;
 
 	/* File controls. */
 	public JButton openFile;
@@ -90,7 +91,8 @@ public class ManageDocumentPanel extends Library {
 
 	public JPanel DocumentScrollPane;
 	//
-	public static List<String> pathTraverse=new ArrayList<String>();
+	public List<String> pathTraverse=new ArrayList<String>();
+	public static File[] searchResult=null;
 	File files;
 	public FileSystemView fileSystemView;
 	public Desktop desktop;
@@ -241,14 +243,22 @@ public class ManageDocumentPanel extends Library {
 		label_SearchBtn = new JLabel("");
 		label_SearchBtn.setBackground(new Color(255, 255, 204));
 		label_SearchBtn.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(!textField.getText().replaceAll("\\s", "").equals(""))
 				{
-					setTableData(search(textField.getText()));
+					if(ActionGUI.dialog.isVisible())
+					{
+						searchResult=null;
+						new ToastMsg("Searching...     ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2).showToast(2);
+					}
+					searchResult=search(textField.getText());
+					setTableData(searchResult);
 				}
 			}
 		});
+		label_SearchBtn.requestFocusInWindow();
 		label_SearchBtn.setBounds(1, 1, 20, 20);
 		panel.add(label_SearchBtn);
 		label_SearchBtn.setToolTipText("Search ");
@@ -553,6 +563,7 @@ public class ManageDocumentPanel extends Library {
 		{
 			if(f.isDirectory())
 			{
+				fileList.add(f);
 				fileList(f);
 			}
 			else

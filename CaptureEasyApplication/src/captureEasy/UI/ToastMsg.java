@@ -1,7 +1,9 @@
 package captureEasy.UI;
 
 import java.awt.*; 
-import javax.swing.*; 
+import javax.swing.*;
+
+import captureEasy.UI.Components.ManageDocumentPanel; 
 public class ToastMsg extends JFrame { 
 
 	
@@ -63,6 +65,10 @@ public class ToastMsg extends JFrame {
 					}
 					else if(terID==1)
 						do{Thread.sleep(100);}while(!ActionGUI.tabLoaded);
+					else if(terID==2)
+					{
+						do{Thread.sleep(100);}while(ManageDocumentPanel.searchResult==null);
+					}
 					else
 					{
 						Thread.sleep(1000);

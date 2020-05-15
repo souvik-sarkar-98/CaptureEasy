@@ -280,6 +280,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_Selection);
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
 					documentPanel.showRootFile();
+					documentPanel.label_SearchBtn.requestFocusInWindow();
 				}catch(Exception e){
 					logError(e,"Exception occured while loading Manage documents tab");
 				}
@@ -290,6 +291,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				documentPanel.loadDocumentsTab(property.getString("DocPath",""));
 				documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
 				documentPanel.showRootFile();
+				documentPanel.label_SearchBtn.requestFocusInWindow();
 			}
 			else if(ManageDocumentPanel.changed)
 			{

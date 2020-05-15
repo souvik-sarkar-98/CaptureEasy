@@ -52,7 +52,6 @@ import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
 import captureEasy.UI.SplashScreen;
-import captureEasy.UI.Components.ManageDocumentPanel;
 import captureEasy.UI.Components.SavePanel;
 
 
@@ -611,14 +610,6 @@ public class Library extends SharedResources
 						}
 					}catch(Exception e){}
 					SplashScreen.displaySplash=false;
-					for(int i=0;i<ManageDocumentPanel.pathTraverse.size();i++)
-					System.out.println(ManageDocumentPanel.pathTraverse.get(i) +"   "+ManageDocumentPanel.pointer);
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				}
 			}
 		}).start();
