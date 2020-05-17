@@ -56,6 +56,7 @@ public class SensorGUI extends Library{
 	ActionGUI act;
 	public static PopUp window;
 	public JLabel label_Settings;
+	public static boolean isRecording=false;
 
 	public static boolean isExpandable=true;
 	Dimension size= new Dimension(50,50);
@@ -147,7 +148,7 @@ public class SensorGUI extends Library{
 		button_panel = new JPanel();
 		button_panel.setBorder(null);
 		button_panel.setBackground(Color.WHITE);
-		button_panel.setBounds(0, 115, 54, 438);
+		button_panel.setBounds(0, 115, 54, 500);
 		Main_panel.add(button_panel);
 		button_panel.setLayout(null);
 		button_panel.setBackground(new Color(0,0,0,0));
@@ -239,7 +240,15 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
+					new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+					{
+						private static final long serialVersionUID = 1L;
+						public void terminationLogic() throws InterruptedException
+						{
+							do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+						}
+						
+					}.showToast();
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Document");
 					if(!IsEmpty(property.getString("TempPath")))
@@ -256,6 +265,8 @@ public class SensorGUI extends Library{
 				else
 				{
 					ActionGUI.dialog.setAlwaysOnTop(true);
+					if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+						ActionGUI.dialog.setState(JFrame.NORMAL);
 				}
 			}
 		});
@@ -283,34 +294,35 @@ public class SensorGUI extends Library{
 						new Timer(1000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
-								p.dispose();
+								PopUp.PopDia.dispose();
 							}
 						}).start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+						{
+							private static final long serialVersionUID = 1L;
+							public void terminationLogic() throws InterruptedException
+							{
+								do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+							}
+						}.showToast();
 						List<String> tabs=new ArrayList<String>();
 						tabs.add("View");
 						tabs.add("Save");
 						tabs.add("Document");
 						tabs.add("Settings");
-						try {
-							//Thread.sleep(2000);
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
 						new ActionGUI(tabs);
-
-
 						ActionGUI.dialog.setVisible(true);
 					}
 				}
 				else
 				{
 					ActionGUI.dialog.setAlwaysOnTop(true);
+					if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+						ActionGUI.dialog.setState(JFrame.NORMAL);
 				}
 			}
 		});
@@ -339,14 +351,21 @@ public class SensorGUI extends Library{
 						new Timer(1000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
-								p.dispose();
+								PopUp.PopDia.dispose();
 							}
 						}).start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
+						ToastMsg tm =new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15){
+							private static final long serialVersionUID = 1L;
+							public void terminationLogic() throws InterruptedException
+							{
+								do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+							}
+						};
+						tm.showToast();
 
 						List<String> tabs=new ArrayList<String>();
 						tabs.add("Save");
@@ -365,6 +384,8 @@ public class SensorGUI extends Library{
 				else
 				{
 					ActionGUI.dialog.setAlwaysOnTop(true);
+					if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+						ActionGUI.dialog.setState(JFrame.NORMAL);
 				}
 			}
 		});
@@ -387,13 +408,20 @@ public class SensorGUI extends Library{
 				{
 					if(IsEmpty(property.getString("TempPath")))
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(2);
+						new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+						{ 
+							private static final long serialVersionUID = 1L;
+							public void terminationLogic() throws InterruptedException
+							{
+								do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+							}
+						}.showToast();
 						PopUp p=new PopUp("INFORMATION","Info","You have nothing to delete !! ","Ok, I understood","");
 						p.setVisible(true);
 						new Timer(1000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
-								p.dispose();
+								PopUp.PopDia.dispose();
 							}
 						}).start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
@@ -413,6 +441,8 @@ public class SensorGUI extends Library{
 				else
 				{
 					ActionGUI.dialog.setAlwaysOnTop(true);
+					if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+						ActionGUI.dialog.setState(JFrame.NORMAL);
 				}
 			}
 		});
@@ -479,8 +509,8 @@ public class SensorGUI extends Library{
 					}
 					else
 					{
-						frame.setSize(new Dimension(54, 500));
-						Main_panel.setSize(new Dimension(54, 500));
+						frame.setSize(new Dimension(54, 560));
+						Main_panel.setSize(new Dimension(54, 560));
 						button_panel.setVisible(true);
 						label_Menu.setToolTipText("Click here to collapse");
 					}
@@ -509,18 +539,18 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15).showToast(0);
+					new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+					{
+						private static final long serialVersionUID = 1L;
+						public void terminationLogic() throws InterruptedException
+						{
+							do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+						}
+					}.showToast();
 
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Settings");
 					tabs.add("Update");
-					/*if(!IsEmpty(property.getString("TempPath")))
-					{
-						tabs.add("Save");
-						tabs.add("View");
-					}
-					tabs.add("Document");*/
-
 					new ActionGUI(tabs);
 
 					ActionGUI.dialog.setVisible(true);	
@@ -528,22 +558,68 @@ public class SensorGUI extends Library{
 				else
 				{
 					ActionGUI.dialog.setAlwaysOnTop(true);
+					if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+						ActionGUI.dialog.setState(JFrame.NORMAL);
 				}
 			}
 		});
 		label_Settings.setToolTipText("Click Here for settings");
-
+		//
 		try{
 			label_Settings.setIcon(new ImageIcon(ImageIO.read(new File(settingIcon)).getScaledInstance(size.width,size.height, java.awt.Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			label_Settings.setText("Settings");
 			logError(e,"Exception in Icon loading: Image "+settingIcon+" Not Available");
 		}
+		
+				label_Record = new JLabel("");
+				label_Record.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						
+						if(ActionGUI.leaveControl)
+						{
+							new ToastMsg("Loading...",frame.getBounds().x-125,label_Record.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+							{
+								private static final long serialVersionUID = 1L;
+								public void terminationLogic() throws InterruptedException
+								{
+									do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+								}
+							}.showToast();
+
+							List<String> tabs=new ArrayList<String>();
+							tabs.add("Record");
+							tabs.add("Settings");
+							
+							new ActionGUI(tabs);
+
+							ActionGUI.dialog.setVisible(true);	
+						}
+						else
+						{
+							ActionGUI.dialog.setAlwaysOnTop(true);
+							if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+							{
+								ActionGUI.dialog.setState(JFrame.NORMAL);
+							}
+						}
+					}
+				});
+				label_Record.setBounds(1, 387, 50, 50);
+				button_panel.add(label_Record);
+				label_Record.setBackground(new Color(0,0,0,0));
+		try{
+			label_Record.setIcon(new ImageIcon(ImageIO.read(new File(recordIcon)).getScaledInstance(50,50, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			label_Record.setText("Record");
+			logError(e,"Exception in Icon loading: Image "+recordIcon+" Not Available");
+		}
 		boolean bool=property.getBoolean("SensorBTNPanelVisible",false);
 		if(bool)
 		{
-			frame.setSize(new Dimension(54, 500));
-			Main_panel.setSize(new Dimension(54, 500));
+			frame.setSize(new Dimension(54, 560));
+			Main_panel.setSize(new Dimension(54, 560));
 		}
 		else
 		{
@@ -554,6 +630,7 @@ public class SensorGUI extends Library{
 	}
 
 	String toolText;
+	public static  JLabel label_Record;
 	public void play()
 	{
 		try{

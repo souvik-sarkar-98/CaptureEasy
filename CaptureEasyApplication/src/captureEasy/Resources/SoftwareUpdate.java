@@ -31,16 +31,20 @@ public class SoftwareUpdate extends Library {
 	public JSONObject JSONObj;
 	private double currentProgress;
 	public static  boolean doUpdate=true,isInstalled=true;
+	public SoftwareUpdate()
+	{
+		if(isReachableByPing())
+		{
+			try {
+				this.JSONObj = new JSONObject(GET(versionInfo.getString( "URL",gitHubBaseURL))); 
+			} catch (Exception e) {
+				logError(e,"Exception Occured on connecting web server...")	;	
+			}
+		}
 
-	
-	public SoftwareUpdate() {
-		try {
-			this.JSONObj = new JSONObject(GET(versionInfo.getString( "URL",gitHubBaseURL))); 
-		} catch (Exception e) {
-			logError(e,"Exception Occured on connecting web server...")	;	
-		} 
 	}
 
+	
 	private static String GET(String url) throws Exception {
 		InputStream is = (new URL(url)).openStream();
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
@@ -57,11 +61,19 @@ public class SoftwareUpdate extends Library {
 
 
 	public boolean checkForUpdates() throws JSONException {
-		if (this.JSONObj.getString("tag_name").equalsIgnoreCase(versionInfo.getString("CurrentVersion")))
-			return false; 
-		if (getDownloadURL() == null)
-			return false; 
-		return true;
+		if(isReachableByPing())
+		{
+			try {
+				if (this.JSONObj.getString("tag_name").equalsIgnoreCase(versionInfo.getString("CurrentVersion")))
+					return false; 
+				if (getDownloadURL() == null)
+					return false; 
+				return true;
+			} catch (Exception e) {
+				logError(e,"Exception Occured on connecting web server...")	;	
+			}
+		}
+		return false;
 	}
 
 	public static boolean isReachableByPing() {
@@ -116,7 +128,7 @@ public class SoftwareUpdate extends Library {
 			fis.close();
 			bis.close();
 		}catch(Exception e){
-			
+
 		}
 		if(new File(downloadPath+"\\" + getRemoteFileName()).exists())
 		{

@@ -35,6 +35,7 @@ public class PathsNKeys{
 	/***
 	 * @Type= Image file path
 	 */
+	public final static String closeIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\close.png");
 	public final static String commentIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\comment.png");
 	public final static String createfolderIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\createfolder.png");
 	public final static String deleteIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\delete.png");
@@ -52,16 +53,23 @@ public class PathsNKeys{
 	public final static String logoIcon3=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\logo3.png");
 	public final static String logoIcon4=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\logo4.png");
 	public final static String menuIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\menu.png");
+	public final static String minimizeIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\minimize.png");
+
 	public final static String openIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\open.png");
 	public final static String pauseIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\pause.png");
 	public final static String playIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\play.png");
 	public final static String powerIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\power.png");
+	public final static String recordIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\record.png");
+	public final static String RECIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\REC.png");
 	public final static String refreshIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\refresh.png");
 	public final static String renameIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\rename.png");
 	public final static String rightarrowIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\right_arrow.png");
 	public final static String saveIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\save.png");
 	public final static String searchIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\search.png");
 	public final static String settingIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\settings.png");
+	public final static String startIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\start.png");
+	public final static String stopIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\stop.png");
+
 	public final static String taskbarIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\taskbar_icon.png");
 	public final static String uploadIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\upload.png");
 	public final static String viewIcon=Library.createFolder(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\view.png");

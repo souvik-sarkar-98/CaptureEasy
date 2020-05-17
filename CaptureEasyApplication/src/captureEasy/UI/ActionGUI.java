@@ -4,16 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -26,9 +29,9 @@ import org.json.JSONException;
 import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SoftwareUpdate;
-//import captureEasy.UI.Components.ActionPanel;
 
 import captureEasy.UI.Components.ManageDocumentPanel;
+import captureEasy.UI.Components.RecordPanel;
 import captureEasy.UI.Components.SavePanel;
 import captureEasy.UI.Components.SettingsPanel;
 import captureEasy.UI.Components.UpdatePanel;
@@ -36,7 +39,7 @@ import captureEasy.UI.Components.ViewPanel;
 
 public class ActionGUI extends Library  implements ChangeListener,MouseListener,MouseMotionListener
 {
-	public static JDialog dialog;
+	public static JFrame dialog;
 	public final JPanel contentPanel = new JPanel();
 	public String selectedTab="";
 	public JTabbedPane TabbledPanel;
@@ -54,6 +57,8 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	public ManageDocumentPanel documentPanel;
 	public static ViewPanel viewPanel;
 	public static SavePanel savePanel;
+	public static RecordPanel screenRecord;
+
 	List<String> tabs;
 	int i;
 	private boolean loadSaveTab=false;
@@ -69,16 +74,34 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		try{Application.sensor.pause();}catch(Exception e){}
 		this.tabs=tabs;
 		leaveControl=false;
-		dialog=new JDialog();
+		dialog=new JFrame();
 		dialog.setSize(new Dimension(575, 350));
 		dialog.setFont(new Font("Dialog", 1, 20));
 		dialog.setAlwaysOnTop(true);
-		dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dialog.setBounds(screensize.width / 2 - 300, screensize.height / 2 - 300, 575, 350);
 		dialog.setUndecorated(true);
 		dialog.setLocation(screensize.width / 2 - 300, screensize.height / 2 - 300);
 		dialog.getContentPane().setLayout(new BorderLayout());
+		List<Image> icons = new ArrayList<Image>();
+		try {
+			icons.add(ImageIO.read(new File(taskbarIcon)));
+			icons.add(ImageIO.read(new File(taskbarIcon)));
+			icons.add(ImageIO.read(new File(taskbarIcon)));
+			icons.add(ImageIO.read(new File(taskbarIcon)));
+			dialog.setIconImages(icons);
 
+		} catch (IOException e2) {
+			logError(e2,"Exception occured while reading icon");
+		}
+		dialog.addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				ActionGUI.leaveControl=true;
+			}
+		});
 		contentPanel.setSize(new Dimension(575, 350));
 		contentPanel.setBackground(new Color(127, 255, 212));
 		this.contentPanel.setFont(new Font("Tahoma", 0, 18));
@@ -156,6 +179,17 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					}
 
 				}
+				else if(tabs.get(i).equalsIgnoreCase("Record"))
+				{
+					screenRecord=new RecordPanel(TabbledPanel);
+					TabbledPanel.addTab("Screen Record", null, screenRecord.RecordPanel, null);
+					TabbledPanel.setTitleAt(i, PRE_HTML + "Screen\nRecording" + POST_HTML);
+					if(i==0)
+					{
+						TabbledPanel.setSelectedIndex(0);
+					}
+				}
+
 				else if(tabs.get(i).equalsIgnoreCase("Update"))
 				{
 					updatePanel=new UpdatePanel(TabbledPanel);
@@ -181,7 +215,14 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		if(ActionGUI.dialog.isVisible())
 		{
 			tabLoaded=false;
-			new ToastMsg("Loading...",dialog.getBounds().x+430/2+75,dialog.getBounds().y+315/2).showToast(1);
+			new ToastMsg("Loading...",dialog.getBounds().x+430/2+75,dialog.getBounds().y+315/2)
+			{
+				private static final long serialVersionUID = 1L;
+				public void terminationLogic() throws InterruptedException
+				{
+					do{Thread.sleep(100);}while(!ActionGUI.tabLoaded);
+				}
+			}.showToast();
 		}
 		if(tabName.contains("Save"))	
 		{
@@ -231,8 +272,8 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				viewPanel.ViewScrollPane.add(viewPanel.panel_Button);
 			}
 
-			if(property.getBoolean("showFolderNameField",false))
-				ViewPanel.files=new File(property.getString("TempPath")).listFiles();
+			///if(property.getBoolean("showFolderNameField",false))
+			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
 			if(ViewPanel.ImageLabel.getToolTipText()==null)
 				ViewPanel.imgId=ViewPanel.files.length-1;
@@ -298,6 +339,33 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				System.out.println("this is me");
 				
 			}
+			tabLoaded=true;
+		}
+		else if(tabName.contains("Record"))
+		{
+			if(!screenRecord.isLoaded)
+			{
+				try{
+					screenRecord.loadRecordPanel();
+					screenRecord.RecordPanel.add(screenRecord.panel_Control);
+
+				}catch(Exception e){
+					logError(e,"Exception occured while loading Screen Recording tab");
+				}
+			}
+			if(property.getBoolean("showFolderNameField",false))
+			{
+				screenRecord.lblFolderName.setVisible(true);
+				screenRecord.textField_Foldername.setVisible(true);
+				screenRecord.textField_Filename.setColumns(16);
+			}
+			else
+			{
+				screenRecord.lblFolderName.setVisible(false);
+				screenRecord.textField_Foldername.setVisible(false);
+				screenRecord.textField_Filename.setColumns(22);
+			}
+			screenRecord.textField_Filename.requestFocusInWindow();
 			tabLoaded=true;
 		}
 		else if(tabName.contains("Settings"))

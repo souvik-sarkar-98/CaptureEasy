@@ -1,12 +1,10 @@
 package captureEasy.UI;
 
 import java.awt.*; 
-import javax.swing.*;
+import javax.swing.*; 
 
-import captureEasy.UI.Components.ManageDocumentPanel; 
 public class ToastMsg extends JFrame { 
 
-	
 	/**
 	 * 
 	 */
@@ -44,36 +42,35 @@ public class ToastMsg extends JFrame {
 		w.setLocation(x, y); 
 		w.setSize(400, 100); 
 	} 
-
+	public void terminationLogic() throws InterruptedException
+	{
+		Thread.sleep(2000);
+	}
 	// function to pop up the toast 
-	public void showToast(int terID) 
+	public void showToast() 
 	{ 
 		new Thread(new Runnable(){
-
 			@Override
 			public void run() {
 				try { 
 					w.setOpacity(1); 
-					w.setVisible(true); 
-					if (terID==0)
+					w.setVisible(true);
+					terminationLogic();
+					/*if (terID==0)
 					{
-						do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
-						for (double d = 1.0; d > 0.2; d -= 0.1) { 
-							Thread.sleep(100); 
-							w.setOpacity((float)d); 
-						} 
+						
 					}
 					else if(terID==1)
-						do{Thread.sleep(100);}while(!ActionGUI.tabLoaded);
 					else if(terID==2)
 					{
-						do{Thread.sleep(100);}while(ManageDocumentPanel.searchResult==null);
 					}
 					else
 					{
-						Thread.sleep(1000);
-					}
-					
+					}*/
+					for (double d = 1.0; d > 0.2; d -= 0.1) { 
+						try {Thread.sleep(100);} catch (InterruptedException e) {} 
+						w.setOpacity((float)d); 
+					} 
 					w.setVisible(false); 
 					w.dispose();
 				} 

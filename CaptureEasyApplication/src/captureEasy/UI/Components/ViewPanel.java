@@ -158,7 +158,6 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 					label_Next.setIcon(new ImageIcon(ImageIO.read(new File(rightarrowIcon)).getScaledInstance(25,25, java.awt.Image.SCALE_SMOOTH)));
 				} catch (IOException e) {
 					logError(e,"Exception in Icon loading: Image "+rightarrowIcon+" Not Available");
-
 				}
 			}
 			{
@@ -211,6 +210,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 													lblExit.setEnabled(true);
 													break;
 												}
+												
 											}
 										}
 									} catch (IOException e) {

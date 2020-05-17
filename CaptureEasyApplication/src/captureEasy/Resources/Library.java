@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.PropertyConfigurator;
@@ -61,7 +60,7 @@ public class Library extends SharedResources
 	 * 
 	 * @utility= logging
 	 */
-
+	static int blink=0;
 	public static void logError(Exception e,String usermessage)
 	{
 		System.setProperty("logfilename", logFolderPath + "/Error.log");
@@ -414,7 +413,7 @@ public class Library extends SharedResources
 					SharedResources.progress=(int)Math.round(((Double.valueOf(i))/Double.valueOf(picture.size()))*100);
 					i++;
 				}
-				
+
 				SharedResources.progress=0;
 				SavePanel.ProgressBar.setValue(0);
 				SavePanel.panel_Progress.repaint();
@@ -426,14 +425,14 @@ public class Library extends SharedResources
 				{
 					logError(e1,"Exception occured while loading previous screenshots in a PDF. Probable cause is user has selected a corrupted File ");
 					new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
-					
+
 				}
 				else
 				{
 					logError(e1,"Exception occured while loading previous screenshots in a PDF");
 					new PopUp("ERROR","error",e1.getClass().getName()+" occured while loading  previous screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
 				}
-				
+
 			}
 			SharedResources.progress=0;
 			SavePanel.ProgressBar.setValue(0);
@@ -598,17 +597,9 @@ public class Library extends SharedResources
 					try{
 						int count=new File(property.getString("TempPath")).listFiles().length;
 						SensorGUI.label_Count.setText(String.valueOf(count)); 
-						SensorGUI.frame.setAlwaysOnTop(true);
-					}catch(Exception w){}
-					try{
-						if(ActionGUI.dialog !=null && SensorGUI.window!=null && ActionGUI.dialog.isVisible() )
-						{
-							SensorGUI.window.dispose();
-							SensorGUI.window=null;
-							PopUp.control=true;
-							
-						}
-					}catch(Exception e){}
+					}catch(Exception e){
+						//logError(e,"")
+					}
 					SplashScreen.displaySplash=false;
 				}
 			}

@@ -1,0 +1,346 @@
+[ERROR] [15 May 2020 22:35:56]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:82)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [15 May 2020 22:36:03]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:82)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [15 May 2020 22:37:53]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:82)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [15 May 2020 22:38:13]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:82)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [15 May 2020 22:38:39]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:82)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [16 May 2020 08:04:18]  
+User Message: 'Exception Occured on connecting web server...
+Exception Class : java.net.UnknownHostException
+Exception Message : api.github.com
+Exception Cause : null
+
+StackTrace:
+	java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	java.net.PlainSocketImpl.connect(Unknown Source)
+	java.net.SocksSocketImpl.connect(Unknown Source)
+	java.net.Socket.connect(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.connect(Unknown Source)
+	sun.security.ssl.BaseSSLSocketImpl.connect(Unknown Source)
+	sun.net.NetworkClient.doConnect(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.<init>(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.New(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	java.net.URL.openStream(Unknown Source)
+	captureEasy.Resources.SoftwareUpdate.GET(SoftwareUpdate.java:45)
+	captureEasy.Resources.SoftwareUpdate.<init>(SoftwareUpdate.java:38)
+	captureEasy.Launch.Application.launch(Application.java:107)
+	captureEasy.Launch.Application.main(Application.java:23)
+
+'
+ 
+[ERROR] [16 May 2020 09:25:42]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.UI.SensorGUI$12.mouseClicked(SensorGUI.java:446)
+	java.awt.AWTEventMulticaster.mouseClicked(Unknown Source)
+	java.awt.Component.processMouseEvent(Unknown Source)
+	javax.swing.JComponent.processMouseEvent(Unknown Source)
+	java.awt.Component.processEvent(Unknown Source)
+	java.awt.Container.processEvent(Unknown Source)
+	java.awt.Component.dispatchEventImpl(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Window.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	java.awt.EventQueue.access$500(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue.dispatchEvent(Unknown Source)
+	java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.run(Unknown Source)
+
+'
+ 
+[ERROR] [16 May 2020 09:28:27]  
+User Message: 'java.lang.NullPointerException Exception occured while taking screenshot
+Exception Class : java.lang.NullPointerException
+Exception Message : null
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.write(Unknown Source)
+	captureEasy.Resources.Library.captureScreen(Library.java:253)
+	captureEasy.Resources.DetectKeypress.nativeKeyPressed(DetectKeypress.java:82)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
+'
+ 
+[ERROR] [16 May 2020 10:21:55]  
+User Message: 'Exception Occured on connecting web server...
+Exception Class : java.net.SocketException
+Exception Message : Connection reset
+Exception Cause : null
+
+StackTrace:
+	java.net.SocketInputStream.read(Unknown Source)
+	java.net.SocketInputStream.read(Unknown Source)
+	sun.security.ssl.InputRecord.readFully(Unknown Source)
+	sun.security.ssl.InputRecord.read(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.afterConnect(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	java.net.URL.openStream(Unknown Source)
+	captureEasy.Resources.SoftwareUpdate.GET(SoftwareUpdate.java:45)
+	captureEasy.Resources.SoftwareUpdate.<init>(SoftwareUpdate.java:38)
+	captureEasy.Launch.Application.launch(Application.java:107)
+	captureEasy.Launch.Application.main(Application.java:23)
+
+'
+ 
+[ERROR] [16 May 2020 16:40:15]  
+User Message: 'Exception Occured on connecting web server...
+Exception Class : java.net.UnknownHostException
+Exception Message : api.github.com
+Exception Cause : null
+
+StackTrace:
+	java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	java.net.PlainSocketImpl.connect(Unknown Source)
+	java.net.SocksSocketImpl.connect(Unknown Source)
+	java.net.Socket.connect(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.connect(Unknown Source)
+	sun.security.ssl.BaseSSLSocketImpl.connect(Unknown Source)
+	sun.net.NetworkClient.doConnect(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.<init>(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.New(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	java.net.URL.openStream(Unknown Source)
+	captureEasy.Resources.SoftwareUpdate.GET(SoftwareUpdate.java:45)
+	captureEasy.Resources.SoftwareUpdate.<init>(SoftwareUpdate.java:38)
+	captureEasy.Launch.Application.launch(Application.java:107)
+	captureEasy.Launch.Application.main(Application.java:23)
+
+'
+ 
+[ERROR] [16 May 2020 16:45:00]  
+User Message: 'Exception Occured on connecting web server...
+Exception Class : java.net.UnknownHostException
+Exception Message : api.github.com
+Exception Cause : null
+
+StackTrace:
+	java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	java.net.PlainSocketImpl.connect(Unknown Source)
+	java.net.SocksSocketImpl.connect(Unknown Source)
+	java.net.Socket.connect(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.connect(Unknown Source)
+	sun.security.ssl.BaseSSLSocketImpl.connect(Unknown Source)
+	sun.net.NetworkClient.doConnect(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.<init>(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.New(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	java.net.URL.openStream(Unknown Source)
+	captureEasy.Resources.SoftwareUpdate.GET(SoftwareUpdate.java:45)
+	captureEasy.Resources.SoftwareUpdate.<init>(SoftwareUpdate.java:38)
+	captureEasy.Launch.Application.launch(Application.java:107)
+	captureEasy.Launch.Application.main(Application.java:23)
+
+'
+ 
+[ERROR] [16 May 2020 16:45:11]  
+User Message: 'Exception Occured on connecting web server...
+Exception Class : java.net.UnknownHostException
+Exception Message : api.github.com
+Exception Cause : null
+
+StackTrace:
+	java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	java.net.PlainSocketImpl.connect(Unknown Source)
+	java.net.SocksSocketImpl.connect(Unknown Source)
+	java.net.Socket.connect(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.connect(Unknown Source)
+	sun.security.ssl.BaseSSLSocketImpl.connect(Unknown Source)
+	sun.net.NetworkClient.doConnect(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.<init>(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.New(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	java.net.URL.openStream(Unknown Source)
+	captureEasy.Resources.SoftwareUpdate.GET(SoftwareUpdate.java:45)
+	captureEasy.Resources.SoftwareUpdate.<init>(SoftwareUpdate.java:38)
+	captureEasy.Launch.Application.launch(Application.java:107)
+	captureEasy.Launch.Application.main(Application.java:23)
+
+'
+ 
+[ERROR] [16 May 2020 16:52:03]  
+User Message: 'Exception Occured on connecting web server...
+Exception Class : java.net.UnknownHostException
+Exception Message : api.github.com
+Exception Cause : null
+
+StackTrace:
+	java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	java.net.PlainSocketImpl.connect(Unknown Source)
+	java.net.SocksSocketImpl.connect(Unknown Source)
+	java.net.Socket.connect(Unknown Source)
+	sun.security.ssl.SSLSocketImpl.connect(Unknown Source)
+	sun.security.ssl.BaseSSLSocketImpl.connect(Unknown Source)
+	sun.net.NetworkClient.doConnect(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.http.HttpClient.openServer(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.<init>(Unknown Source)
+	sun.net.www.protocol.https.HttpsClient.New(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.plainConnect(Unknown Source)
+	sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	java.net.URL.openStream(Unknown Source)
+	captureEasy.Resources.SoftwareUpdate.GET(SoftwareUpdate.java:45)
+	captureEasy.Resources.SoftwareUpdate.<init>(SoftwareUpdate.java:38)
+	captureEasy.Launch.Application.launch(Application.java:107)
+	captureEasy.Launch.Application.main(Application.java:23)
+
+'
+ 

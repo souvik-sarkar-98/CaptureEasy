@@ -251,7 +251,14 @@ public class ManageDocumentPanel extends Library {
 					if(ActionGUI.dialog.isVisible())
 					{
 						searchResult=null;
-						new ToastMsg("Searching...     ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2).showToast(2);
+						new ToastMsg("Searching...     ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
+						{
+							private static final long serialVersionUID = 1L;
+							public void terminationLogic() throws InterruptedException
+							{
+								do{Thread.sleep(100);}while(ManageDocumentPanel.searchResult==null);
+							}
+						}.showToast();
 					}
 					searchResult=search(textField.getText());
 					setTableData(searchResult);

@@ -20,5 +20,8 @@
 	<classpathentry kind="lib" path="Dependencies/commons-configuration-1.10.jar"/>
 	<classpathentry kind="lib" path="Dependencies/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="Dependencies/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jcodec-0.2.3.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jsr305-3.0.2.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jcodec-javase-0.2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

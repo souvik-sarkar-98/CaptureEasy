@@ -39,6 +39,8 @@ import captureEasy.Resources.Library;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
+import captureEasy.UI.ToastMsg;
+
 import javax.swing.ButtonGroup;
 
 public class SettingsPanel extends Library implements MouseListener,MouseMotionListener{
@@ -293,7 +295,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							btnUpdateFrameLocation.setBackground(UIManager.getColor("CheckBox.background"));
 							PopUp window=new PopUp("INSTRUCTION","INFO","To "+btnUpdateFrameLocation.getText().toLowerCase()+", drag the green frame to your preferred location and set frame expansion then click Done.","Ok, I Understood","");
 							window.setVisible(true);
-							window.getRootPane().setDefaultButton(window.btnNewButton);
+							PopUp.PopDia.getRootPane().setDefaultButton(window.btnNewButton);
 							sen=new SensorGUI();
 							SensorGUI.frame.setVisible(true);
 							SensorGUI.label_Count.setVisible(false);
@@ -419,10 +421,11 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									}
 									property.setProperty("ImageFormat",ImageFormat_Current);
 
-									
-									PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
-									window.setVisible(true);
-									window.getRootPane().setDefaultButton(window.btnNewButton);
+									new ToastMsg("Successfully Saved !!!",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
+									.showToast();
+									/*PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
+									PopUp.PopDia.setVisible(true);
+									PopUp.PopDia.getRootPane().setDefaultButton(window.btnNewButton);
 									
 									new Timer(1000, new ActionListener() {
 								        @Override
@@ -430,10 +433,11 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								        	window.dispose();
 								        	PopUp.control=true;
 								        }
-								      }).start();
+								      }).start();*/
 									
 									if(ActionGUI.settingsPanel.CancelBtn.isEnabled())
 									{
+										try{Thread.sleep(2000);}catch(Exception e9){}
 										ActionGUI.dialog.dispose();
 										ActionGUI.leaveControl=true;
 										try{Application.sensor.play();}catch(Exception rr){};
@@ -483,9 +487,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 											{
 												ActionGUI.savePanel.textField_Filename.setColumns(16);
 											}											
-										}catch(Exception e58){}
-										
-										
+										}catch(Exception e58){}										
 									}
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e6){}
 									TabbledPanel.setSelectedIndex(0);
