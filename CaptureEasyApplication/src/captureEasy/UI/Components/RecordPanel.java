@@ -131,7 +131,6 @@ public class RecordPanel extends Library {
 							try{srecord.imgEncoder.finish();}catch(Exception pe){}
 							doDelete=true;
 						}
-						
 					});
 					p.setVisible(true);
 					PopUp.PopDia=p;
@@ -160,7 +159,6 @@ public class RecordPanel extends Library {
 			lblMinimize.setIcon(new ImageIcon(ImageIO.read(new File(minimizeIcon)).getScaledInstance(lblMinimize.getBounds().width,lblMinimize.getBounds().height, java.awt.Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			logError(e,"Exception in Icon loading: Image "+minimizeIcon+" Not Available");
-
 		}
 		panel_Control.add(lblMinimize);
 		
@@ -187,8 +185,6 @@ public class RecordPanel extends Library {
 				if(lblStartpause.isVisible())
 				{
 					doDelete=false;
-					chckbxDelayStart.setVisible(false);
-					spinner.setVisible(false);
 					lblRecordingInProgress.setVisible(true);
 					if(lblStartpause.getToolTipText().equalsIgnoreCase("Pause recording"))
 					{
@@ -341,11 +337,11 @@ public class RecordPanel extends Library {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxDelayStart.isSelected())
 				{
-					spinner.setVisible(true);
+					spinner.setEnabled(true);
 				}
 				else
 				{
-					spinner.setVisible(false);
+					spinner.setEnabled(false);
 				}
 			}
 		});
@@ -354,7 +350,7 @@ public class RecordPanel extends Library {
 		panel_View.add(chckbxDelayStart);
 
 		spinner = new JSpinner();
-		spinner.setVisible(false);
+		spinner.setEnabled(false);
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		spinner.setBounds(243, 170, 47, 25);
 		spinner.setValue(5);
@@ -449,8 +445,10 @@ public class RecordPanel extends Library {
 		lblRecordingInProgress.setForeground(Color.BLUE);
 		if(lblStartpause.getToolTipText().equalsIgnoreCase("Start recording"))
 		{
-			if(spinner.isVisible())
+			if(spinner.isEnabled() && chckbxDelayStart.isSelected())
 				delay=(int) spinner.getValue();
+			chckbxDelayStart.setVisible(false);
+			spinner.setVisible(false);
 			new Thread(new Runnable(){
 				@Override
 				public void run() {

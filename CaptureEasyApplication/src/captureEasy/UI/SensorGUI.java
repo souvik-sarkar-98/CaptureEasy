@@ -38,12 +38,8 @@ import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Image;
 
-public class SensorGUI extends Library{
-
-	/**
-	 * 
-	 * 
-	 */
+public class SensorGUI extends Library
+{
 	public static int xx,xy,x,y;
 	JPopupMenu popupMenu;
 	public static JFrame frame;
@@ -92,15 +88,12 @@ public class SensorGUI extends Library{
 		});
 		frame.addWindowFocusListener(new WindowFocusListener() {	
 			public void windowGainedFocus(WindowEvent e) {	
-				System.out.println("Focus gained");
 			}
 
 			@Override
 			public void windowLostFocus(WindowEvent arg0) {
-				System.out.println("Focus lost");
 			}
 		});
-		//frame.addWindowStateListener();
 
 		List<Image> icons = new ArrayList<Image>();
 		try {
@@ -227,10 +220,6 @@ public class SensorGUI extends Library{
 		} catch (IOException e) {
 			lebel_Power.setText("Close");logError(e,"Exception in Icon loading: Image "+powerIcon+" Not Available");
 		}
-
-
-
-
 		label_Document = new JLabel();
 		label_Document.setBounds(1, 275, 50, 50);
 		button_panel.add(label_Document);
@@ -343,6 +332,7 @@ public class SensorGUI extends Library{
 
 
 		label_Save = new JLabel();
+		label_Save.setName("SAVE");
 		label_Save.setBounds(1, 165, 50, 50);
 		button_panel.add(label_Save);
 		label_Save.setBackground(new Color(0,0,0,0));
@@ -350,6 +340,7 @@ public class SensorGUI extends Library{
 		label_Save.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(label_Save.getName());
 				if(ActionGUI.leaveControl )
 				{
 					if(IsEmpty(property.getString("TempPath")))

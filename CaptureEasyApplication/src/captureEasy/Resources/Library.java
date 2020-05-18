@@ -646,13 +646,12 @@ public class Library extends SharedResources
 							RecordPanel.recDialog.setLocation(5, 5);
 						else
 							RecordPanel.recDialog.setLocation(10000, 10000);
+						Thread.sleep(1000);
 					}
-					Thread.sleep(1000);
 					}catch(Exception e){}
 				}
 			}
 		}).start();
 	}
-	//
 }
 
