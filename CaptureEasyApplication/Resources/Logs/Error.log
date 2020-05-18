@@ -344,3 +344,137 @@ StackTrace:
 
 '
  
+[ERROR] [17 May 2020 21:47:16]  
+User Message: 'Exception occured while moving file
+Exception Class : java.nio.file.NoSuchFileException
+Exception Message : C:\Users\USER\git\CaptureEasyApp\CaptureEasyApplication\Resources\bin\ExtractedImages\DoNotDelete.mp4
+Exception Cause : null
+
+StackTrace:
+	sun.nio.fs.WindowsException.translateToIOException(Unknown Source)
+	sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
+	sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
+	sun.nio.fs.WindowsFileCopy.move(Unknown Source)
+	sun.nio.fs.WindowsFileSystemProvider.move(Unknown Source)
+	java.nio.file.Files.move(Unknown Source)
+	captureEasy.Resources.Library.moveToFolder(Library.java:99)
+	captureEasy.UI.Components.RecordPanel$5.mouseClicked(RecordPanel.java:283)
+	java.awt.AWTEventMulticaster.mouseClicked(Unknown Source)
+	java.awt.Component.processMouseEvent(Unknown Source)
+	javax.swing.JComponent.processMouseEvent(Unknown Source)
+	java.awt.Component.processEvent(Unknown Source)
+	java.awt.Container.processEvent(Unknown Source)
+	java.awt.Component.dispatchEventImpl(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Window.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	java.awt.EventQueue.access$500(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue.dispatchEvent(Unknown Source)
+	java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.run(Unknown Source)
+
+'
+ 
+[ERROR] [17 May 2020 23:48:14]  
+User Message: 'Exception occured while moving file
+Exception Class : java.nio.file.FileSystemException
+Exception Message : C:\Users\USER\git\CaptureEasyApp\CaptureEasyApplication\Resources\bin\ExtractedImages\DoNotDelete.mp4 -> C:\Users\USER\desktop\nil\nil.mp4: The process cannot access the file because it is being used by another process.
+
+Exception Cause : null
+
+StackTrace:
+	sun.nio.fs.WindowsException.translateToIOException(Unknown Source)
+	sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
+	sun.nio.fs.WindowsFileCopy.move(Unknown Source)
+	sun.nio.fs.WindowsFileSystemProvider.move(Unknown Source)
+	java.nio.file.Files.move(Unknown Source)
+	captureEasy.Resources.Library.moveToFolder(Library.java:99)
+	captureEasy.UI.Components.RecordPanel$5.mouseClicked(RecordPanel.java:292)
+	java.awt.AWTEventMulticaster.mouseClicked(Unknown Source)
+	java.awt.Component.processMouseEvent(Unknown Source)
+	javax.swing.JComponent.processMouseEvent(Unknown Source)
+	java.awt.Component.processEvent(Unknown Source)
+	java.awt.Container.processEvent(Unknown Source)
+	java.awt.Component.dispatchEventImpl(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	java.awt.Container.dispatchEventImpl(Unknown Source)
+	java.awt.Window.dispatchEventImpl(Unknown Source)
+	java.awt.Component.dispatchEvent(Unknown Source)
+	java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	java.awt.EventQueue.access$500(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.awt.EventQueue$4.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue.dispatchEvent(Unknown Source)
+	java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.run(Unknown Source)
+
+'
+ 
+[ERROR] [18 May 2020 00:32:12]  
+User Message: 'Exception occured while creating Robot object
+Exception Class : java.io.FileNotFoundException
+Exception Message : C:\Users\USER\git\CaptureEasyApp\CaptureEasyApplication\Resources\bin\temp.properties\DoNotDelete.mp4 (The system cannot find the path specified)
+Exception Cause : null
+
+StackTrace:
+	java.io.FileOutputStream.open0(Native Method)
+	java.io.FileOutputStream.open(Unknown Source)
+	java.io.FileOutputStream.<init>(Unknown Source)
+	java.io.FileOutputStream.<init>(Unknown Source)
+	org.jcodec.common.io.NIOUtils.writableChannel(NIOUtils.java:353)
+	org.jcodec.api.awt.AWTSequenceEncoder.createSequenceEncoder(AWTSequenceEncoder.java:29)
+	captureEasy.ScreenRecorder.ScreenRecorder.<init>(ScreenRecorder.java:36)
+	captureEasy.UI.Components.RecordPanel$10.actionPerformed(RecordPanel.java:453)
+	javax.swing.Timer.fireActionPerformed(Unknown Source)
+	javax.swing.Timer$DoPostEvent.run(Unknown Source)
+	java.awt.event.InvocationEvent.dispatch(Unknown Source)
+	java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	java.awt.EventQueue.access$500(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.awt.EventQueue$3.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	java.awt.EventQueue.dispatchEvent(Unknown Source)
+	java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	java.awt.EventDispatchThread.run(Unknown Source)
+
+'
+ 

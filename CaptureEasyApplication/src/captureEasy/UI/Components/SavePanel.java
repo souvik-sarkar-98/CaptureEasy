@@ -329,6 +329,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					btnChooseFile.requestFocusInWindow();
 					ActionGUI.dialog.setAlwaysOnTop(false);
 					popup=new PopUp("ERROR","Error","Please choose a file!!","Ok, I understood","");
+					PopUp.PopDia=popup;
 					lblEnterFilename.setVisible(false);
 					textField_Filename.setVisible(false);
 					textField_Filename.setText("");
@@ -344,6 +345,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						popup=new PopUp("WARNING","warning","Selected file '"+file.getName()+"' "
 								+ "is open for editing. To overwrite please close the file and select again. Otherwise enter filename to create a copy.",
 								"Ok, I understood","");
+						PopUp.PopDia=popup;
 						chckbxOverwriteSelectedFile.setVisible(true);
 						chckbxOverwriteSelectedFile.setSelected(false);
 						chckbxOverwriteSelectedFile.setEnabled(false);
@@ -523,6 +525,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				if(chckbxSelectExistingDocument.isSelected())
 				{
 					pop=new PopUp("Information","info","Please be noted that only images will be imported inside newly created PDF. Please untick the checkbox if you don't want to proceed further.","Ok, Fine","");
+					PopUp.PopDia=pop;
 					pop.setVisible(true);
 					rdbtnNo.setBounds(360, 230, 50, 16);
 					lblDoYouWant.setBounds(15, 230, 299, 16);
@@ -632,24 +635,32 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				{
 					if(textField_Filename.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
 					{
-						new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","").setVisible(true);
+						PopUp p=new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","");
+						p.setVisible(true);
+						PopUp.PopDia=p;
 						textField_Filename.setBackground(Color.PINK);
 					}
 					else if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 					{
 						textField_Filename.setBackground(Color.PINK);
-						new PopUp("ERROR","error", "A file name can not contain any of the following "
-								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+						PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
+								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+						p.setAlwaysOnTop(true);
+						PopUp.PopDia=p;
 					}
 					else if (textField_ParFol.getText().contains(Character.toString('"')) || /*textField_ParFol.getText().contains("/") || textField_ParFol.getText().contains("\\") ||*/ textField_ParFol.getText().contains(":") || textField_ParFol.getText().contains("*") || textField_ParFol.getText().contains("?") || textField_ParFol.getText().contains("<") || textField_ParFol.getText().contains(">") || textField_ParFol.getText().contains("|")) 
 					{
 						textField_ParFol.setBackground(Color.PINK);
-						new PopUp("ERROR","error", "A Folder name can not contain any of the following "
-								+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+						PopUp p=new PopUp("ERROR","error", "A Folder name can not contain any of the following "
+								+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+						p.setAlwaysOnTop(true);;
+						PopUp.PopDia=p;
 					}
 					else if(!lblChooseFile.isVisible() && !chckbxSelectExistingDocument.isSelected() && property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_ParFol.getText().replaceAll("\\s", "").equals(""))
 					{
-						new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","").setVisible(true);
+						PopUp p=new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","");
+						p.setVisible(true);
+						PopUp.PopDia=p;
 						textField_ParFol.setBackground(Color.PINK);
 					}
 
@@ -658,18 +669,14 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						String value=property.getString("DocPath");
 						if(value==null || value.replaceAll("\\s", "").equals(""))
 						{
-							new PopUp("ERROR","error","'DocPath' is unavailable in '"+new File(PropertyFilePath).getName()+"'.Please update this property.","Okay","").setVisible(true);
+							PopUp p=new PopUp("ERROR","error","'DocPath' is unavailable in '"+new File(PropertyFilePath).getName()+"'.Please update this property.","Okay","");
+							p.setVisible(true);
+							PopUp.PopDia=p;
 							TabbledPanel.setSelectedIndex(TabbledPanel.getTabCount()-1);
 							ActionGUI.settingsPanel.textField_DocDestFolder.setBackground(Color.PINK);
 						}
 						else
 						{
-							/*if(ActionPanel.panel_4!=null)
-						{
-							ActionGUI.actionPanel.rdbtnContinuePreviousWork.setEnabled(false);
-							ActionGUI.actionPanel.rdbtnDeletePreviousWork.setEnabled(false);
-						}
-						ActionPanel.panel_4=null;*/
 							textField_ParFol.setBackground(Color.WHITE);
 							SavePanel.setVisible(false);
 							panel_Save_Buttons.setVisible(false);
@@ -809,8 +816,12 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				textField_Filename.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
-					new PopUp("ERROR","error", "A file name can not contain any of the following "
-							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+				{
+					popup =new PopUp("ERROR","error", "A file name can not contain any of the following "
+							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+					popup.setAlwaysOnTop(true);
+					PopUp.PopDia=popup;
+				}
 			}
 			else if (folder.contains(Character.toString('"')) || /*folder.contains("/") || folder.contains("\\") ||*/ folder.contains(":") || folder.contains("*") || folder.contains("?") || folder.contains("<") || folder.contains(">") || folder.contains("|")) 
 			{
@@ -818,8 +829,12 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				textField_ParFol.setBackground(Color.PINK);
 				//textField_Filename.requestFocusInWindow();
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
-					new PopUp("ERROR","error", "A folder name can not contain any of the following "
-							+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","").setAlwaysOnTop(true);;
+				{
+					popup=new PopUp("ERROR","error", "A folder name can not contain any of the following "
+							+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+				popup.setAlwaysOnTop(true);
+				PopUp.PopDia=popup;
+				}
 			}
 			
 			else if (rdbtnSavePDF.isSelected() && new File(getSubFolders(property.getString("DocPath"),textField_ParFol.getText()) + "\\" + newFileName + ".pdf").exists()) 
@@ -831,8 +846,10 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				if(ActionType.equalsIgnoreCase("Insert"))
 				{
 					ActionGUI.dialog.setAlwaysOnTop(false);
-					new PopUp("ERROR","error","There is already a file with the same name in "+new File(String.valueOf(getSubFolders(property.getString("DocPath"),textField_ParFol.getText())) 
-							+ "\\" + newFileName + ".docx").getParentFile()+" folder.","Ok, I understood","").setAlwaysOnTop(true);;
+					popup=new PopUp("ERROR","error","There is already a file with the same name in "+new File(String.valueOf(getSubFolders(property.getString("DocPath"),textField_ParFol.getText())) 
+							+ "\\" + newFileName + ".docx").getParentFile()+" folder.","Ok, I understood","");
+					popup.setAlwaysOnTop(true);;
+					PopUp.PopDia=popup;
 				}
 
 			}
@@ -845,9 +862,10 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				if(ActionType.equalsIgnoreCase("Insert"))
 				{
 					ActionGUI.dialog.setAlwaysOnTop(false);
-					new PopUp("ERROR","error","There is already a file with the same name in "+new File(String.valueOf(getSubFolders(property.getString("DocPath"),textField_ParFol.getText())) 
-							+ "\\" + newFileName + ".docx").getParentFile()+" folder.","Ok, I understood","").setAlwaysOnTop(true);;
-
+					popup=new PopUp("ERROR","error","There is already a file with the same name in "+new File(String.valueOf(getSubFolders(property.getString("DocPath"),textField_ParFol.getText())) 
+							+ "\\" + newFileName + ".docx").getParentFile()+" folder.","Ok, I understood","");
+					popup.setAlwaysOnTop(true);;
+					PopUp.PopDia=popup;
 				}
 
 			}

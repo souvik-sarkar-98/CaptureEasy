@@ -152,6 +152,7 @@ public class SoftwareUpdate extends Library {
 					try{UpdatePanel.lblprogressflag.setText("Download Completed");}catch(Exception e){}
 					PopUp p=new PopUp("PERMISSION","info","Download Completed. Do you want to restart application now? It will take near about 20 seconds. ","Yes","No");
 					p.setVisible(true);
+					PopUp.PopDia=p;
 					p.btnNewButton.addActionListener(new ActionListener(){
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
@@ -168,10 +169,16 @@ public class SoftwareUpdate extends Library {
 
 				}
 				else
-					new PopUp("DOWNLOAD FAILED","error","Download failed !! Please try Again.","Okay","").setVisible(true);
+				{
+					PopUp p=new PopUp("DOWNLOAD FAILED","error","Download failed !! Please try Again.","Okay","");
+					p.setVisible(true);
+					PopUp.PopDia=p;
+				}
 			} catch (IOException | JSONException e) {
 				logError(e,e.getClass().getName()+" Occured. Update Failed. ");
-				new PopUp("UPDATE FAILED","error",e.getClass().getName()+"Occured. Update failed !! Please try Again.","Okay","").setVisible(true);
+				PopUp p=new PopUp("UPDATE FAILED","error",e.getClass().getName()+"Occured. Update failed !! Please try Again.","Okay","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
 			}
 
 		}).start();

@@ -57,7 +57,7 @@ public class SensorGUI extends Library{
 	public static PopUp window;
 	public JLabel label_Settings;
 	public static boolean isRecording=false;
-
+	Timer timer;
 	public static boolean isExpandable=true;
 	Dimension size= new Dimension(50,50);
 	public JLabel label_Menu;
@@ -67,14 +67,14 @@ public class SensorGUI extends Library{
 	public static boolean clickable=true;
 	private JPanel Main_panel = new JPanel();
 	public JPanel button_panel;
-
+	ToastMsg tm;
 
 	public SensorGUI()
 	{
 		try{frame.dispose();}catch(Exception e){}
 
 		frame=new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
+		//frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
@@ -208,6 +208,7 @@ public class SensorGUI extends Library{
 				//if(ActionGUI.leaveControl)
 				{
 					PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
+					PopUp.PopDia=p;
 					p.btnNewButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							closeApplication(true);
@@ -240,7 +241,7 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+					tm=new ToastMsg("Loading...",frame.getBounds().x-125,label_Document.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
 					{
 						private static final long serialVersionUID = 1L;
 						public void terminationLogic() throws InterruptedException
@@ -248,7 +249,8 @@ public class SensorGUI extends Library{
 							do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
 						}
 						
-					}.showToast();
+					};
+					tm.showToast();
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Document");
 					if(!IsEmpty(property.getString("TempPath")))
@@ -291,24 +293,30 @@ public class SensorGUI extends Library{
 					{
 						PopUp p=new PopUp("INFORMATION","Info","You have nothing to view !! ","Ok, I understood","");
 						p.setVisible(true);
-						new Timer(1000, new ActionListener() {
+						PopUp.PopDia=p;
+						
+						timer=new Timer(1000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								PopUp.PopDia.dispose();
+								PopUp.control=true;
+								timer.stop();
 							}
-						}).start();
+						});
+						timer.start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+						tm=new ToastMsg("Loading...",frame.getBounds().x-125,label_View.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
 						{
 							private static final long serialVersionUID = 1L;
 							public void terminationLogic() throws InterruptedException
 							{
 								do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
 							}
-						}.showToast();
+						};
+						tm.showToast();
 						List<String> tabs=new ArrayList<String>();
 						tabs.add("View");
 						tabs.add("Save");
@@ -347,18 +355,22 @@ public class SensorGUI extends Library{
 					if(IsEmpty(property.getString("TempPath")))
 					{
 						PopUp p= new PopUp("INFORMATION","Info","You have nothing to save !! ","Ok, I understood","");
+						PopUp.PopDia=p;
 						p.setVisible(true);
-						new Timer(1000, new ActionListener() {
+						timer=new Timer(1000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
-								PopUp.PopDia.dispose();
+								p.dispose();
+								PopUp.control=true;
+								timer.stop();
 							}
-						}).start();
+						});
+						timer.start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
-						ToastMsg tm =new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15){
+						tm =new ToastMsg("Loading...",frame.getBounds().x-125,label_Save.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15){
 							private static final long serialVersionUID = 1L;
 							public void terminationLogic() throws InterruptedException
 							{
@@ -408,27 +420,33 @@ public class SensorGUI extends Library{
 				{
 					if(IsEmpty(property.getString("TempPath")))
 					{
-						new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+						tm=new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
 						{ 
 							private static final long serialVersionUID = 1L;
 							public void terminationLogic() throws InterruptedException
 							{
 								do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
 							}
-						}.showToast();
+						};
+						tm.showToast();
 						PopUp p=new PopUp("INFORMATION","Info","You have nothing to delete !! ","Ok, I understood","");
+						PopUp.PopDia=p;
 						p.setVisible(true);
-						new Timer(1000, new ActionListener() {
+						timer =new Timer(1000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
-								PopUp.PopDia.dispose();
+								p.dispose();
+								PopUp.control=true;
+								timer.stop();
 							}
-						}).start();
+						});
+						timer.start();
 						try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
 					else
 					{
 						PopUp p=new PopUp("Confirm Delete","warning","Are you sure that you want to delete all screenshots?","Yes","No");
+						PopUp.PopDia=p;
 						p.btnNewButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
 								Library.c=0;
@@ -539,14 +557,15 @@ public class SensorGUI extends Library{
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
 				{
-					new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+					tm=new ToastMsg("Loading...",frame.getBounds().x-125,label_Settings.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
 					{
 						private static final long serialVersionUID = 1L;
 						public void terminationLogic() throws InterruptedException
 						{
 							do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
 						}
-					}.showToast();
+					};
+					tm.showToast();
 
 					List<String> tabs=new ArrayList<String>();
 					tabs.add("Settings");
@@ -573,6 +592,7 @@ public class SensorGUI extends Library{
 		}
 		
 				label_Record = new JLabel("");
+				label_Record.setToolTipText("Click here to record screen");
 				label_Record.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {

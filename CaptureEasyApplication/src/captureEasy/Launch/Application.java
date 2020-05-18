@@ -95,6 +95,7 @@ public class Application extends Library{
 				GlobalScreen.registerNativeHook();
 			} catch (Exception e) {
 				PopUp p=new PopUp("ERROR","Error","Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.","Ok, I understoood","Exit Application");
+				PopUp.PopDia=p;
 				p.setVisible(true);
 				logError(e,"Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.");
 			}

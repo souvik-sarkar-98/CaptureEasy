@@ -28,7 +28,6 @@ public class SharedResources extends PathsNKeys {
 	public static PropertiesConfiguration property ;
 	public static PropertiesConfiguration versionInfo ;
 	public static PropertiesConfiguration log4j ;
-
 	public static void init() 
 	{
 		try {
@@ -37,7 +36,9 @@ public class SharedResources extends PathsNKeys {
 			property.setAutoSave(true);
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");
-			new PopUp("ERROR","error","FAILED!\nUnable to initialize propery configuration."+e.getClass().getSimpleName()+" Occured.","Okay","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error","FAILED!\nUnable to initialize propery configuration."+e.getClass().getSimpleName()+" Occured.","Okay","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}
 		try {
 			new File(versionInfoFilePath).createNewFile();
@@ -70,7 +71,9 @@ public class SharedResources extends PathsNKeys {
 			}
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");
-			new PopUp("ERROR","error","FAILED!\nUnable to initialize versioninfo configuration."+e.getClass().getSimpleName()+" Occured.","Okay","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error","FAILED!\nUnable to initialize versioninfo configuration."+e.getClass().getSimpleName()+" Occured.","Okay","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}
 		try {
 			
@@ -88,7 +91,9 @@ public class SharedResources extends PathsNKeys {
 			}
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");
-			new PopUp("ERROR","error","FAILED!\nUnable to initialize log4j propery ."+e.getClass().getSimpleName()+" Occured.","Okay","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error","FAILED!\nUnable to initialize log4j propery ."+e.getClass().getSimpleName()+" Occured.","Okay","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}
 		if(versionInfo.getString("ApplicationPath")==null)
 		{

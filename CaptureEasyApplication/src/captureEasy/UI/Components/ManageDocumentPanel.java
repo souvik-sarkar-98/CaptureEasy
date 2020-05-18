@@ -71,12 +71,11 @@ public class ManageDocumentPanel extends Library {
 	public boolean cellSizesSet = false;
 	//
 	public int rowIconPadding = 8,pointer=-1;
-
+	ToastMsg tm;
 	/* File controls. */
 	public JButton openFile;
 	public JButton printFile;
 	public JButton editFile;
-
 	/* File details. */
 	public JLabel fileName;
 	public JLabel date;
@@ -152,6 +151,7 @@ public class ManageDocumentPanel extends Library {
 					ActionGUI.xDialog = arg0.getXOnScreen();
 					ActionGUI.yDialog = arg0.getYOnScreen();
 					ActionGUI.dialog.setLocation(ActionGUI.xDialog - ActionGUI.xxDialog, ActionGUI.yDialog - ActionGUI.xyDialog); 		
+					tm.setLocation(ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2);
 				}
 			});
 			DocumentScrollPane.setLayout(null);
@@ -251,14 +251,15 @@ public class ManageDocumentPanel extends Library {
 					if(ActionGUI.dialog.isVisible())
 					{
 						searchResult=null;
-						new ToastMsg("Searching...     ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
+						 tm=new ToastMsg("Searching... ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
 						{
 							private static final long serialVersionUID = 1L;
 							public void terminationLogic() throws InterruptedException
 							{
 								do{Thread.sleep(100);}while(ManageDocumentPanel.searchResult==null);
 							}
-						}.showToast();
+						};
+						tm.showToast();
 					}
 					searchResult=search(textField.getText());
 					setTableData(searchResult);
@@ -488,7 +489,9 @@ public class ManageDocumentPanel extends Library {
 						try {
 							desktop.open(((FileTableModel)table.getModel()).getFile(row));
 						} catch (IOException e1) {
-							new PopUp("ERROR","error",e1.getMessage().replace(((FileTableModel)table.getModel()).getFile(row).getPath(), ""),"Okay","").setVisible(true);
+							PopUp p=new PopUp("ERROR","error",e1.getMessage().replace(((FileTableModel)table.getModel()).getFile(row).getPath(), ""),"Okay","");
+							p.setVisible(true);
+							PopUp.PopDia=p;
 							logError(e1,"Exception occured while opening file "+((FileTableModel)table.getModel()).getFile(row));
 						}
 					}
@@ -496,7 +499,9 @@ public class ManageDocumentPanel extends Library {
 						try {
 							desktop.open(((FileTableModel)table.getModel()).getFile(row));
 						} catch (IOException e1) {
-							new PopUp("ERROR","error",e1.getMessage().replace(((FileTableModel)table.getModel()).getFile(row).getPath(), ""),"Okay","").setVisible(true);
+							PopUp p=new PopUp("ERROR","error",e1.getMessage().replace(((FileTableModel)table.getModel()).getFile(row).getPath(), ""),"Okay","");
+							p.setVisible(true);
+							PopUp.PopDia=p;
 							logError(e1,"Exception occured while opening file "+((FileTableModel)table.getModel()).getFile(row));						}
 					}
 					else if (e.getClickCount() == 1 && column==1) {

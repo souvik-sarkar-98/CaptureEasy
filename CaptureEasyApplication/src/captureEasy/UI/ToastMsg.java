@@ -41,11 +41,17 @@ public class ToastMsg extends JFrame {
 		w.add(p); 
 		w.setLocation(x, y); 
 		w.setSize(400, 100); 
+		
 	} 
 	public void terminationLogic() throws InterruptedException
 	{
 		Thread.sleep(2000);
 	}
+	public void setLocation(int x,int y) 
+	{
+		w.setLocation(x, y); 
+	}
+
 	// function to pop up the toast 
 	public void showToast() 
 	{ 
@@ -56,17 +62,6 @@ public class ToastMsg extends JFrame {
 					w.setOpacity(1); 
 					w.setVisible(true);
 					terminationLogic();
-					/*if (terID==0)
-					{
-						
-					}
-					else if(terID==1)
-					else if(terID==2)
-					{
-					}
-					else
-					{
-					}*/
 					for (double d = 1.0; d > 0.2; d -= 0.1) { 
 						try {Thread.sleep(100);} catch (InterruptedException e) {} 
 						w.setOpacity((float)d); 

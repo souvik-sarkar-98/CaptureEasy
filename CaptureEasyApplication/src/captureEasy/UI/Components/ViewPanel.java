@@ -173,6 +173,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 						if(label_Delete.isEnabled())
 						{
 							PopUp p=new PopUp("Confirm Delete","warning","Are you sure that you want to delete this file?","Yes","No");
+							PopUp.PopDia=p;
 							p.setVisible(true);
 							p.btnNewButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
@@ -299,6 +300,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 							populateComment="";
 						PopUp pp=new PopUp("Enter comment for "+files[imgId].getName(),"comment",populateComment,"Done","Cancel");
 						pp.setVisible(true);
+						PopUp.PopDia=pp;
 						pp.btnNewButton.addActionListener(new ActionListener(){
 
 							@Override

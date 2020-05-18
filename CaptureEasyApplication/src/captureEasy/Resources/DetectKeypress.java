@@ -19,7 +19,7 @@ import captureEasy.Launch.Application;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
-
+import captureEasy.UI.Components.RecordPanel;
 
 public class DetectKeypress extends Library implements NativeKeyListener  {
 	int key=0;
@@ -90,7 +90,9 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				File file = new File(createFolder(property.getString("TempPath")) + "\\" + String.valueOf(++(Library.c)) + "." + property.getString("ImageFormat","png").toLowerCase());
 				ImageIO.write(image, property.getString("ImageFormat","png").toLowerCase(), file);
 			} catch (Exception e1) {
-				new PopUp("ERROR","error","Screen Captute Failed !  "+e1.getClass().getSimpleName()+" Occured while getting data from clipboard. Please try again. ","Okay","").setVisible(true);;
+				PopUp p=new PopUp("ERROR","error","Screen Captute Failed !  "+e1.getClass().getSimpleName()+" Occured while getting data from clipboard. Please try again. ","Okay","");
+				PopUp.PopDia=p;
+				p.setVisible(true);;
 				logError(e1,e.getClass().getSimpleName()+" Occured while getting data from clipboard.");
 			}
 		}
@@ -112,7 +114,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		if(key==e.getKeyCode())
 		{
 			key=0;
-			if(!SensorGUI.frame.isVisible())
+			if(!SensorGUI.frame.isVisible() && RecordPanel.isRecording==false)
 				SensorGUI.frame.setVisible(true);
 			if(SensorGUI.frame.getLocation().x==10000 && SensorGUI.frame.getLocation().y==10000 )
 				SensorGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));

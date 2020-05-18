@@ -46,11 +46,10 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-
-import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
 import captureEasy.UI.SplashScreen;
+import captureEasy.UI.Components.RecordPanel;
 import captureEasy.UI.Components.SavePanel;
 
 
@@ -60,7 +59,6 @@ public class Library extends SharedResources
 	 * 
 	 * @utility= logging
 	 */
-	static int blink=0;
 	public static void logError(Exception e,String usermessage)
 	{
 		System.setProperty("logfilename", logFolderPath + "/Error.log");
@@ -94,12 +92,21 @@ public class Library extends SharedResources
 	 * 
 	 * @utility= file/folder operation
 	 */
+	public static Path moveToFolder(String src, String dest)
+	{
+		try {
+			Files.move(Paths.get(src), Paths.get(dest),StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			logError(e,"Exception occured while moving file");
+		};
+		return  Paths.get(dest);
+	}
 	public static Path copyToFolder(String src, String dest)
 	{
 		try {
 			Files.copy(Paths.get(src), Paths.get(dest),StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			logError(e,"Exception occured while copying data");
+			logError(e,"Exception occured while copying file");
 		};
 		return  Paths.get(dest);
 	}
@@ -184,8 +191,9 @@ public class Library extends SharedResources
 		}
 		catch(NullPointerException e){
 			logError(e,e.getClass().getName()+" Exception occured while creating folder.\nPath: "+path);
-			new PopUp("ERROR","error",e.getClass().getName()+"Exception occured while creating folder. Visit 'Error.log' for more details.","Ok, I understood","").setVisible(true);
-
+			PopUp p=new PopUp("ERROR","error",e.getClass().getName()+"Exception occured while creating folder. Visit 'Error.log' for more details.","Ok, I understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}
 		return path;
 	}
@@ -253,7 +261,9 @@ public class Library extends SharedResources
 		} catch (Exception e) 
 		{
 			logError(e,e.getClass().getName()+" Exception occured while taking screenshot");
-			new PopUp("ERROR","error",e.getClass().getName()+"Exception occured while taking screenshot","Ok, I understood","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error",e.getClass().getName()+"Exception occured while taking screenshot","Ok, I understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}  
 		SensorGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 		SensorGUI.frame.setAlwaysOnTop(true);
@@ -291,7 +301,9 @@ public class Library extends SharedResources
 				}
 			} catch (InvalidFormatException | IOException e) {
 				logError(e,e.getClass().getName()+" occured while pasteing '"+files[(int) i].getName()+"'. File Path: "+files[i].getPath());
-				new PopUp("ERROR","error",e.getClass().getName()+" occured while pasteing '"+files[i].getName()+"'. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+				PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occured while pasteing '"+files[i].getName()+"'. Visit 'Error.log for more details.","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
 			}
 
 		}
@@ -321,8 +333,9 @@ public class Library extends SharedResources
 			}catch(Exception e){
 				SavePanel.lblUpdatingFiles.setText(e.getClass().getSimpleName()+" Occured ");
 				logError(e,"Exception occured while loading screenshots in a PDF");
-				new PopUp("ERROR","error",e.getClass().getName()+" occured while loading screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
-
+				PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occured while loading screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
 			}
 		}  
 	}
@@ -372,7 +385,9 @@ public class Library extends SharedResources
 		} catch (FileNotFoundException e) {
 			SavePanel.lblUpdatingFiles.setText(e.getClass().getSimpleName()+" Occured ");
 			logError(e,"Exception occured while loading screenshots in a PDF");
-			new PopUp("ERROR","error",e.getClass().getName()+" occured while saving screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occured while saving screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 
 		}              
 
@@ -424,13 +439,16 @@ public class Library extends SharedResources
 				if(e1.getMessage().equalsIgnoreCase("No valid entries or contents found, this is not a valid OOXML (Office Open XML) file"))
 				{
 					logError(e1,"Exception occured while loading previous screenshots in a PDF. Probable cause is user has selected a corrupted File ");
-					new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
-
+					PopUp p= new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","");
+					p.setVisible(true);
+					PopUp.PopDia=p;
 				}
 				else
 				{
 					logError(e1,"Exception occured while loading previous screenshots in a PDF");
-					new PopUp("ERROR","error",e1.getClass().getName()+" occured while loading  previous screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+					PopUp p=new PopUp("ERROR","error",e1.getClass().getName()+" occured while loading  previous screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","");
+					p.setVisible(true);
+					PopUp.PopDia=p;
 				}
 
 			}
@@ -453,14 +471,18 @@ public class Library extends SharedResources
 		} catch (FileNotFoundException e) {
 			SavePanel.lblUpdatingFiles.setText(e.getClass().getSimpleName()+" Occured ");
 			logError(e,"Exception occured while loading screenshots in a PDF");
-			new PopUp("ERROR","error",e.getClass().getName()+" occured while handeling screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occured while handeling screenshots in PDF. Visit 'Error.log for more details.","Ok, I understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 
 		}              
 		try {
 			FileUtils.deleteDirectory(new File (extractedPath));
 		} catch (IOException e) {
 			logError(e,"Exception occured while loading screenshots in a PDF");
-			new PopUp("ERROR","error",e.getClass().getName()+" occure whiile delete directory","Ok, I understood","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occure whiile delete directory","Ok, I understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}
 
 	}
@@ -496,7 +518,9 @@ public class Library extends SharedResources
 		}
 		catch(Exception e)	{
 			logError(e,e.getClass().getName()+" occured while createNewWord. Path :"+DocumentPath+" \nFile name: "+fileName);
-			new PopUp("ERROR","error",e.getClass().getName()+" occured while createNewWord. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+			PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occured while createNewWord. Visit 'Error.log for more details.","Ok, I understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
 		}
 	}
 
@@ -548,12 +572,16 @@ public class Library extends SharedResources
 			if(e.getMessage().equalsIgnoreCase("No valid entries or contents found, this is not a valid OOXML (Office Open XML) file"))
 			{
 				logError(e,"Exception occured while addToExistingWord. Probable cause is user has selected a corrupted File ");
-				new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+				PopUp p=new PopUp("ERROR","error","Exception Occured.Probable cause is user has selected a corrupted File Visit 'Error.log for more details.","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
 			}
 			else
 			{
 				logError(e,e.getClass().getName()+" occured while addToExistingWord. Path :"+filePath+" \nModified File name: "+fileName);
-				new PopUp("ERROR","error",e.getClass().getName()+" occured while addToExistingWord. Visit 'Error.log for more details.","Ok, I understood","").setVisible(true);
+				PopUp p=new PopUp("ERROR","error",e.getClass().getName()+" occured while addToExistingWord. Visit 'Error.log for more details.","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
 			}	
 		}
 	}
@@ -566,18 +594,27 @@ public class Library extends SharedResources
 			public void run() {
 				while (!stopThread)
 				{
+
 					try{
-						File file=new File(createFolder(System.getProperty("user.dir")+"/Resources/bin/Temp"));
+						File file=new File(tempFolderPath);
 						File[] filesdelete=file.listFiles();
+
 						for(File f:filesdelete)
 						{
-							if(!f.equals(new File(property.getString("TempPath"))))
+							if(!f.equals(new File(property.getString("TempPath") ))&& f.isDirectory())
 							{
-								FileUtils.deleteDirectory(f);
+								try{FileUtils.deleteDirectory(f);}catch(Exception e){}
+							}
+							
+							if(RecordPanel.doDelete && f.getName().equalsIgnoreCase("DoNotDelete.mp4"))
+							{
+								try{FileUtils.forceDelete(f);
+								System.out.println("Delected");
+								}catch(Exception e){}
 							}
 						}
 						Thread.sleep(interval);
-					}catch(Exception w){}
+					}catch(Exception w){w.printStackTrace();}
 				}
 			}
 		}).start();	
@@ -601,6 +638,16 @@ public class Library extends SharedResources
 						//logError(e,"")
 					}
 					SplashScreen.displaySplash=false;
+					try{
+					if(RecordPanel.isRecording)
+					{
+						if(RecordPanel.recDialog.getLocation().x==10000 && RecordPanel.recDialog.getLocation().y==10000 )
+							RecordPanel.recDialog.setLocation(5, 5);
+						else
+							RecordPanel.recDialog.setLocation(10000, 10000);
+					}
+					Thread.sleep(1000);
+					}catch(Exception e){}
 				}
 			}
 		}).start();

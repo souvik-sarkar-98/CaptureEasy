@@ -25,15 +25,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JTextArea;
-import javax.swing.Timer;
 
 import java.awt.SystemColor;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PopUp{
+public class PopUp extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int xx,xy;
 	public static boolean control=true;
 	public static boolean decision;
@@ -44,7 +47,6 @@ public class PopUp{
 	/**
 	 * Launch the application.
 	 */
-	static Timer timer=null;
 	public JLabel lblIcon;
 	public static JDialog  PopDia;
 	
@@ -52,36 +54,21 @@ public class PopUp{
 	/**
 	 * Create the application.
 	 */
-	public void setVisible(boolean bool)
-	{
-		PopDia.setVisible(bool);
-	}
-	public void dispose()
-	{
-		PopDia.dispose();
-	}
-	public void setAlwaysOnTop(boolean bool)
-	{
-		PopDia.setAlwaysOnTop(bool);
-	}
-	
 	
 	public PopUp(String title,String PopUpType,String text,String OkButton_Text,String cancelButton_Text) 
 	{
 		control=false;
-		
 		try{ActionGUI.dialog.setAlwaysOnTop(false);}catch(Exception e){}
 		try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e){}
 		try{PopDia.dispose();}catch(Exception e){}
-		PopDia=new JDialog();
-		PopDia.setResizable(false);
+		setResizable(false);
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		PopDia.setUndecorated(true);
-		PopDia.setAlwaysOnTop(true);
-		PopDia.setLocation(screensize.width/2-300, screensize.height/2-300);  
-		PopDia.setBounds(screensize.width/2-300, screensize.height/2-300, 425, 225);
-		PopDia.getContentPane().setLayout(null);
-		PopDia.addMouseListener(new MouseAdapter() {
+		setUndecorated(true);
+		setAlwaysOnTop(true);
+		setLocation(screensize.width/2-300, screensize.height/2-300);  
+		setBounds(screensize.width/2-300, screensize.height/2-300, 425, 225);
+		getContentPane().setLayout(null);
+		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
@@ -89,21 +76,21 @@ public class PopUp{
 				xy = e.getY();
 			}
 		});
-		PopDia.addMouseMotionListener(new MouseMotionAdapter() {
+		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 
 				int x = arg0.getXOnScreen();
 				int y = arg0.getYOnScreen();
-				PopDia.setLocation(x - xx, y - xy);  
-				PopDia.setBounds(x - xx, y - xy, 425, 225);
+				setLocation(x - xx, y - xy);  
+				setBounds(x - xx, y - xy, 425, 225);
 			}
 		});
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		panel.setBounds(0, 0, 425, 225);
-		PopDia.getContentPane().add(panel);
+		getContentPane().add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_1 = new JPanel();
@@ -132,7 +119,7 @@ public class PopUp{
 				try{ActionGUI.dialog.setAlwaysOnTop(true);}catch(Exception e){}
 				control=true;
 				decision=true;
-				PopDia.dispose();
+				dispose();
 				try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e){}
 			}
 		});
@@ -155,7 +142,7 @@ public class PopUp{
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{ActionGUI.dialog.setAlwaysOnTop(true);}catch(Exception e){}
-				PopDia.dispose();
+				dispose();
 				control=true;
 				decision=false;
 				try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e){}
@@ -306,7 +293,7 @@ public class PopUp{
 
 		panel_7.add(txtrExceptionOccuredPlease);
 
-		PopDia.setVisible(true); 
-		try{PopDia.getRootPane().setDefaultButton(btnNewButton);}catch(Exception e){}
+		setVisible(true); 
+		try{getRootPane().setDefaultButton(btnNewButton);}catch(Exception e){}
 	}
 }

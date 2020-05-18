@@ -39,8 +39,6 @@ import captureEasy.Resources.Library;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
-import captureEasy.UI.ToastMsg;
-
 import javax.swing.ButtonGroup;
 
 public class SettingsPanel extends Library implements MouseListener,MouseMotionListener{
@@ -57,7 +55,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	int Xlocation,Ylocation;
 	SensorGUI sen;
 	PopUp pop;
-	
+	Timer timer;
 	public static String DocPath_Previous=null;
 	public JComboBox<?> comboBox_CaptureKey;
 	public JButton CancelBtn;
@@ -174,11 +172,17 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						}else {
 							if(textField_DocDestFolder.getText().equals(""))
 							{
-								new PopUp("ERROR","error","No Folder Selected","Ok, I understood","");
+								PopUp p=new PopUp("ERROR","error","No Folder Selected","Ok, I understood","");
+								PopUp.PopDia=p;
+								p.setVisible(true);
 								textField_DocDestFolder.setBackground(Color.PINK);
 							}
 							else
-								new PopUp("WARNING","warning","No Folder Selected","Ok, I understood","");
+							{
+								PopUp p=new PopUp("WARNING","warning","No Folder Selected","Ok, I understood","");
+								PopUp.PopDia=p;
+								p.setVisible(true);
+							}
 						}
 						try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 					}
@@ -248,7 +252,9 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					SettingsPane_Recordpanel_RecordFlag = new JCheckBox("Screen recording");
 					SettingsPane_Recordpanel_RecordFlag.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							new PopUp("Information","info","Sorry !! This facility is currently  unavailable.","Ok, Fine","");
+							PopUp p=new PopUp("Information","info","Sorry !! This facility is currently  unavailable.","Ok, Fine","");
+							p.setVisible(true);
+							PopUp.PopDia=p;
 							SettingsPane_Recordpanel_RecordFlag.setSelected(false);
 							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 						}
@@ -295,7 +301,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							btnUpdateFrameLocation.setBackground(UIManager.getColor("CheckBox.background"));
 							PopUp window=new PopUp("INSTRUCTION","INFO","To "+btnUpdateFrameLocation.getText().toLowerCase()+", drag the green frame to your preferred location and set frame expansion then click Done.","Ok, I Understood","");
 							window.setVisible(true);
-							PopUp.PopDia.getRootPane().setDefaultButton(window.btnNewButton);
+							PopUp.PopDia=window;
+							window.getRootPane().setDefaultButton(window.btnNewButton);
 							sen=new SensorGUI();
 							SensorGUI.frame.setVisible(true);
 							SensorGUI.label_Count.setVisible(false);
@@ -310,14 +317,15 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							sen.label_Settings.setToolTipText("");
 							SensorGUI.clickable=false;
 							btnUpdateFrameLocation.setText("Done");
-							new Timer(5000, new ActionListener() {
+							timer=new Timer(5000, new ActionListener() {
 						        @Override
 						        public void actionPerformed(ActionEvent e) {
 						        	window.dispose();
+						        	timer.stop();
 						        }
-						      }).start();
+						      });
+							timer.start();
 						}
-
 					}
 				});
 				btnUpdateFrameLocation.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -361,6 +369,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								{
 									PopUp window = new PopUp("ERROR","error","Please click Done before save !!","Ok, I understood","");
 									window.setVisible(true);
+									PopUp.PopDia=window;
 									btnUpdateFrameLocation.setBackground(Color.PINK);
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
@@ -368,8 +377,9 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								{
 									PopUp window = new PopUp("ERROR","error","No changes have been made !!","Ok, I understood","");
 									window.setVisible(true);
+									PopUp.PopDia=window;
 									window.btnNewButton.addActionListener(new ActionListener(){
-
+										
 										@Override
 										public void actionPerformed(ActionEvent e) {
 											try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
@@ -381,6 +391,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								else if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location") || DocPath_Current.equals(""))
 								{
 									PopUp window = new PopUp("ERROR","error","All mandatory fields must be set before save !!","Ok, I understood","");
+									PopUp.PopDia=window;
 									window.setVisible(true);
 									if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location"))
 										btnUpdateFrameLocation.setBackground(Color.PINK);
@@ -391,6 +402,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								else if(!new File(textField_DocDestFolder.getText()).exists())
 								{
 									PopUp window = new PopUp("ERROR","error","Selected folder not exists. Please Select again","Ok, I understood","");
+									PopUp.PopDia=window;
 									window.setVisible(true);
 									textField_DocDestFolder.setBackground(Color.PINK);
 								}
@@ -421,26 +433,19 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 									}
 									property.setProperty("ImageFormat",ImageFormat_Current);
 
-									new ToastMsg("Successfully Saved !!!",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
-									.showToast();
-									/*PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
-									PopUp.PopDia.setVisible(true);
-									PopUp.PopDia.getRootPane().setDefaultButton(window.btnNewButton);
 									
-									new Timer(1000, new ActionListener() {
-								        @Override
-								        public void actionPerformed(ActionEvent e) {
-								        	window.dispose();
-								        	PopUp.control=true;
-								        }
-								      }).start();*/
+									PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
+									PopUp.PopDia=window;
+									window.setVisible(true);
+									window.getRootPane().setDefaultButton(window.btnNewButton);
+									
 									
 									if(ActionGUI.settingsPanel.CancelBtn.isEnabled())
 									{
-										try{Thread.sleep(2000);}catch(Exception e9){}
+										//try{Thread.sleep(2000);}catch(Exception e9){}
 										ActionGUI.dialog.dispose();
 										ActionGUI.leaveControl=true;
-										try{Application.sensor.play();}catch(Exception rr){};
+										//try{Application.sensor.play();}catch(Exception rr){};
 										if(xv!=null && yv!=null)
 										{
 											new SensorGUI();
@@ -490,11 +495,19 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 										}catch(Exception e58){}										
 									}
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e6){}
-									TabbledPanel.setSelectedIndex(0);
+									timer=new Timer(1000, new ActionListener() {
+								        @Override
+								        public void actionPerformed(ActionEvent e) {
+								        	window.dispose();
+								        	PopUp.control=true;
+											TabbledPanel.setSelectedIndex(0);
+											timer.stop();
+								        }
+								      });
+									timer.start();
 								}
 							}
 						});
-					SaveBtn.setBackground(Color.BLUE);
 					SaveBtn.setForeground(Color.BLACK);
 					SaveBtn.setBorder(new LineBorder(new Color(0, 0, 0)));
 					SaveBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -508,6 +521,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						{
 						PopUp p=new PopUp("ERROR","error","Sorry !! You cannot cancel during primary setup. Please complete primary setup process","Ok, I understood","");
 						p.setVisible(true);
+						PopUp.PopDia=p;
 						try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 						/*p.btnNewButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
@@ -518,6 +532,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						else if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Done"))
 						{
 							PopUp window = new PopUp("ERROR","error","Please click Done before cancel !!","Ok, I understood","");
+							PopUp.PopDia=window;
 							window.setVisible(true);
 							btnUpdateFrameLocation.setBackground(Color.PINK);
 							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
@@ -579,11 +594,13 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					if(comboBox_CaptureKey.getSelectedItem().toString().equalsIgnoreCase("ALT+Prtsc") && ActionGUI.dialog.isVisible() && ActionGUI.tagDrop)
 					{
 						pop=new PopUp("Information","info","ALT+Prtsc will capture only focused window, So please make your target window focused.Press ALT key wait till frame disappears then press PrtSc key.","Ok,I'll Remember","");
+						PopUp.PopDia=pop;
 						pop.setVisible(true);
 					}
 					else if(ActionGUI.dialog.isVisible() && ActionGUI.tagDrop)
 					{
 						pop=new PopUp("Information","info","Please pause the applicaton while you are using "+comboBox_CaptureKey.getSelectedItem().toString()+" button for other use.","Ok,I'll Remember","");
+						PopUp.PopDia=pop;
 						pop.setVisible(true);
 
 					}

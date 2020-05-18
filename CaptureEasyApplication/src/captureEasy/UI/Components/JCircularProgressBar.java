@@ -8,7 +8,6 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
-import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
 public class JCircularProgressBar extends BasicProgressBarUI implements Runnable{
@@ -54,7 +53,6 @@ public class JCircularProgressBar extends BasicProgressBarUI implements Runnable
 			paintString(g, b.left, b.top, barRectWidth, barRectHeight, 0, b);
 		}
 	}
-	Timer timer;
 	public JProgressBar makeUI() {
 
 		progress = new JProgressBar();

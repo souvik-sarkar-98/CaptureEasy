@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,6 +102,16 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			{
 				ActionGUI.leaveControl=true;
 			}
+		});
+		dialog.addWindowStateListener(new WindowStateListener(){
+			@Override
+			public void windowStateChanged(WindowEvent p) {
+				if(p.getNewState()==JFrame.NORMAL && RecordPanel.isRecording)
+				{
+					screenRecord.pauseRecording();
+				}
+			}
+			
 		});
 		contentPanel.setSize(new Dimension(575, 350));
 		contentPanel.setBackground(new Color(127, 255, 212));
@@ -405,15 +416,6 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 		else if(tabName.contains("Update"))
 		{
-			/*new Thread(new Runnable(){
-				@Override
-				public void run() {
-					PopUp window = new PopUp("INFORMATION","info","\n\n                  Loading ...","Close","");
-					window.setVisible(true);
-					window.lblIcon.setBounds(20, 45,50,50);
-				}
-
-			}).start();;*/
 			SoftwareUpdate su= new SoftwareUpdate();
 			try {
 				if(su.checkForUpdates())
