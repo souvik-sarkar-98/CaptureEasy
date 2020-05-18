@@ -107,6 +107,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		
 		if(key==0)
 			key=e.getKeyCode();
+		logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed");
 	}
 
 	@Override
@@ -119,6 +120,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			if(SensorGUI.frame.getLocation().x==10000 && SensorGUI.frame.getLocation().y==10000 )
 				SensorGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 		}
+		logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released\n");
 	}
 	@Override
 	public void nativeKeyTyped(NativeKeyEvent e) {

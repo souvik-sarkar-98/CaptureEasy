@@ -127,8 +127,7 @@ public class ManageDocumentPanel extends Library {
 	public static JTextField textField_Path;
 	private JLabel label_refesh;
 	private JLabel label_refresh;
-	public ManageDocumentPanel(JTabbedPane TabbledPanel)
-	{
+	public ManageDocumentPanel(JTabbedPane TabbledPanel) 	{
 		this.TabbledPanel=TabbledPanel;
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -165,7 +164,7 @@ public class ManageDocumentPanel extends Library {
 
 	}
 
-	public void loadDocumentsTab(String Path) 
+	public void loadDocumentsTab(String Path)  throws Exception
 	{
 		panel_Selection = new JPanel();
 		panel_Selection.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));

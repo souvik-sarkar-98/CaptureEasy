@@ -41,7 +41,7 @@ import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
 import javax.swing.UIManager;
 
-public class SavePanel extends Library implements MouseListener,MouseMotionListener{
+public class SavePanel extends Library implements MouseListener,MouseMotionListener {
 
 	public JPanel SavePanel;
 	public JPanel SaveScrollPane;
@@ -93,7 +93,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		//loadSaveTab();
 	}
 
-	public void loadSaveTab()
+	public void loadSaveTab() throws Exception
 	{
 		SavePanel = new JPanel();
 		SavePanel.setBorder(new MatteBorder(1, 1, 0, 1, (Color) new Color(0, 0, 0)));

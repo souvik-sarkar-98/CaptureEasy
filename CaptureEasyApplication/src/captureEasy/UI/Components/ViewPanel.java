@@ -44,7 +44,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 	private JTabbedPane TabbedPanel;
 	public boolean viewLoaded=false;
 
-	public ViewPanel(JTabbedPane TabbedPanel)
+	public ViewPanel(JTabbedPane TabbedPanel) 
 	{
 		this.TabbedPanel=TabbedPanel;
 		ViewScrollPane = new JPanel();
@@ -56,10 +56,8 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 		ViewScrollPane.addMouseMotionListener(this);
 
 	}
-	public void loadViewTab()
+	public void loadViewTab() throws Exception
 	{
-
-
 		{
 			panel_Image = new JPanel();
 			panel_Image.setSize(new Dimension(410, 250));

@@ -239,12 +239,17 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		{
 			if(!savePanel.saveLoaded)
 			{
-				savePanel.loadSaveTab();
-				savePanel.SaveScrollPane.add(savePanel.panel_Save_Buttons);
-				savePanel.SaveScrollPane.add(savePanel.SavePanel);
-				savePanel.btnDone.requestFocusInWindow();
-				if(i!=0 && loadSaveTab)
-					savePanel.exitbtn.setEnabled(false);
+				try {
+					savePanel.loadSaveTab();
+					savePanel.SaveScrollPane.add(savePanel.panel_Save_Buttons);
+					savePanel.SaveScrollPane.add(savePanel.SavePanel);
+					savePanel.btnDone.requestFocusInWindow();
+					if(i!=0 && loadSaveTab)
+						savePanel.exitbtn.setEnabled(false);
+					super.e=null;
+				} catch (Exception e) {
+					super.e=e;
+				}
 			}
 
 			if(property.getBoolean("showFolderNameField",false))
@@ -278,12 +283,16 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		{
 			if(!viewPanel.viewLoaded)
 			{
-				viewPanel.loadViewTab();
-				viewPanel.ViewScrollPane.add(viewPanel.panel_Image);
-				viewPanel.ViewScrollPane.add(viewPanel.panel_Button);
+				try {
+					viewPanel.loadViewTab();
+					viewPanel.ViewScrollPane.add(viewPanel.panel_Image);
+					viewPanel.ViewScrollPane.add(viewPanel.panel_Button);
+					super.e=null;
+				} catch (Exception e) {
+					super.e=e;
+				}
+				
 			}
-
-			///if(property.getBoolean("showFolderNameField",false))
 			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
 			if(ViewPanel.ImageLabel.getToolTipText()==null)
@@ -298,26 +307,6 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 						ViewPanel.ImageLabel.setToolTipText("<html>Filename : "+ViewPanel.files[ViewPanel.imgId].getName()+"<br>Comment:"+comments.get(ViewPanel.files[ViewPanel.imgId].getName())+"<br><br>Click image to zoom</html>");
 
 				}
-				/*else
-				{
-					ViewPanel.ImageLabel.setIcon(null);
-					ViewPanel.ImageLabel.setText("                                             You have nothing to view");
-					ViewPanel.ImageLabel.setToolTipText("");
-					viewPanel.label_SetComment.setEnabled(false);
-					viewPanel.label_Next.setEnabled(false);
-					viewPanel.label_Prev.setEnabled(false);
-					viewPanel.label_Delete.setEnabled(false);
-					viewPanel.Label_FullView.setEnabled(false);
-					for(int i=0;i<TabbledPanel.getTabCount();i++)
-					{
-						if(TabbledPanel.getTitleAt(i).toLowerCase().contains("save"))
-						{
-							TabbledPanel.removeTabAt(i);
-							viewPanel.lblExit.setEnabled(true);
-							break;
-						}
-					}
-				}*/
 			} catch (IOException e) {
 				logError(e,"Exception occured while loading imageviewer");
 			}
@@ -333,21 +322,24 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
 					documentPanel.showRootFile();
 					documentPanel.label_SearchBtn.requestFocusInWindow();
+					super.e=null;
 				}catch(Exception e){
+					super.e=e;
 					logError(e,"Exception occured while loading Manage documents tab");
 				}
 			}
 			else if(SettingsPanel.DocPath_Previous!=null && !SettingsPanel.DocPath_Previous.equalsIgnoreCase(property.getString("DocPath")))
 			{
-				documentPanel.DocumentScrollPane.remove(documentPanel.panel_View);
-				documentPanel.loadDocumentsTab(property.getString("DocPath",""));
-				documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
-				documentPanel.showRootFile();
-				documentPanel.label_SearchBtn.requestFocusInWindow();
-			}
-			else if(ManageDocumentPanel.changed)
-			{
-				System.out.println("this is me");
+				try {
+					documentPanel.DocumentScrollPane.remove(documentPanel.panel_View);
+					documentPanel.loadDocumentsTab(property.getString("DocPath",""));
+					documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
+					documentPanel.showRootFile();
+					documentPanel.label_SearchBtn.requestFocusInWindow();
+					super.e=null;
+				} catch (Exception e) {
+					super.e=e;
+				}
 				
 			}
 			tabLoaded=true;
@@ -359,8 +351,9 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				try{
 					screenRecord.loadRecordPanel();
 					screenRecord.RecordPanel.add(screenRecord.panel_Control);
-
+					super.e=null;
 				}catch(Exception e){
+					super.e=e;
 					logError(e,"Exception occured while loading Screen Recording tab");
 				}
 			}
@@ -385,9 +378,14 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			ActionGUI.tagDrop=false;
 			if(!settingsPanel.loadSettingsTab)
 			{
-				settingsPanel.loadSettingsTab();
-				settingsPanel.SettingsScrollPane.add(settingsPanel.SettingsPane);
-				settingsPanel.loadSettingsTab=true;
+				try {
+					settingsPanel.loadSettingsTab();
+					settingsPanel.SettingsScrollPane.add(settingsPanel.SettingsPane);
+					settingsPanel.loadSettingsTab=true;
+					super.e=null;
+				} catch (Exception e) {
+					super.e=e;
+				}
 			}
 			settingsPanel.textField_DocDestFolder.setText(property.getString("DocPath",""));
 			settingsPanel.chckbxShowFilderNameField.setSelected(property.getBoolean("showFolderNameField",false));
@@ -420,23 +418,30 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			try {
 				if(su.checkForUpdates())
 				{
-					updatePanel.loadNeedUpdate();
-					updatePanel.panel_Update.add(updatePanel.panel_UpdateYes);
-					updatePanel.lblName.setText(" Name : "+su.JSONObj.get("name"));
-					updatePanel.lblVersion.setText(" Version  : "+su.JSONObj.get("tag_name"));
-					updatePanel.lblPublish.setText(" Published at : "+su.JSONObj.get("published_at"));
-					updatePanel.lblPublish.setToolTipText(su.JSONObj.get("published_at").toString());
-
-					//if download flag is false
-					UpdatePanel.lblprogressflag.setVisible(false);
+					try {
+						updatePanel.loadNeedUpdate();
+						updatePanel.panel_Update.add(updatePanel.panel_UpdateYes);
+						updatePanel.lblName.setText(" Name : "+su.JSONObj.get("name"));
+						updatePanel.lblVersion.setText(" Version  : "+su.JSONObj.get("tag_name"));
+						updatePanel.lblPublish.setText(" Published at : "+su.JSONObj.get("published_at"));
+						updatePanel.lblPublish.setToolTipText(su.JSONObj.get("published_at").toString());
+						UpdatePanel.lblprogressflag.setVisible(false);
+						super.e=null;
+					} catch (Exception e) {
+						super.e=e;
+					}
+					
 				}
 				else
 				{
-					updatePanel.loadUpdated();
-					updatePanel.lblLastUpdatedOn.setText(" Last updated on : "+versionInfo.getString("LasUpdateDate","Data not available"));
-					updatePanel.lblTime.setText(" Time : "+versionInfo.getString("LasUpdateTime","Data not available"));
-					updatePanel.lblCurrentVersion.setText(" Current version : "+versionInfo.getString("CurrentVersion","Base"));
-
+					try{
+						updatePanel.loadUpdated();
+						updatePanel.lblLastUpdatedOn.setText(" Last updated on : "+versionInfo.getString("LasUpdateDate","Data not available"));
+						updatePanel.lblTime.setText(" Time : "+versionInfo.getString("LasUpdateTime","Data not available"));
+						updatePanel.lblCurrentVersion.setText(" Current version : "+versionInfo.getString("CurrentVersion","Base"));
+						super.e=null;
+					}
+					catch(Exception e){super.e=e;}
 				}
 
 			} catch (JSONException e) {

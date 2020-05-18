@@ -69,7 +69,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public boolean loadSettingsTab=false,isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
 	public JCheckBox chckbxAutoUpdate;
-	public SettingsPanel(JTabbedPane TabbledPanel)
+	public SettingsPanel(JTabbedPane TabbledPanel) 
 	{
 		this.TabbledPanel=TabbledPanel;
 		SettingsScrollPane= new JPanel();
@@ -79,10 +79,10 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsScrollPane.setLayout(null);
 		SettingsScrollPane.addMouseListener(this);
 		SettingsScrollPane.addMouseMotionListener(this);
-		loadSettingsTab();
+		//loadSettingsTab();
 		
 	}
-	public void loadSettingsTab()
+	public void loadSettingsTab() throws Exception
 	{
 		SettingsPane = new JPanel();
 		SettingsPane.setSize(new Dimension(439, 320));

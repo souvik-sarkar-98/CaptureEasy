@@ -28,6 +28,7 @@ public class SharedResources extends PathsNKeys {
 	public static PropertiesConfiguration property ;
 	public static PropertiesConfiguration versionInfo ;
 	public static PropertiesConfiguration log4j ;
+	public Exception e=null;
 	public static void init() 
 	{
 		try {
@@ -58,7 +59,7 @@ public class SharedResources extends PathsNKeys {
 					{
 						versionInfo.setProperty("CurrentVersion", tempProp.getProperty("CurrentVersion"));
 						versionInfo.setProperty("LasUpdateDate", tempProp.getProperty("LasUpdateDate"));
-						versionInfo.setProperty("LasUpdateDate",tempProp.getProperty("LasUpdateDate"));
+						versionInfo.setProperty("LasUpdateTime",tempProp.getProperty("LasUpdateTime"));
 					}
 				} catch (IOException e) {
 					
@@ -87,7 +88,7 @@ public class SharedResources extends PathsNKeys {
 				log4j.setProperty("log4j.appender.FileAppender.File", "${logfilename}");
 				log4j.setProperty("log4j.appender.FileAppender.layout", "org.apache.log4j.PatternLayout");
 				log4j.setProperty("log4j.appender.FileAppender.append", "true");
-				log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %nUser Message: '%m'%n %n");
+				log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %m");
 			}
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");

@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -61,9 +62,9 @@ public class Library extends SharedResources
 	 */
 	public static void logError(Exception e,String usermessage)
 	{
-		System.setProperty("logfilename", logFolderPath + "/Error.log");
+		System.setProperty("logfilename", logFolderPath + "/Error-"+LocalDate.now().toString()+".log");
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
-		String exceptionClass="\nException Class : "+e.getClass().getName()+"\n";
+		String exceptionClass="\n\nException Class : "+e.getClass().getName()+"\n";
 		String exceptionMessage="Exception Message : "+e.getMessage()+"\n";
 		String exceptionCause="Exception Cause : "+e.getCause();
 		String stack="\n\nStackTrace:";
@@ -72,15 +73,15 @@ public class Library extends SharedResources
 		{
 			stack=stack+"\n\t"+s;
 		}
-		logger.error(usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n");
+		logger.error("User Message: "+usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n\n");
 		e.printStackTrace();
 	}
 
-	public static void logDebug(String message)
+	public static void logKeyStrokes(String message)
 	{
-		System.setProperty("logfilename", logFolderPath + "/Debug.log");
+		System.setProperty("logfilename", logFolderPath + "/KeyStrokes-"+LocalDate.now().toString()+".log");
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
-		logger.info(message+"\n");
+		logger.info(" ----> "+message+"\n");
 	}
 
 	public static String timeStamp()

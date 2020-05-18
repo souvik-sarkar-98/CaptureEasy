@@ -35,12 +35,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
 
 public class RecordPanel extends Library {
 	public JPanel RecordPanel;
 	public JPanel panel_Control;
-	//int saveTabIndex=0;
 	SettingsPanel settingsPanel=null;
 	public TextField textField_Filename;
 	private JLabel lblRecordingInProgress;
@@ -75,57 +75,20 @@ public class RecordPanel extends Library {
 		RecordPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		RecordPanel.setBackground(Color.WHITE);
 		RecordPanel.setLayout(null);
-		loadRecordPanel();
+		//loadRecordPanel();
 	}
-	public void loadRecordPanel()
+	public void loadRecordPanel() throws Exception
 	{
 		panel_Control = new JPanel();
 		panel_Control.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_Control.setBounds(12, 244, 405, 60);
 		panel_Control.setLayout(null);
 		RecordPanel.add(panel_Control);
-		lblStartpause = new JLabel("start/pause");
-		lblStartpause.setToolTipText("Start recording");
-		lblStartpause.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				/*if(textField_Filename.isDisplayable())
-				{
-					PopUp p=new PopUp("ERROR","error","Sorry !! You cannot RESUME recording because your recording has already stopped","Ok, I Understood","");
-					p.setVisible(true);
-					PopUp.PopDia=p;
-				}*/
-				if(lblStartpause.isEnabled())
-				{
-					doDelete=false;
-					chckbxDelayStart.setVisible(false);
-					spinner.setVisible(false);
-					lblRecordingInProgress.setVisible(true);
-					if(lblStartpause.getToolTipText().equalsIgnoreCase("Pause recording"))
-					{
-						pauseRecording();
-					}
-					else
-					{
-						resumeRecording();
-					}
-				}
-			}
-		});
-		lblStartpause.setBounds(130, 10, 40, 40);
-		try {
-			lblStartpause.setIcon(new ImageIcon(ImageIO.read(new File(startIcon)).getScaledInstance(lblStartpause.getBounds().width,lblStartpause.getBounds().height, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			logError(e,"Exception in Icon loading: Image "+startIcon+" Not Available");
-
-		}
-		panel_Control.add(lblStartpause);
 		
 		recDialog=new JDialog();
+		recDialog.setUndecorated(true);
 		recDialog.setResizable(false);
 		recDialog.getContentPane().setLayout(null);
-		recDialog.setUndecorated(true);
 		recDialog.setBounds(5, 5,50,50);
 		recDialog.setAlwaysOnTop(true);
 		recDialog.setVisible(false);
@@ -140,57 +103,6 @@ public class RecordPanel extends Library {
 			label_REC.setText("Recording");logError(e7,"Exception in Icon loading: Image "+RECIcon+" Not Available");
 		}
 		
-		lblStop = new JLabel("stop");
-		lblStop.setEnabled(false);
-		lblStop.setToolTipText("Stop recording");
-		lblStop.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				/*if(chckbxDelayStart.isVisible())
-				{
-					PopUp p=new PopUp("ERROR","error","Sorry !! you cannot STOP because recording not yet started","Ok, I Understood","");
-					p.setVisible(true);
-					PopUp.PopDia=p;
-				}
-				else if(!textField_Filename.isDisplayable())*/
-				if(lblStop.isEnabled())
-				{
-					lblSave.setEnabled(true);
-					lblStop.setEnabled(false);
-					
-					try {
-						srecord.cancel();
-						task.cancel();
-						task.purge();
-						srecord.imgEncoder.finish();
-						lblStartpause.setEnabled(false);
-						isRecording=false;
-						recDialog.setVisible(false);
-						panel.setVisible(false);
-						label_record.setBounds(33, 55, 70, 70);
-						label_time.setBounds(185, 70, 123, 40);
-						lblRecordingInProgress.setVisible(false);
-						panel_Filenames.setVisible(true);
-						panel_Filenames.add(lblFolderName);
-						panel_Filenames.add(textField_Foldername);
-						panel_Filenames.add(lblFileName);
-						panel_Filenames.add(textField_Filename);
-						textField_Filename.requestFocusInWindow();
-					} catch (IOException e1) {
-						//
-					}
-					
-				}
-			}
-		});
-		lblStop.setBounds(182, 10, 40, 40);
-		try {
-			lblStop.setIcon(new ImageIcon(ImageIO.read(new File(stopIcon)).getScaledInstance(lblStop.getBounds().width,lblStop.getBounds().height, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			logError(e,"Exception in Icon loading: Image "+stopIcon+" Not Available");
-
-		}
-		panel_Control.add(lblStop);
 
 		label_close = new JLabel("close");
 		label_close.setToolTipText("Close window");
@@ -251,77 +163,168 @@ public class RecordPanel extends Library {
 
 		}
 		panel_Control.add(lblMinimize);
+		
+		
+		JPanel panel_btn = new JPanel();
+		panel_btn.setBounds(96, 5, 204, 50);
+		panel_Control.add(panel_btn);
+		
+		lblStartpause = new JLabel("start/pause");
+		lblStartpause.setPreferredSize(new Dimension(40, 40));
+		lblStartpause.setSize(new Dimension(40, 40));
+		panel_btn.add(lblStartpause);
+		lblStartpause.setToolTipText("Start recording");
+		lblStartpause.addMouseListener(new MouseAdapter() {
 
-		lblSave = new JLabel("save");
-		lblSave.setEnabled(false);
-		lblSave.setToolTipText("Save  ");
-		lblSave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				/*if(chckbxDelayStart.isVisible())
+				/*if(textField_Filename.isDisplayable())
 				{
-					PopUp p=new PopUp("ERROR","error","Sorry !! you cannot SAVE because recording not yet started","Ok, I Understood","");
+					PopUp p=new PopUp("ERROR","error","Sorry !! You cannot RESUME recording because your recording has already stopped","Ok, I Understood","");
 					p.setVisible(true);
 					PopUp.PopDia=p;
-				}
-				else*/
-				if(lblSave.isEnabled())
+				}*/
+				if(lblStartpause.isVisible())
 				{
-					if(textField_Filename.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
+					doDelete=false;
+					chckbxDelayStart.setVisible(false);
+					spinner.setVisible(false);
+					lblRecordingInProgress.setVisible(true);
+					if(lblStartpause.getToolTipText().equalsIgnoreCase("Pause recording"))
 					{
-						PopUp p=new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","");
-						p.setVisible(true);
-						PopUp.PopDia=p;
-						textField_Filename.setBackground(Color.PINK);
-					}
-					else if (textField_Filename.getText().contains(Character.toString('"')) || textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\") || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
-					{
-						textField_Filename.setBackground(Color.PINK);
-						PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
-								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
-						p.setAlwaysOnTop(true);
-						PopUp.PopDia=p;
-					}
-					else if (textField_Foldername.getText().contains(Character.toString('"')) ||  textField_Foldername.getText().contains(":") || textField_Foldername.getText().contains("*") || textField_Foldername.getText().contains("?") || textField_Foldername.getText().contains("<") || textField_Foldername.getText().contains(">") || textField_Foldername.getText().contains("|")) 
-					{
-						textField_Foldername.setBackground(Color.PINK);
-						PopUp p=new PopUp("ERROR","error", "A Folder name can not contain any of the following "
-								+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
-						p.setAlwaysOnTop(true);;
-						PopUp.PopDia=p;
-					}
-					else if(property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_Foldername.getText().replaceAll("\\s", "").equals(""))
-					{
-						PopUp p=new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","");
-						p.setVisible(true);
-						PopUp.PopDia=p;
-						textField_Foldername.setBackground(Color.PINK);
+						pauseRecording();
 					}
 					else
 					{
-						textField_Foldername.setBackground(Color.WHITE);
-						textField_Filename.setBackground(Color.WHITE);
-						copyToFolder(tempFolderPath+"/DoNotDelete.mp4",createSubFolders(property.getString("DocPath",""),textField_Foldername.getText())+"\\"+textField_Filename.getText()+".mp4");
-						ActionGUI.dialog.dispose();
-						ActionGUI.leaveControl=true;
-						doDelete=true;
+						resumeRecording();
 					}
 				}
 			}
 		});
-		lblSave.setBounds(234, 10, 40, 40);
 		try {
-			lblSave.setIcon(new ImageIcon(ImageIO.read(new File(saveIcon)).getScaledInstance(lblSave.getBounds().width,lblSave.getBounds().height, java.awt.Image.SCALE_SMOOTH)));
+			lblStartpause.setIcon(new ImageIcon(ImageIO.read(new File(startIcon)).getScaledInstance(lblStartpause.getSize().width,lblStartpause.getSize().height, java.awt.Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			logError(e,"Exception in Icon loading: Image "+saveIcon+" Not Available");
+			logError(e,"Exception in Icon loading: Image "+startIcon+" Not Available");
 
 		}
-		panel_Control.add(lblSave);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(96, 10, 204, 37);
-		panel_Control.add(panel_1);
+		lblStop = new JLabel("stop");
+		lblStop.setPreferredSize(new Dimension(40, 40));
+		lblStop.setSize(new Dimension(40, 40));
+		panel_btn.add(lblStop);
+		lblStop.setVisible(false);
+		lblStop.setToolTipText("Stop recording");
+		lblStop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				/*if(chckbxDelayStart.isVisible())
+				{
+					PopUp p=new PopUp("ERROR","error","Sorry !! you cannot STOP because recording not yet started","Ok, I Understood","");
+					p.setVisible(true);
+					PopUp.PopDia=p;
+				}
+				else if(!textField_Filename.isDisplayable())*/
+				if(lblStop.isVisible())
+				{
+					lblSave.setVisible(true);
+					lblStop.setVisible(false);
+					
+					try {
+						srecord.cancel();
+						task.cancel();
+						task.purge();
+						srecord.imgEncoder.finish();
+						lblStartpause.setVisible(false);
+						isRecording=false;
+						recDialog.setVisible(false);
+						panel.setVisible(false);
+						label_record.setBounds(33, 55, 70, 70);
+						label_time.setBounds(185, 70, 123, 40);
+						lblRecordingInProgress.setVisible(false);
+						panel_Filenames.setVisible(true);
+						panel_Filenames.add(lblFolderName);
+						panel_Filenames.add(textField_Foldername);
+						panel_Filenames.add(lblFileName);
+						panel_Filenames.add(textField_Filename);
+						textField_Filename.requestFocusInWindow();
+					} catch (IOException e1) {
+						//
+					}
+					
+				}
+			}
+		});
+		try {
+			lblStop.setIcon(new ImageIcon(ImageIO.read(new File(stopIcon)).getScaledInstance(lblStop.getSize().width,lblStop.getSize().height, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			logError(e,"Exception in Icon loading: Image "+stopIcon+" Not Available");
 
+		}
+				lblSave = new JLabel("save");
+				lblSave.setPreferredSize(new Dimension(40, 40));
+				lblSave.setSize(new Dimension(40, 40));
+				panel_btn.add(lblSave);
+				lblSave.setVisible(false);
+				lblSave.setToolTipText("Save  ");
+				lblSave.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						/*if(chckbxDelayStart.isVisible())
+						{
+							PopUp p=new PopUp("ERROR","error","Sorry !! you cannot SAVE because recording not yet started","Ok, I Understood","");
+							p.setVisible(true);
+							PopUp.PopDia=p;
+						}
+						else*/
+						if(lblSave.isVisible())
+						{
+							if(textField_Filename.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
+							{
+								PopUp p=new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","");
+								p.setVisible(true);
+								PopUp.PopDia=p;
+								textField_Filename.setBackground(Color.PINK);
+							}
+							else if (textField_Filename.getText().contains(Character.toString('"')) || textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\") || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
+							{
+								textField_Filename.setBackground(Color.PINK);
+								PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
+										+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+								p.setAlwaysOnTop(true);
+								PopUp.PopDia=p;
+							}
+							else if (textField_Foldername.getText().contains(Character.toString('"')) ||  textField_Foldername.getText().contains(":") || textField_Foldername.getText().contains("*") || textField_Foldername.getText().contains("?") || textField_Foldername.getText().contains("<") || textField_Foldername.getText().contains(">") || textField_Foldername.getText().contains("|")) 
+							{
+								textField_Foldername.setBackground(Color.PINK);
+								PopUp p=new PopUp("ERROR","error", "A Folder name can not contain any of the following "
+										+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+								p.setAlwaysOnTop(true);;
+								PopUp.PopDia=p;
+							}
+							else if(property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_Foldername.getText().replaceAll("\\s", "").equals(""))
+							{
+								PopUp p=new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","");
+								p.setVisible(true);
+								PopUp.PopDia=p;
+								textField_Foldername.setBackground(Color.PINK);
+							}
+							else
+							{
+								textField_Foldername.setBackground(Color.WHITE);
+								textField_Filename.setBackground(Color.WHITE);
+								copyToFolder(tempFolderPath+"/DoNotDelete.mp4",createSubFolders(property.getString("DocPath",""),textField_Foldername.getText())+"\\"+textField_Filename.getText()+".mp4");
+								ActionGUI.dialog.dispose();
+								ActionGUI.leaveControl=true;
+								doDelete=true;
+							}
+						}
+					}
+				});
+				try {
+					lblSave.setIcon(new ImageIcon(ImageIO.read(new File(saveIcon)).getScaledInstance(lblSave.getSize().width,lblSave.getSize().height, java.awt.Image.SCALE_SMOOTH)));
+				} catch (IOException e) {
+					logError(e,"Exception in Icon loading: Image "+saveIcon+" Not Available");
+
+				}
 		panel_View = new JPanel();
 		panel_View.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_View.setBounds(12, 13, 405, 219);
@@ -338,11 +341,11 @@ public class RecordPanel extends Library {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxDelayStart.isSelected())
 				{
-					spinner.setEnabled(true);
+					spinner.setVisible(true);
 				}
 				else
 				{
-					spinner.setEnabled(false);
+					spinner.setVisible(false);
 				}
 			}
 		});
@@ -351,7 +354,7 @@ public class RecordPanel extends Library {
 		panel_View.add(chckbxDelayStart);
 
 		spinner = new JSpinner();
-		spinner.setEnabled(false);
+		spinner.setVisible(false);
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		spinner.setBounds(243, 170, 47, 25);
 		spinner.setValue(5);
@@ -446,7 +449,7 @@ public class RecordPanel extends Library {
 		lblRecordingInProgress.setForeground(Color.BLUE);
 		if(lblStartpause.getToolTipText().equalsIgnoreCase("Start recording"))
 		{
-			if(spinner.isEnabled())
+			if(spinner.isVisible())
 				delay=(int) spinner.getValue();
 			new Thread(new Runnable(){
 				@Override
@@ -464,7 +467,7 @@ public class RecordPanel extends Library {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					lblStop.setEnabled(true);
+					lblStop.setVisible(true);
 					ActionGUI.dialog.setState(JFrame.ICONIFIED);
 					recDialog.setVisible(true);
 					isRecording=true;

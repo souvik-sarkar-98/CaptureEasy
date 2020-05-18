@@ -50,7 +50,7 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 		
 	}
 	
-	public void loadUpdated()
+	public void loadUpdated() throws Exception
 	{
 		panel_UpdateNo = new JPanel();
 		//panel_UpdateNo.setVisible(false);
@@ -103,7 +103,7 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 		panel.add(lblCurrentVersion);
 	}
 	
-	public void loadNeedUpdate()
+	public void loadNeedUpdate() throws Exception
 	{
 		panel_UpdateYes = new JPanel();
 		panel_UpdateYes.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
