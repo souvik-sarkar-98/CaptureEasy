@@ -104,7 +104,7 @@ public class Application extends Library{
 			sensor.label_Menu.setEnabled(true);
 			sensor.sensor_panel.setEnabled(true);
 			updateUI();
-			clearTempImages(20000);
+			clearFiles(20000);
 			new SoftwareUpdate().autoUpdate();
 		}
 	}

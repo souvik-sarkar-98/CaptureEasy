@@ -587,7 +587,7 @@ public class Library extends SharedResources
 		}
 	}
 
-	public static void clearTempImages(int interval)
+	public static void clearFiles(int interval)
 	{
 		new Thread(new Runnable(){
 
@@ -597,10 +597,8 @@ public class Library extends SharedResources
 				{
 
 					try{
-						File file=new File(tempFolderPath);
-						File[] filesdelete=file.listFiles();
-
-						for(File f:filesdelete)
+						File tempFile=new File(tempFolderPath);
+						for(File f:tempFile.listFiles())
 						{
 							if(!f.equals(new File(property.getString("TempPath") ))&& f.isDirectory())
 							{
@@ -610,7 +608,15 @@ public class Library extends SharedResources
 							if(RecordPanel.doDelete && f.getName().equalsIgnoreCase("DoNotDelete.mp4"))
 							{
 								try{FileUtils.forceDelete(f);
-								System.out.println("Delected");
+								}catch(Exception e){}
+							}
+						}
+						File logFile=new File(logFolderPath);
+						for(File f:logFile.listFiles())
+						{
+							if(!f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase()))
+							{
+								try{FileUtils.forceDelete(f);
 								}catch(Exception e){}
 							}
 						}
