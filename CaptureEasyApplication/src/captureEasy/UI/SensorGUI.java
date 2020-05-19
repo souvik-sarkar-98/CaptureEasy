@@ -6,6 +6,8 @@ import javax.swing.border.MatteBorder;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.jnativehook.mouse.NativeMouseEvent;
+import org.jnativehook.mouse.NativeMouseListener;
 import org.jnativehook.mouse.SwingMouseAdapter;
 
 import captureEasy.Launch.Application;
@@ -38,7 +40,7 @@ import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Image;
 
-public class SensorGUI extends Library
+public class SensorGUI extends Library implements NativeMouseListener
 {
 	public static int xx,xy,x,y;
 	JPopupMenu popupMenu;
@@ -152,6 +154,7 @@ public class SensorGUI extends Library
 		button_panel.setBackground(new Color(0,0,0,0));
 
 		Label_Pause = new JLabel();
+		
 		Label_Pause.addMouseListener(new SwingMouseAdapter() {
 			/**
 			 * 
@@ -642,36 +645,11 @@ public class SensorGUI extends Library
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						
-						if(ActionGUI.leaveControl)
-						{
-							new ToastMsg("Loading...",frame.getBounds().x-125,label_Record.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
-							{
-								private static final long serialVersionUID = 1L;
-								public void terminationLogic() throws InterruptedException
-								{
-									do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
-								}
-							}.showToast();
-
-							List<String> tabs=new ArrayList<String>();
-							tabs.add("Record");
-							tabs.add("Settings");
-							
-							new ActionGUI(tabs);
-
-							ActionGUI.dialog.setVisible(true);	
-						}
-						else
-						{
-							ActionGUI.dialog.setAlwaysOnTop(true);
-							if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
-							{
-								ActionGUI.dialog.setState(JFrame.NORMAL);
-							}
-						}
+						
 					}
 				});
 				label_Record.setBounds(1, 387, 50, 50);
+				
 				button_panel.add(label_Record);
 				label_Record.setBackground(new Color(0,0,0,0));
 		try{
@@ -754,6 +732,52 @@ public class SensorGUI extends Library
 				Runtime.getRuntime().exec("Taskkill /f /im javaw.exe ");
 
 		} catch (IOException e) {} 
+	}
+	@Override
+	public void nativeMouseClicked(NativeMouseEvent arg0) {
+		System.out.println(arg0.getX()+"   "+arg0.getY());
+		System.out.println(label_Record.getLocationOnScreen().x+"   "+label_Record.getLocationOnScreen().y);
+		if(arg0.getX()>label_Record.getLocationOnScreen().x &&arg0.getX()<label_Record.getLocationOnScreen().x+label_Record.getBounds().width && arg0.getY()>label_Record.getLocationOnScreen().y &&arg0.getY()<label_Record.getLocationOnScreen().x+label_Record.getBounds().height)
+		{
+			if(ActionGUI.leaveControl)
+			{
+				new ToastMsg("Loading...",frame.getBounds().x-125,label_Record.getBounds().y+frame.getBounds().y+sensor_panel.getBounds().height+label_Menu.getBounds().height+15)
+				{
+					private static final long serialVersionUID = 1L;
+					public void terminationLogic() throws InterruptedException
+					{
+						do{Thread.sleep(100);}while(!ActionGUI.dialog.isVisible());	
+					}
+				}.showToast();
+
+				List<String> tabs=new ArrayList<String>();
+				tabs.add("Record");
+				tabs.add("Settings");
+				
+				new ActionGUI(tabs);
+
+				ActionGUI.dialog.setVisible(true);	
+			}
+			else
+			{
+				ActionGUI.dialog.setAlwaysOnTop(true);
+				if(ActionGUI.dialog.getState()==JFrame.ICONIFIED)
+				{
+					ActionGUI.dialog.setState(JFrame.NORMAL);
+				}
+			}
+		}
+		
+	}
+	@Override
+	public void nativeMousePressed(NativeMouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void nativeMouseReleased(NativeMouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

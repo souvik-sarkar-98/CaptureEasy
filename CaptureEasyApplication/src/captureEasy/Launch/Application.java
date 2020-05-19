@@ -74,17 +74,7 @@ public class Application extends Library{
 			}catch(Exception w){
 				logError(w,"exception occured while setting previous comments");
 			}
-			/*List<String> tabs=new ArrayList<String>();
-			tabs.add("Action");
-			tabs.add("View");
-
-			new ActionGUI(tabs);			
-			ActionGUI.dialog.setVisible(true);
-			act.viewPanel.lblExit.setEnabled(false);
-			act.actionPanel.rdbtnSavePreviousWork.setEnabled(false);
-			do{try {Thread.sleep(100);} catch (InterruptedException e) {}}while(!ActionGUI.leaveControl);	
-			TempNeeded=false;
-			 */
+			
 		}
 		new File(tempFilePath).delete();
 		new File(tempFilePath).deleteOnExit();
@@ -93,10 +83,11 @@ public class Application extends Library{
 		if (new File(createFolder(PropertyFilePath)).exists()/* && IsEmpty(createFolder(TempFolder))*/)
 		{
 			GlobalScreen.addNativeKeyListener(new DetectKeypress());
+
 			try {
 				GlobalScreen.registerNativeHook();
 			} catch (Exception e) {
-				PopUp p=new PopUp("ERROR","Error","Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.","Ok, I understoood","Exit Application");
+				PopUp p=new PopUp("ERROR","Error","Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.","Continue","Exit Application");
 				PopUp.PopDia=p;
 				p.setVisible(true);
 				logError(e,"Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.");
@@ -105,6 +96,8 @@ public class Application extends Library{
 			SensorGUI.frame.setVisible(true);
 			sensor.label_Menu.setEnabled(true);
 			sensor.sensor_panel.setEnabled(true);
+			GlobalScreen.addNativeMouseListener(sensor);
+
 			updateUI();
 			clearFiles(20000);
 			new SoftwareUpdate().autoUpdate();
