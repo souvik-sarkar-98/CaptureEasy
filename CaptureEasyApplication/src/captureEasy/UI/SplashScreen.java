@@ -1,7 +1,7 @@
 package captureEasy.UI;
 
 import java.awt.EventQueue;
-import java.awt.event.MouseAdapter;
+import org.jnativehook.mouse.SwingMouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
@@ -101,7 +101,12 @@ public class SplashScreen extends Library{
 		frame.setBounds(700, 170, 460, 350);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.addMouseListener(new MouseAdapter() {
+		frame.addMouseListener(new SwingMouseAdapter() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void mousePressed(MouseEvent e) {

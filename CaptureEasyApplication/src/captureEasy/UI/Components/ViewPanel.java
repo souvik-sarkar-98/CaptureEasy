@@ -5,7 +5,7 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
+import org.jnativehook.mouse.SwingMouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -66,7 +66,12 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 			panel_Image.setLayout(null);
 			{
 				ImageLabel = new JLabel();
-				ImageLabel.addMouseListener(new MouseAdapter() {
+				ImageLabel.addMouseListener(new SwingMouseAdapter() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						//////
@@ -94,7 +99,12 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 				label_Prev.setToolTipText("Swipe left");
 				label_Prev.setBounds(160, 5, 33, 25);
 				panel_Button.add(label_Prev);
-				label_Prev.addMouseListener(new MouseAdapter(){
+				label_Prev.addMouseListener(new SwingMouseAdapter(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						gotoPreviousImage();
@@ -112,8 +122,13 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 				Label_FullView.setToolTipText("View fullscreen with image viewer");
 				Label_FullView.setBounds(195, 5, 33, 25);
 				panel_Button.add(Label_FullView);
-				Label_FullView.addMouseListener(new MouseAdapter()
+				Label_FullView.addMouseListener(new SwingMouseAdapter()
 				{
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						if(Label_FullView.isEnabled())
@@ -139,8 +154,13 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 			}
 			{
 				label_Next = new JLabel(" ");
-				label_Next.addMouseListener(new MouseAdapter()
+				label_Next.addMouseListener(new SwingMouseAdapter()
 				{
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						gotoNextImage();
@@ -164,8 +184,13 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 				label_Delete.setSize(new Dimension(25, 25));
 				label_Delete.setToolTipText("Delete this image");
 				label_Delete.setBounds(376, 0, 25, 30);
-				label_Delete.addMouseListener(new MouseAdapter()
+				label_Delete.addMouseListener(new SwingMouseAdapter()
 				{
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						if(label_Delete.isEnabled())
@@ -233,7 +258,12 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 			}
 			{
 				label_VisitFolder = new JLabel("");
-				label_VisitFolder.addMouseListener(new MouseAdapter() {
+				label_VisitFolder.addMouseListener(new SwingMouseAdapter() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						if(label_Delete.isEnabled())
@@ -262,7 +292,12 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 
 			lblExit = new JLabel("exit");
 			//lblExit.setBounds(308, 9, 20, 20);
-			lblExit.addMouseListener(new MouseAdapter() {
+			lblExit.addMouseListener(new SwingMouseAdapter() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					if(lblExit.isEnabled())
@@ -288,7 +323,12 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 			label_SetComment = new JLabel("");
 			label_SetComment.setBounds(47, 3, 25, 25);
 			panel_Button.add(label_SetComment);
-			label_SetComment.addMouseListener(new MouseAdapter() {
+			label_SetComment.addMouseListener(new SwingMouseAdapter() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					if(label_SetComment.isEnabled())

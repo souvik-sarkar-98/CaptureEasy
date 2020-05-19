@@ -6,6 +6,7 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +53,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import java.awt.event.MouseAdapter;
+import org.jnativehook.mouse.SwingMouseAdapter;
 import javax.swing.JTextField;
 
 public class ManageDocumentPanel extends Library {
@@ -139,7 +140,12 @@ public class ManageDocumentPanel extends Library {
 			DocumentScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 			DocumentScrollPane.setBackground(Color.WHITE);
 			DocumentScrollPane.setSize(new Dimension(437, 315));
-			DocumentScrollPane.addMouseListener(new MouseAdapter(){
+			DocumentScrollPane.addMouseListener(new SwingMouseAdapter(){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				public void mousePressed(MouseEvent e) {
 					ActionGUI.xxDialog = e.getX();
 					ActionGUI.xyDialog = e.getY();
@@ -150,6 +156,7 @@ public class ManageDocumentPanel extends Library {
 					ActionGUI.xDialog = arg0.getXOnScreen();
 					ActionGUI.yDialog = arg0.getYOnScreen();
 					ActionGUI.dialog.setLocation(ActionGUI.xDialog - ActionGUI.xxDialog, ActionGUI.yDialog - ActionGUI.xyDialog); 		
+					if(tm!=null)
 					tm.setLocation(ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2);
 				}
 			});
@@ -181,7 +188,12 @@ public class ManageDocumentPanel extends Library {
 		} catch (IOException e1) {
 			logError(e1,"Exception in Icon loading: Image "+exitIcon+" Not Available");}
 
-		lblCross.addMouseListener(new MouseAdapter() {
+		lblCross.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(lblCross.isEnabled())
@@ -199,7 +211,12 @@ public class ManageDocumentPanel extends Library {
 		panel_Selection.add(textField_Path);
 		textField_Path.setColumns(10);
 		label_refresh = new JLabel("");
-		label_refresh.addMouseListener(new MouseAdapter() {
+		label_refresh.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				textField_Path.setToolTipText(textField_Path.getText());
@@ -241,7 +258,12 @@ public class ManageDocumentPanel extends Library {
 
 		label_SearchBtn = new JLabel("");
 		label_SearchBtn.setBackground(new Color(255, 255, 204));
-		label_SearchBtn.addMouseListener(new MouseAdapter() {
+		label_SearchBtn.addMouseListener(new SwingMouseAdapter() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -276,13 +298,23 @@ public class ManageDocumentPanel extends Library {
 		}
 
 		label_Kebab = new JLabel("");
-		label_Kebab.addMouseListener(new MouseAdapter() {
+		label_Kebab.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
 			}
 		});
-		label_Kebab.addMouseListener(new MouseAdapter(){
+		label_Kebab.addMouseListener(new SwingMouseAdapter(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			//public void mouseClicked()
 			{
 				
@@ -300,7 +332,12 @@ public class ManageDocumentPanel extends Library {
 		}
 
 		label_createFolder = new JLabel("");
-		label_createFolder.addMouseListener(new MouseAdapter() {
+		label_createFolder.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 			}
@@ -318,7 +355,12 @@ public class ManageDocumentPanel extends Library {
 
 		label_Back = new JLabel("");
 		label_Back.setEnabled(false);
-		label_Back.addMouseListener(new MouseAdapter() {
+		label_Back.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//pathTraverse
@@ -350,7 +392,12 @@ public class ManageDocumentPanel extends Library {
 		
 		label_Forword = new JLabel("");
 		label_Forword.setEnabled(false);
-		label_Forword.addMouseListener(new MouseAdapter() {
+		label_Forword.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (pointer < pathTraverse.size()) {
@@ -479,7 +526,12 @@ public class ManageDocumentPanel extends Library {
 					//System.out.println( row );
 				}
 			};
-			table.addMouseListener(new MouseAdapter() {
+			table.addMouseListener(new SwingMouseAdapter() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				public void mouseClicked(MouseEvent e) {
 					JTable target = (JTable)e.getSource();
 					int row = target.getSelectedRow();
@@ -828,7 +880,11 @@ class FileTreeCellRenderer extends DefaultTreeCellRenderer {
 	}
 
 }
-class TableMouseListener extends MouseAdapter {
+class TableMouseListener extends SwingMouseAdapter {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	public TableMouseListener(JTable table) {
 		this.table = table;

@@ -17,13 +17,13 @@ import org.jnativehook.GlobalScreen;
 public class Application extends Library{
 	static boolean TempNeeded=true;
 	public static SensorGUI sensor;
-
 	public static void main(String args[]) throws Exception
 	{
 		new Application().launch();
 	}
 	public void launch() 
 	{	
+		//logger
 		logProcess("Initiating application to launch");
 		SplashScreen sp=new SplashScreen();
 		sp.frame.setVisible(true);
@@ -31,7 +31,7 @@ public class Application extends Library{
 		SharedResources.init();
 		//
 		sp.lblVersion.setText("Version : "+versionInfo.getString("CurrentVersion","Base"));
-		//try{Thread.sleep(1000);}catch(Exception e){}
+		try{Thread.sleep(500);}catch(Exception e){}
 		if(!new File(createFolder(PropertyFilePath)).exists() || property.getString("DocPath","").replaceAll("\\s", "").equals(""))
 		{
 			property.setProperty("TempPath",createTemp());

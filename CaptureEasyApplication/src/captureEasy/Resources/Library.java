@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
@@ -30,7 +28,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -75,7 +72,7 @@ public class Library extends SharedResources
 		{
 			stack=stack+"\n\t"+s;
 		}
-		logger.error("User Message: "+usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n\n");
+		logger.info("User Message: "+usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n");
 		e.printStackTrace();
 	}
 
@@ -83,13 +80,13 @@ public class Library extends SharedResources
 	{
 		System.setProperty("logfilename", logFolderPath + "/KeyStrokes-"+LocalDate.now().toString()+".log");
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
-		logger.info(" --> "+message+"\n");
+		logger.info(" --> "+message);
 	}
 	public static void logProcess(String message)
 	{
 		System.setProperty("logfilename", logFolderPath + "/Process-"+getPID()+".log");
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
-		logger.info(" <*|*> "+message+"\n");
+		logger.info(" <*|*> "+message);
 	}
 
 	public static String timeStamp()
@@ -603,7 +600,6 @@ public class Library extends SharedResources
 			public void run() {
 				while (!stopThread)
 				{
-
 					try{
 						File tempFile=new File(tempFolderPath);
 						for(File f:tempFile.listFiles())
@@ -623,35 +619,17 @@ public class Library extends SharedResources
 						File logFile=new File(logFolderPath);
 						for(File f:logFile.listFiles())
 						{
-							if((f.length())>1024)
+							if((f.length()/1024)>1024)
 							{
-								try{FileUtils.forceDelete(f);
+								try{FileUtils.forceDelete(f); //new PopUp("hshd","bhsb",f.getPath(),"ok","").setVisible(true);;
 								}catch(Exception e){}
 							}
-							else if(!f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase()))
+							else if(f.getName().toLowerCase().contains(String.valueOf(getPID()))){}
+							else if(f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase())){}
+							else
 							{
-								if(f.getName().toLowerCase().contains(String.valueOf(getPID())))
-								{
-									try {
-										String line;
-										BufferedReader input =new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec("tasklist").getInputStream()));
-										while ((line = input.readLine()) != null) {
-											if(line.toLowerCase().contains("java") && !line.toLowerCase().contains(String.valueOf(getPID())))
-											{
-												try{FileUtils.forceDelete(f);
-												}catch(Exception e){}
-											}
-										}
-										input.close();
-									} catch (Exception err) {
-										err.printStackTrace();
-									}
-								}
-								else
-								{
-									try{FileUtils.forceDelete(f);
-									}catch(Exception e){}
-								}
+								try{FileUtils.forceDelete(f);//new PopUp("hshd","bhsb",f.getPath()+" from else","ok","").setVisible(true);
+								}catch(Exception e){}
 							}
 						}
 						Thread.sleep(interval);

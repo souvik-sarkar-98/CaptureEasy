@@ -31,7 +31,7 @@ import javax.swing.JFrame;
 import javax.swing.JSpinner;
 import javax.swing.Timer;
 
-import java.awt.event.MouseAdapter;
+import org.jnativehook.mouse.SwingMouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -106,7 +106,12 @@ public class RecordPanel extends Library {
 
 		label_close = new JLabel("close");
 		label_close.setToolTipText("Close window");
-		label_close.addMouseListener(new MouseAdapter() {
+		label_close.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(chckbxDelayStart.isVisible())
@@ -148,7 +153,12 @@ public class RecordPanel extends Library {
 
 		lblMinimize = new JLabel("minimize");
 		lblMinimize.setToolTipText("Minimize window");
-		lblMinimize.addMouseListener(new MouseAdapter() {
+		lblMinimize.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				ActionGUI.dialog.setState(Frame.ICONIFIED);
@@ -172,7 +182,12 @@ public class RecordPanel extends Library {
 		lblStartpause.setSize(new Dimension(40, 40));
 		panel_btn.add(lblStartpause);
 		lblStartpause.setToolTipText("Start recording");
-		lblStartpause.addMouseListener(new MouseAdapter() {
+		lblStartpause.addMouseListener(new SwingMouseAdapter() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -209,7 +224,12 @@ public class RecordPanel extends Library {
 		panel_btn.add(lblStop);
 		lblStop.setVisible(false);
 		lblStop.setToolTipText("Stop recording");
-		lblStop.addMouseListener(new MouseAdapter() {
+		lblStop.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				/*if(chckbxDelayStart.isVisible())
@@ -261,7 +281,12 @@ public class RecordPanel extends Library {
 				panel_btn.add(lblSave);
 				lblSave.setVisible(false);
 				lblSave.setToolTipText("Save  ");
-				lblSave.addMouseListener(new MouseAdapter() {
+				lblSave.addMouseListener(new SwingMouseAdapter() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						/*if(chckbxDelayStart.isVisible())

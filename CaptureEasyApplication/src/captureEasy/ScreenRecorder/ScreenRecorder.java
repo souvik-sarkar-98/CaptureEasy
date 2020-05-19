@@ -19,18 +19,6 @@ public class ScreenRecorder extends TimerTask {
 	BufferedImage image;
 	private Rectangle screenDimension;
 	public ScreenRecorder(String filename) {
-		/*try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
-			{
-				if ("Nimbus".equals(info.getName())) 
-				{
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				} 
-			}
-		}catch (ClassNotFoundException | InstantiationException | IllegalAccessException| UnsupportedLookAndFeelException e) {
-			Library.logError(e,"Exception occured while setinng UI (ScreenRecord)");
-		}*/
 		try {
 			robot = new Robot();
 			imgEncoder = AWTSequenceEncoder.createSequenceEncoder(new File(filename), 24 / 8);

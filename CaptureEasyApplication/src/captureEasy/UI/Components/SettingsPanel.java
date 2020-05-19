@@ -161,7 +161,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						try {
 							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException| UnsupportedLookAndFeelException e1) {
-							logger.error(e1.getClass().getName()+" Occured while setting look and feel of JDirectoryChooser");
+							logError(e1,e1.getClass().getName()+" Occured while setting look and feel of JDirectoryChooser");
 						}
 						fileChooser = new JFileChooser();
 						fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

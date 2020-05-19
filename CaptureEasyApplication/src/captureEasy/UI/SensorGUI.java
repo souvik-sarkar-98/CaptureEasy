@@ -6,6 +6,7 @@ import javax.swing.border.MatteBorder;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.jnativehook.mouse.SwingMouseAdapter;
 
 import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
@@ -16,7 +17,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
@@ -111,7 +111,12 @@ public class SensorGUI extends Library
 		frame.setAlwaysOnTop(true);
 
 		frame.setBackground(new Color(0,0,0,0));
-		frame.addMouseListener(new MouseAdapter() {
+		frame.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 
@@ -147,7 +152,12 @@ public class SensorGUI extends Library
 		button_panel.setBackground(new Color(0,0,0,0));
 
 		Label_Pause = new JLabel();
-		Label_Pause.addMouseListener(new MouseAdapter() {
+		Label_Pause.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String toolText=label_Menu.getToolTipText();
@@ -195,7 +205,12 @@ public class SensorGUI extends Library
 		lebel_Power.setBounds(2, 0, 50, 50);
 		button_panel.add(lebel_Power);
 		lebel_Power.setBackground(new Color(0,0,0,0));
-		lebel_Power.addMouseListener(new MouseAdapter() {
+		lebel_Power.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//if(ActionGUI.leaveControl)
@@ -225,7 +240,12 @@ public class SensorGUI extends Library
 		button_panel.add(label_Document);
 		label_Document.setBackground(new Color(0,0,0,0));
 		label_Document.setToolTipText("Click here to manage documents");
-		label_Document.addMouseListener(new MouseAdapter() {
+		label_Document.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
@@ -273,7 +293,12 @@ public class SensorGUI extends Library
 		label_View.setBackground(new Color(0,0,0,0));
 		label_View.setToolTipText("Click here to view screenshot");
 		label_View.setPreferredSize(new Dimension(50, 50));
-		label_View.addMouseListener(new MouseAdapter() {
+		label_View.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
@@ -337,7 +362,12 @@ public class SensorGUI extends Library
 		button_panel.add(label_Save);
 		label_Save.setBackground(new Color(0,0,0,0));
 		label_Save.setToolTipText("Click here to Save");
-		label_Save.addMouseListener(new MouseAdapter() {
+		label_Save.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(label_Save.getName());
@@ -404,7 +434,12 @@ public class SensorGUI extends Library
 		label_delete.setBounds(1, 110, 50, 50);
 		button_panel.add(label_delete);
 		label_delete.setBackground(new Color(0,0,0,0));
-		label_delete.addMouseListener(new MouseAdapter() {
+		label_delete.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override				
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
@@ -477,7 +512,11 @@ public class SensorGUI extends Library
 			}
 		});
 		sensor_panel.setToolTipText("Click here to take screenshots");
-		sensor_panel.addMouseListener(new MouseAdapter() {
+		sensor_panel.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(ActionGUI.leaveControl && !SharedResources.PauseThread)
@@ -505,7 +544,12 @@ public class SensorGUI extends Library
 		label_Menu.setBounds(2, 55, 50, 50);
 		Main_panel.add(label_Menu);
 		label_Menu.setBackground(new Color(0,0,0,0));
-		label_Menu.addMouseListener(new MouseAdapter() {
+		label_Menu.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(label_Menu.isEnabled()){
@@ -543,7 +587,12 @@ public class SensorGUI extends Library
 		label_Settings.setBounds(1, 330, 50, 50);
 		button_panel.add(label_Settings);
 		label_Settings.setBackground(new Color(0,0,0,0));
-		label_Settings.addMouseListener(new MouseAdapter() {
+		label_Settings.addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(ActionGUI.leaveControl)
@@ -584,7 +633,12 @@ public class SensorGUI extends Library
 		
 				label_Record = new JLabel("");
 				label_Record.setToolTipText("Click here to record screen");
-				label_Record.addMouseListener(new MouseAdapter() {
+				label_Record.addMouseListener(new SwingMouseAdapter() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						

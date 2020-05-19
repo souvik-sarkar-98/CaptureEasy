@@ -25,6 +25,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 
 import captureEasy.Launch.Application;
@@ -40,6 +41,8 @@ import captureEasy.UI.Components.ViewPanel;
 
 public class ActionGUI extends Library  implements ChangeListener,MouseListener,MouseMotionListener
 {
+	public static Logger logger = Logger.getLogger(ActionGUI.class);
+
 	public static JFrame dialog;
 	public final JPanel contentPanel = new JPanel();
 	public String selectedTab="";

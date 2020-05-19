@@ -13,12 +13,13 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.jnativehook.mouse.SwingMouseAdapter;
+
 import captureEasy.Resources.Library;
 import captureEasy.Resources.PathsNKeys;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
@@ -68,7 +69,12 @@ public class PopUp extends JDialog{
 		setLocation(screensize.width/2-300, screensize.height/2-300);  
 		setBounds(screensize.width/2-300, screensize.height/2-300, 425, 225);
 		getContentPane().setLayout(null);
-		addMouseListener(new MouseAdapter() {
+		addMouseListener(new SwingMouseAdapter() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 

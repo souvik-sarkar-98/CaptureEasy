@@ -23,13 +23,12 @@ import captureEasy.UI.Components.RecordPanel;
 
 public class DetectKeypress extends Library implements NativeKeyListener  {
 	int key=0;
-	//
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
 		String captureKey=property.getString("CaptureKey","PrtSc");
 		if(captureKey.equalsIgnoreCase("PrtSc"))
-			captureKey="Print Screen";
-		else if(e.getKeyCode()==NativeKeyEvent.VC_PRINTSCREEN  )
+			captureKey="Print Screen"; 
+		else if(e.getKeyCode()==NativeKeyEvent.VC_PRINTSCREEN && e.getRawCode()==44)
 		{
 			SensorGUI.frame.setLocation(10000,10000);
 			if(!captureKey.equalsIgnoreCase("ALT+Prtsc"))
@@ -81,7 +80,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		{
 			captureScreen();
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==44 && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			try {
 				Thread.sleep(500);
@@ -107,7 +106,10 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		
 		if(key==0)
 			key=e.getKeyCode();
-		logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed");
+		if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
+			logKeyStrokes("'*' Pressed. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
+		else
+			logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
 	}
 
 	@Override
@@ -119,8 +121,19 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				SensorGUI.frame.setVisible(true);
 			if(SensorGUI.frame.getLocation().x==10000 && SensorGUI.frame.getLocation().y==10000 )
 				SensorGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
+			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
+				logKeyStrokes("'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
+			else
+				logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. (KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+")\n");
 		}
-		logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released\n");
+		else
+		{
+			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
+				logKeyStrokes("'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
+			else
+				logKeyStrokes("'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. ( KeyCode="+e.getKeyCode()+" , RawCode="+e.getRawCode()+" )");
+
+		}
 	}
 	@Override
 	public void nativeKeyTyped(NativeKeyEvent e) {

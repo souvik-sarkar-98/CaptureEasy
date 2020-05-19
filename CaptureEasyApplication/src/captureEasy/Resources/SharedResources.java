@@ -18,9 +18,8 @@ import captureEasy.UI.PopUp;
 
 public class SharedResources extends PathsNKeys {
 
-	
 	public static Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-	public static Logger logger = Logger.getLogger(PathsNKeys.class);
+	public static Logger logger = Logger.getLogger(SharedResources.class);
 	public static boolean PauseThread=false;
 	public static boolean stopThread=false;
 	public static int progress=0;
@@ -29,8 +28,21 @@ public class SharedResources extends PathsNKeys {
 	public static PropertiesConfiguration versionInfo ;
 	public static PropertiesConfiguration log4j ;
 	public Exception e=null;
+
 	public static void init() 
 	{
+		/*try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
+			{
+				if ("Nimbus".equals(info.getName())) 
+				{
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				} 
+			}
+		}catch (Exception e) {
+			Library.logError(e,"Exception occured while setinng UI (ScreenRecord)");
+		}*/
 		Library.logProcess("Initiating Shared Resources");
 		try {
 			new File(PropertyFilePath).createNewFile();
@@ -64,13 +76,13 @@ public class SharedResources extends PathsNKeys {
 						versionInfo.setProperty("LasUpdateTime",tempProp.getProperty("LasUpdateTime"));
 					}
 				} catch (IOException e) {
-					
+
 				}
 				if(tempProp.getProperty("TempPath")!=null)
 				{
 					property.setProperty("TempPath", tempProp.getProperty("TempPath"));
 				}
-				
+
 			}
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");
@@ -79,7 +91,7 @@ public class SharedResources extends PathsNKeys {
 			PopUp.PopDia=p;
 		}
 		try {
-			
+
 			new File(Log4jPropertyFilePath).createNewFile();
 			log4j = new PropertiesConfiguration(Log4jPropertyFilePath);
 			log4j.setAutoSave(true);
@@ -90,7 +102,7 @@ public class SharedResources extends PathsNKeys {
 				log4j.setProperty("log4j.appender.FileAppender.File", "${logfilename}");
 				log4j.setProperty("log4j.appender.FileAppender.layout", "org.apache.log4j.PatternLayout");
 				log4j.setProperty("log4j.appender.FileAppender.append", "true");
-				log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %m");
+				log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %m%n");
 			}
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");
