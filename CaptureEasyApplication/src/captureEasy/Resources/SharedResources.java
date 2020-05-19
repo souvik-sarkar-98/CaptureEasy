@@ -31,10 +31,12 @@ public class SharedResources extends PathsNKeys {
 	public Exception e=null;
 	public static void init() 
 	{
+		Library.logProcess("Initiating Shared Resources");
 		try {
 			new File(PropertyFilePath).createNewFile();
 			property = new PropertiesConfiguration(PropertyFilePath);
 			property.setAutoSave(true);
+			Library.logProcess("PropertiesConfiguration created and set as autosave");
 		} catch (ConfigurationException | IOException e) {
 			Library.logError(e,"Unable to initialize propery configuration");
 			PopUp p=new PopUp("ERROR","error","FAILED!\nUnable to initialize propery configuration."+e.getClass().getSimpleName()+" Occured.","Okay","");

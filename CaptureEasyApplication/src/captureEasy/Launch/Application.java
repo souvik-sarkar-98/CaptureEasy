@@ -24,8 +24,10 @@ public class Application extends Library{
 	}
 	public void launch() 
 	{	
+		logProcess("Initiating application to launch");
 		SplashScreen sp=new SplashScreen();
 		sp.frame.setVisible(true);
+		logProcess("Splash screen object created and setVisible as true");
 		SharedResources.init();
 		//
 		sp.lblVersion.setText("Version : "+versionInfo.getString("CurrentVersion","Base"));

@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
@@ -81,7 +83,13 @@ public class Library extends SharedResources
 	{
 		System.setProperty("logfilename", logFolderPath + "/KeyStrokes-"+LocalDate.now().toString()+".log");
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
-		logger.info(" ----> "+message+"\n");
+		logger.info(" --> "+message+"\n");
+	}
+	public static void logProcess(String message)
+	{
+		System.setProperty("logfilename", logFolderPath + "/Process-"+getPID()+".log");
+		PropertyConfigurator.configure(Log4jPropertyFilePath);
+		logger.info(" <*|*> "+message+"\n");
 	}
 
 	public static String timeStamp()
@@ -600,24 +608,50 @@ public class Library extends SharedResources
 						File tempFile=new File(tempFolderPath);
 						for(File f:tempFile.listFiles())
 						{
-							if(!f.equals(new File(property.getString("TempPath") ))&& f.isDirectory())
+							if((!f.equals(new File(property.getString("TempPath") ))&& f.isDirectory()) || (f.length()/1024)>1024)
 							{
 								try{FileUtils.deleteDirectory(f);}catch(Exception e){}
 							}
-							
+
 							if(RecordPanel.doDelete && f.getName().equalsIgnoreCase("DoNotDelete.mp4"))
 							{
 								try{FileUtils.forceDelete(f);
 								}catch(Exception e){}
 							}
+							
 						}
 						File logFile=new File(logFolderPath);
 						for(File f:logFile.listFiles())
 						{
-							if(!f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase()))
+							if((f.length())>1024)
 							{
 								try{FileUtils.forceDelete(f);
 								}catch(Exception e){}
+							}
+							else if(!f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase()))
+							{
+								if(f.getName().toLowerCase().contains(String.valueOf(getPID())))
+								{
+									try {
+										String line;
+										BufferedReader input =new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec("tasklist").getInputStream()));
+										while ((line = input.readLine()) != null) {
+											if(line.toLowerCase().contains("java") && !line.toLowerCase().contains(String.valueOf(getPID())))
+											{
+												try{FileUtils.forceDelete(f);
+												}catch(Exception e){}
+											}
+										}
+										input.close();
+									} catch (Exception err) {
+										err.printStackTrace();
+									}
+								}
+								else
+								{
+									try{FileUtils.forceDelete(f);
+									}catch(Exception e){}
+								}
 							}
 						}
 						Thread.sleep(interval);
@@ -646,14 +680,14 @@ public class Library extends SharedResources
 					}
 					SplashScreen.displaySplash=false;
 					try{
-					if(RecordPanel.isRecording)
-					{
-						if(RecordPanel.recDialog.getLocation().x==10000 && RecordPanel.recDialog.getLocation().y==10000 )
-							RecordPanel.recDialog.setLocation(5, 5);
-						else
-							RecordPanel.recDialog.setLocation(10000, 10000);
-						Thread.sleep(1000);
-					}
+						if(RecordPanel.isRecording)
+						{
+							if(RecordPanel.recDialog.getLocation().x==10000 && RecordPanel.recDialog.getLocation().y==10000 )
+								RecordPanel.recDialog.setLocation(5, 5);
+							else
+								RecordPanel.recDialog.setLocation(10000, 10000);
+							Thread.sleep(1000);
+						}
 					}catch(Exception e){}
 				}
 			}
