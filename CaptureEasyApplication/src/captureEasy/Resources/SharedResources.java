@@ -14,20 +14,21 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
 import captureEasy.UI.PopUp;
+import captureEasy.UI.SensorGUI;
 
 
 public class SharedResources extends PathsNKeys {
 
 	public static Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Logger logger = Logger.getLogger(SharedResources.class);
-	public static boolean PauseThread=false;
-	public static boolean stopThread=false;
+	public static boolean PauseThread=false,stopThread=false,duplicateAvailable=false;
 	public static int progress=0;
 	public static Map<String,String> comments=new HashMap<>();
 	public static PropertiesConfiguration property ;
 	public static PropertiesConfiguration versionInfo ;
 	public static PropertiesConfiguration log4j ;
 	public Exception e=null;
+	public static SensorGUI senGUI;
 
 	public static void init() 
 	{

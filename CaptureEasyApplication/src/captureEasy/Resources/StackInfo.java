@@ -1,4 +1,4 @@
-/*package captureEasy.Resources;
+package captureEasy.Resources;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,4 +57,4 @@ public class StackInfo
 		{
 			return trace[3];
 		}
-	}*/
+	}

@@ -55,6 +55,11 @@ import captureEasy.UI.Components.SavePanel;
 
 public class Library extends SharedResources
 {
+
+	public static String[] monthName = {"January", "February",
+			"March", "April", "May", "June", "July",
+			"August", "September", "October", "November",
+	"December"};
 	/****
 	 * 
 	 * @utility= logging
@@ -150,10 +155,6 @@ public class Library extends SharedResources
 
 	public static String createSubFolders(String basepath,String folderName)
 	{
-		String[] monthName = {"January", "February",
-				"March", "April", "May", "June", "July",
-				"August", "September", "October", "November",
-		"December"};
 		Calendar cal = Calendar.getInstance();
 		String month = monthName[cal.get(Calendar.MONTH)];
 		if(true==property.getBoolean("showFolderNameField",false))
@@ -643,7 +644,7 @@ public class Library extends SharedResources
 		RuntimeMXBean bean= ManagementFactory.getRuntimeMXBean();
 		return Long.valueOf(bean.getName().split("@")[0]);
 	}
-	public static void updateUI()
+	public void updateUI()
 	{
 		new Thread(new Runnable(){
 			@Override
@@ -657,6 +658,7 @@ public class Library extends SharedResources
 						//logError(e,"")
 					}
 					SplashScreen.displaySplash=false;
+					//System.out.println(senGUI.label_Menu.isEnabled());
 					try{
 						if(RecordPanel.isRecording)
 						{

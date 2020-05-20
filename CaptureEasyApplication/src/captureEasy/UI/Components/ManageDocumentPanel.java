@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -19,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -35,8 +35,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
-import captureEasy.Launch.Application;
-import captureEasy.Resources.Library;
+import captureEasy.Resources.Library; 
 import captureEasy.Resources.PathsNKeys;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
@@ -200,7 +199,6 @@ public class ManageDocumentPanel extends Library {
 				{
 					ActionGUI.dialog.dispose();
 					ActionGUI.leaveControl=true;
-					try{Application.sensor.play();}catch(Exception e){};
 				}
 			}
 		});
@@ -267,24 +265,7 @@ public class ManageDocumentPanel extends Library {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!textField.getText().replaceAll("\\s", "").equals(""))
-				{
-					if(ActionGUI.dialog.isVisible())
-					{
-						searchResult=null;
-						 tm=new ToastMsg("Searching... ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
-						{
-							private static final long serialVersionUID = 1L;
-							public void terminationLogic() throws InterruptedException
-							{
-								do{Thread.sleep(100);}while(ManageDocumentPanel.searchResult==null);
-							}
-						};
-						tm.showToast();
-					}
-					searchResult=search(textField.getText());
-					setTableData(searchResult);
-				}
+				searchAction();
 			}
 		});
 		label_SearchBtn.requestFocusInWindow();
@@ -369,7 +350,7 @@ public class ManageDocumentPanel extends Library {
 					 	pointer--;
 			            String path = pathTraverse.get(pointer);
 			            System.out.println(path + " Switch");
-			            setTableData(new File(path).listFiles());
+			            setTableData(new File(path));
 			            textField_Path.setText(path);
 			            panel_View.revalidate();
 			            panel_View.repaint();
@@ -404,7 +385,7 @@ public class ManageDocumentPanel extends Library {
 				 	pointer++;
 		            String path = pathTraverse.get(pointer);
 		            System.out.println(path + " Switch");
-		            setTableData(new File(path).listFiles());
+		            setTableData(new File(path));
 		            textField_Path.setText(path);
 		            panel_View.revalidate();
 		            panel_View.repaint();
@@ -558,7 +539,7 @@ public class ManageDocumentPanel extends Library {
 					else if (e.getClickCount() == 1 && column==1) {
 						if(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).isDirectory())
 						{
-							setTableData(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).listFiles());
+							setTableData(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()));
 							label_Back.setEnabled(true);
 				            textField_Path.setText(((FileTableModel)table.getModel()).getFile(table.getSelectionModel().getLeadSelectionIndex()).getAbsolutePath());
 				           /* for(int i=pointer;i<pathTraverse.size();i++)
@@ -573,17 +554,48 @@ public class ManageDocumentPanel extends Library {
 		{
 			TabbledPanel.setSelectedIndex(TabbledPanel.getTabCount()-1);
 		}
+		
+        textField_Path.setText(RFile.getAbsolutePath());
+
 		isloaded=true;
 		//lblCross.setEnabled(false);
 	}
 
-
-
-
+	public void showRecent()
+	{
+		File recent=new File(createFolder(RFile.getAbsolutePath()+"\\"+monthName[Calendar.getInstance().get(Calendar.MONTH)]+" "+Calendar.getInstance().get(Calendar.YEAR)));
+		if(recent.exists())
+			setTableData(recent);
+		panel_View.revalidate();
+		panel_View.repaint();
+		textField_Path.setText(recent.getAbsolutePath());
+	}
 
 	public void showRootFile() {
 		// ensure the main files are displayed
-		try{tree.setSelectionInterval(0,0);}catch(Exception e){}
+		try{tree.setSelectionInterval(0,0);}catch(Exception e){e.printStackTrace();
+		}
+	}
+	
+	public void searchAction(){
+		if(!textField.getText().replaceAll("\\s", "").equals(""))
+		{
+			if(ActionGUI.dialog.isVisible())
+			{
+				searchResult=null;
+				 tm=new ToastMsg("Searching... ",ActionGUI.dialog.getBounds().x+430/2+75,ActionGUI.dialog.getBounds().y+315/2)
+				{
+					private static final long serialVersionUID = 1L;
+					public void terminationLogic() throws InterruptedException
+					{
+						do{Thread.sleep(100);}while(ManageDocumentPanel.searchResult==null);
+					}
+				};
+				tm.showToast();
+			}
+			searchResult=search(textField.getText());
+			setTableData(searchResult);
+		}
 	}
 
 	public TreePath findTreePath(File find) {
@@ -613,6 +625,7 @@ public class ManageDocumentPanel extends Library {
 					System.out.println(file.getAbsolutePath());
 				}
 			}
+			textField_Path.setText("Search result");
 			return result.toArray(new File[result.size()]);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -638,18 +651,6 @@ public class ManageDocumentPanel extends Library {
 
 
 
-	public void showThrowable(Throwable t) {
-		t.printStackTrace();
-		JOptionPane.showMessageDialog(
-				panel_View,
-				t.toString(),
-				t.getMessage(),
-				JOptionPane.ERROR_MESSAGE
-				);
-		panel_View.repaint();
-	}
-
-
 	/** Add the files that are contained within the directory of this node.
     Thanks to Hovercraft Full Of Eels for the SwingWorker fix. */
 	public void showChildren(final DefaultMutableTreeNode node) {
@@ -669,8 +670,7 @@ public class ManageDocumentPanel extends Library {
 							}
 						}
 					}
-					setTableData(files);
-
+					setTableData(file);
 					label_Back.setEnabled(true);
 					textField_Path.setText(file.getAbsolutePath());
 					pathTraverse.add(file.getAbsolutePath());
@@ -700,11 +700,17 @@ public class ManageDocumentPanel extends Library {
 
 
 	}
+	public void setTableData(final File file) 
+	{
+		setTableData(file.listFiles());
+		textField_Path.setText(file.getAbsolutePath());
+
+	}
 	/** Update the table on the EDT */
 	public void setTableData(final File[] files) {
-		//System.out.println("Setting table Data");
-		//	StackInfo info=new StackInfo(Thread.currentThread().getStackTrace());
-		////System.out.println(info.getCallSequence());
+		/*System.out.println("Setting table Data");
+			StackInfo info=new StackInfo(Thread.currentThread().getStackTrace());
+		System.out.println(info.getCallSequence());*/
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 

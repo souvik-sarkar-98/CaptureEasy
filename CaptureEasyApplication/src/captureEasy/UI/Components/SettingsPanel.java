@@ -14,7 +14,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,12 +33,12 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 
 public class SettingsPanel extends Library implements MouseListener,MouseMotionListener{
 
@@ -53,7 +52,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JButton SaveBtn;
 	public JComboBox<?> comboBox_ImageFormat;
 	int Xlocation,Ylocation;
-	SensorGUI sen;
 	PopUp pop;
 	Timer timer;
 	public static String DocPath_Previous=null;
@@ -69,6 +67,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public boolean loadSettingsTab=false,isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
 	public JCheckBox chckbxAutoUpdate;
+	String[] captureKey={"PrtSc","ALT+Prtsc","Ctrl+ALT","Ctrl+Shift","F7","F8","F9"};
+	DefaultComboBoxModel<Object> keys=new  DefaultComboBoxModel<Object>(captureKey);
 	public SettingsPanel(JTabbedPane TabbledPanel) 
 	{
 		this.TabbledPanel=TabbledPanel;
@@ -80,7 +80,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsScrollPane.addMouseListener(this);
 		SettingsScrollPane.addMouseMotionListener(this);
 		//loadSettingsTab();
-		
+
 	}
 	public void loadSettingsTab() throws Exception
 	{
@@ -92,7 +92,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsPane.addMouseListener(this);
 		SettingsPane.addMouseMotionListener(this);
 
-		
+
 		{
 			SettingsPane_DocFolderPanel = new JPanel();
 			SettingsPane_DocFolderPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -196,7 +196,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 				} catch (IOException e1) {
 					logError(e1," Exception occurec file not found "+uploadIcon);
 				}
-				
+
 			}
 			{
 				{
@@ -207,7 +207,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							SettingsPane_DocFolderPanel.add(chckbxSetFoldernameMandatory);
 							if(chckbxShowFilderNameField.isSelected())
 							{
-								
+
 								chckbxSetFoldernameMandatory.setSelected(false);
 								chckbxSetFoldernameMandatory.setVisible(true);
 							}
@@ -224,14 +224,14 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					SettingsPane_DocFolderPanel.add(chckbxShowFilderNameField);
 				}
 			}
-			
+
 			chckbxSetFoldernameMandatory = new JCheckBox("Set as mandatory field");
 			chckbxSetFoldernameMandatory.setFont(new Font("Tahoma", Font.BOLD, 13));
 			chckbxSetFoldernameMandatory.setBounds(229, 78, 177, 25);
 			SettingsPane_DocFolderPanel.add(chckbxSetFoldernameMandatory);
 			chckbxSetFoldernameMandatory.setSelected(false);
 			chckbxSetFoldernameMandatory.setVisible(false);
-			
+
 			DocumentDestination = new JRadioButton("Update document destination folder ");
 			DocumentDestination.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -249,21 +249,31 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 				SettingsPane.add(SettingsPane_FramePanel);
 				SettingsPane_FramePanel.setLayout(null);
 				{
-					SettingsPane_Recordpanel_RecordFlag = new JCheckBox("Screen recording");
+					SettingsPane_Recordpanel_RecordFlag = new JCheckBox("Duplicate window");
 					SettingsPane_Recordpanel_RecordFlag.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							PopUp p=new PopUp("Information","info","Sorry !! This facility is currently  unavailable.","Ok, Fine","");
-							p.setVisible(true);
-							PopUp.PopDia=p;
-							SettingsPane_Recordpanel_RecordFlag.setSelected(false);
-							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+							if(SettingsPane_Recordpanel_RecordFlag.isSelected())
+							{
+								ActionGUI.tagDrop=false;
+								for(int i=0;i<keys.getSize();i++)
+								{
+									if(keys.getElementAt(i).toString().equalsIgnoreCase(property.getString("CaptureKey")))
+									{
+										keys.removeElementAt(i);
+									}
+								}
+								comboBox_CaptureKey.setSelectedIndex(0);
+								ActionGUI.tagDrop=false;
+								PopUp p=new PopUp("INSTRUCTION","info","1. Set duplicate frame location\n2. Set preferred capture key","Ok, I undestood","");
+								p.setVisible(true);
+							}
 						}
 					});
 					SettingsPane_Recordpanel_RecordFlag.setFont(new Font("Tahoma", Font.BOLD, 16));
 					SettingsPane_Recordpanel_RecordFlag.setBounds(10, 9, 180, 25);
 					SettingsPane_FramePanel.add(SettingsPane_Recordpanel_RecordFlag);
 				}
-				
+
 				chckbxAutoUpdate = new JCheckBox("Auto Update");
 				chckbxAutoUpdate.setSelected(true);
 				chckbxAutoUpdate.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -284,7 +294,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					public void actionPerformed(ActionEvent arg0) {
 						if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Done"))
 						{
-							BtnPanelState=sen.button_panel.isVisible();
+							BtnPanelState=senGUI.button_panel.isVisible();
 							btnUpdateFrameLocation.setBackground(UIManager.getColor("CheckBox.background"));
 							Xlocation=SensorGUI.x;Ylocation=SensorGUI.y;
 							lblLocationx.setText("Location : ( "+SensorGUI.x+" , "+SensorGUI.y+" )");
@@ -302,28 +312,29 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							PopUp window=new PopUp("INSTRUCTION","INFO","To "+btnUpdateFrameLocation.getText().toLowerCase()+", drag the green frame to your preferred location and set frame expansion then click Done.","Ok, I Understood","");
 							window.setVisible(true);
 							PopUp.PopDia=window;
-							window.getRootPane().setDefaultButton(window.btnNewButton);
-							sen=new SensorGUI();
+							PopUp.PopDia.getRootPane().setDefaultButton(PopUp.btnNewButton);
+							senGUI=new SensorGUI();
 							SensorGUI.frame.setVisible(true);
 							SensorGUI.label_Count.setVisible(false);
 							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-							sen.sensor_panel.setToolTipText("Drag this window to your preferred location.");
-							sen.lebel_Power.setToolTipText("");
-							sen.Label_Pause.setToolTipText("");
-							sen.label_delete.setToolTipText("");
-							sen.label_Save.setToolTipText("");
-							sen.label_View.setToolTipText("");
-							sen.label_Document.setToolTipText("");
-							sen.label_Settings.setToolTipText("");
+							senGUI.sensor_panel.setToolTipText("Drag this window to your preferred location.");
+							senGUI.lebel_Power.setToolTipText("");
+							senGUI.Label_Pause.setToolTipText("");
+							senGUI.label_delete.setToolTipText("");
+							senGUI.label_Save.setToolTipText("");
+							senGUI.label_View.setToolTipText("");
+							senGUI.label_Document.setToolTipText("");
+							senGUI.label_Settings.setToolTipText("");
+							senGUI.label_Record.setToolTipText("");
 							SensorGUI.clickable=false;
 							btnUpdateFrameLocation.setText("Done");
 							timer=new Timer(5000, new ActionListener() {
-						        @Override
-						        public void actionPerformed(ActionEvent e) {
-						        	window.dispose();
-						        	timer.stop();
-						        }
-						      });
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									window.dispose();
+									timer.stop();
+								}
+							});
 							timer.start();
 						}
 					}
@@ -348,164 +359,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						SaveBtn.addActionListener(new ActionListener() {
 
 							public void actionPerformed(ActionEvent e) {
-								String DocPath_Current=textField_DocDestFolder.getText();
-								DocPath_Previous=property.getString("DocPath");
-								boolean showFolderNameField_Current=chckbxShowFilderNameField.isSelected();
-								boolean showFolderNameField_Previous=property.getBoolean("showFolderNameField",false);
-								boolean setFoldernameMandatory_Current=chckbxSetFoldernameMandatory.isSelected();
-								boolean setFoldernameMandatory_Previous=property.getBoolean("setFolderNameMandatory",false);
-								String ScreenRecording_Current=String.valueOf(SettingsPane_Recordpanel_RecordFlag.isSelected());
-								String ScreenRecording_Prev=property.getString("ScreenRecording");
-								int Xvalue_Prev, Yvalue_Prev;
-								String xv=property.getInteger("Xlocation",screensize.width-160).toString();
-								String yv=property.getInteger("Ylocation",screensize.width-160).toString();
-								try{ Xvalue_Prev=Integer.parseInt(xv);}catch(Exception q){Xvalue_Prev=0;}
-								try{  Yvalue_Prev=Integer.parseInt(yv);}catch(Exception q){Yvalue_Prev=0;}
-								String ImageFormat_Current=String.valueOf(comboBox_ImageFormat.getSelectedItem());
-								String ImageFormat_Prev=property.getString("ImageFormat");
-								String CaptureKey_Current=String.valueOf(comboBox_CaptureKey.getSelectedItem());
-								String CaptureKey_Prev=property.getString("CaptureKey");
-								if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Done"))
-								{
-									PopUp window = new PopUp("ERROR","error","Please click Done before save !!","Ok, I understood","");
-									window.setVisible(true);
-									PopUp.PopDia=window;
-									btnUpdateFrameLocation.setBackground(Color.PINK);
-									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-								}
-								else if(chckbxAutoUpdate.isSelected()==property.getBoolean("autoupdate",false) && BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false) && CaptureKey_Current.equals(CaptureKey_Prev) && DocPath_Current.equals(DocPath_Previous) && showFolderNameField_Current==showFolderNameField_Previous&& setFoldernameMandatory_Current==setFoldernameMandatory_Previous && ScreenRecording_Current.equals(ScreenRecording_Prev) && (Math.abs(Xvalue_Prev-Xlocation)==0 || Math.abs(Xvalue_Prev-Xlocation)==Xvalue_Prev) && (Math.abs(Yvalue_Prev-Ylocation)==0 || Math.abs(Yvalue_Prev-Xlocation)==Yvalue_Prev)  && ImageFormat_Current.equals(ImageFormat_Prev))
-								{
-									PopUp window = new PopUp("ERROR","error","No changes have been made !!","Ok, I understood","");
-									window.setVisible(true);
-									PopUp.PopDia=window;
-									window.btnNewButton.addActionListener(new ActionListener(){
-										
-										@Override
-										public void actionPerformed(ActionEvent e) {
-											try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-										}
-										
-									});
-									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-								}
-								else if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location") || DocPath_Current.equals(""))
-								{
-									PopUp window = new PopUp("ERROR","error","All mandatory fields must be set before save !!","Ok, I understood","");
-									PopUp.PopDia=window;
-									window.setVisible(true);
-									if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location"))
-										btnUpdateFrameLocation.setBackground(Color.PINK);
-									if(DocPath_Current.equals(""))
-										textField_DocDestFolder.setBackground(Color.PINK);
-									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-								}
-								else if(!new File(textField_DocDestFolder.getText()).exists())
-								{
-									PopUp window = new PopUp("ERROR","error","Selected folder not exists. Please Select again","Ok, I understood","");
-									PopUp.PopDia=window;
-									window.setVisible(true);
-									textField_DocDestFolder.setBackground(Color.PINK);
-								}
-								else
-								{
-									textField_DocDestFolder.setBackground(Color.WHITE);
-									isframeupdateTouched=false;
-									property.setProperty("DocPath",DocPath_Current);
-									property.setProperty("showFolderNameField",showFolderNameField_Current);
-									property.setProperty("setFolderNameMandatory",setFoldernameMandatory_Current);
-									property.setProperty("ScreenRecording",ScreenRecording_Current);
-									property.setProperty("CaptureKey",CaptureKey_Current);
-									property.setProperty("autoupdate", chckbxAutoUpdate.isSelected());
-									try
-									{
-										if(Xlocation!=0&& Math.abs(Xlocation-Xvalue_Prev)>0)
-											property.setProperty("Xlocation",String.valueOf(Xlocation));
-										if(Ylocation!=0 &&Math.abs(Ylocation-Yvalue_Prev)>0)
-											property.setProperty("Ylocation",String.valueOf(Ylocation));
-										if(!BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false))
-											property.setProperty("SensorBTNPanelVisible",BtnPanelState);
-									}
-									catch(Exception pp){
-										logError(pp,"Exception while saving frame location");
-										property.setProperty("Xlocation",String.valueOf(Xlocation));
-										property.setProperty("Ylocation",String.valueOf(Ylocation));	
-										property.setProperty("SensorBTNPanelVisible",BtnPanelState);
-									}
-									property.setProperty("ImageFormat",ImageFormat_Current);
-
-									
-									PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
-									PopUp.PopDia=window;
-									window.setVisible(true);
-									window.getRootPane().setDefaultButton(window.btnNewButton);
-									
-									
-									if(ActionGUI.settingsPanel.CancelBtn.isEnabled())
-									{
-										//try{Thread.sleep(2000);}catch(Exception e9){}
-										ActionGUI.dialog.dispose();
-										ActionGUI.leaveControl=true;
-										//try{Application.sensor.play();}catch(Exception rr){};
-										if(xv!=null && yv!=null)
-										{
-											new SensorGUI();
-											SensorGUI.frame.setVisible(true);
-											SensorGUI.frame.setAlwaysOnTop(true);
-										}
-									}
-									else
-									{
-										try{
-										if(!ActionGUI.savePanel.chckbxSelectExistingDocument.isSelected() &&property.getBoolean("showFolderNameField",false))
-										{
-											ActionGUI.savePanel.lblParFol.setVisible(true);
-											ActionGUI.savePanel.textField_ParFol.setVisible(true);
-											ActionGUI.savePanel.textField_Filename.setColumns(16);
-										}
-										else
-										{
-											ActionGUI.savePanel.lblParFol.setVisible(false);
-											ActionGUI.savePanel.textField_ParFol.setVisible(false);
-
-											if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.isSelected())
-												ActionGUI.savePanel.textField_Filename.setColumns(16);
-											else /*if(ActionGUI.savePanel)*/
-												ActionGUI.savePanel.textField_Filename.setColumns(22);
-											
-										}
-										
-										if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.getText().equalsIgnoreCase("Rename selected file")&& !SavePanel.chckbxOverwriteSelectedFile.isSelected())
-											ActionGUI.savePanel.btnDone.setVisible(true);
-										
-											
-											if(ActionGUI.savePanel.saveLoaded && !ActionGUI.savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
-											{
-												ActionGUI.savePanel.btnDone.setVisible(true);
-												ActionGUI.savePanel.textField_ParFol.setBackground(Color.WHITE);
-											}
-											if(ActionGUI.savePanel.saveLoaded && ActionGUI.savePanel.lblChooseFile.isVisible())
-											{
-												ActionGUI.savePanel.lblParFol.setVisible(false);
-												ActionGUI.savePanel.textField_ParFol.setVisible(false);
-											}
-											if(ActionGUI.savePanel.saveLoaded && SavePanel.chckbxOverwriteSelectedFile.isVisible())
-											{
-												ActionGUI.savePanel.textField_Filename.setColumns(16);
-											}											
-										}catch(Exception e58){}										
-									}
-									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e6){}
-									timer=new Timer(1000, new ActionListener() {
-								        @Override
-								        public void actionPerformed(ActionEvent e) {
-								        	window.dispose();
-								        	PopUp.control=true;
-											TabbledPanel.setSelectedIndex(0);
-											timer.stop();
-								        }
-								      });
-									timer.start();
-								}
+								save();
 							}
 						});
 					SaveBtn.setForeground(Color.BLACK);
@@ -519,11 +373,11 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					public void actionPerformed(ActionEvent arg0) {
 						if(property.getString("DocPath")==null)
 						{
-						PopUp p=new PopUp("ERROR","error","Sorry !! You cannot cancel during primary setup. Please complete primary setup process","Ok, I understood","");
-						p.setVisible(true);
-						PopUp.PopDia=p;
-						try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
-						/*p.btnNewButton.addActionListener(new ActionListener() {
+							PopUp p=new PopUp("ERROR","error","Sorry !! You cannot cancel during primary setup. Please complete primary setup process","Ok, I understood","");
+							p.setVisible(true);
+							PopUp.PopDia=p;
+							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+							/*PopUp.btnNewButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
 								try{ActionGUI.dialog.setAlwaysOnTop(true);}catch(Exception e){}								
 							}
@@ -547,7 +401,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								SensorGUI.frame.setVisible(true);
 								SensorGUI.frame.setAlwaysOnTop(true);
 							}
-							try{Application.sensor.play();}catch(Exception e){};
 							try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 						}
 					}
@@ -585,9 +438,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			lblNewLabel.setBounds(12, 41, 92, 16);
 			panel.add(lblNewLabel);
 
-			String[] captureKey={"PrtSc","ALT+Prtsc","Ctrl+ALT","Ctrl+Shift","F7","F8","F9"};
-			comboBox_CaptureKey = new JComboBox<Object>(captureKey);
-			
+
+			comboBox_CaptureKey = new JComboBox<Object>(keys);
 			comboBox_CaptureKey.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{Thread.sleep(500);pop.dispose();}catch(Exception m){}
@@ -615,7 +467,167 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		loadSettingsTab=false;
 
 	}
-	
+	public void save()
+	{
+		String DocPath_Current=textField_DocDestFolder.getText();
+		DocPath_Previous=property.getString("DocPath");
+		boolean showFolderNameField_Current=chckbxShowFilderNameField.isSelected();
+		boolean showFolderNameField_Previous=property.getBoolean("showFolderNameField",false);
+		boolean setFoldernameMandatory_Current=chckbxSetFoldernameMandatory.isSelected();
+		boolean setFoldernameMandatory_Previous=property.getBoolean("setFolderNameMandatory",false);
+		String ScreenRecording_Current=String.valueOf(SettingsPane_Recordpanel_RecordFlag.isSelected());
+		String ScreenRecording_Prev=property.getString("ScreenRecording");
+		int Xvalue_Prev, Yvalue_Prev;
+		String xv=property.getInteger("Xlocation",screensize.width-160).toString();
+		String yv=property.getInteger("Ylocation",screensize.width-160).toString();
+		try{ Xvalue_Prev=Integer.parseInt(xv);}catch(Exception q){Xvalue_Prev=0;}
+		try{  Yvalue_Prev=Integer.parseInt(yv);}catch(Exception q){Yvalue_Prev=0;}
+		String ImageFormat_Current=String.valueOf(comboBox_ImageFormat.getSelectedItem());
+		String ImageFormat_Prev=property.getString("ImageFormat");
+		String CaptureKey_Current=String.valueOf(comboBox_CaptureKey.getSelectedItem());
+		String CaptureKey_Prev=property.getString("CaptureKey");
+		if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Done"))
+		{
+			PopUp window = new PopUp("ERROR","error","Please click Done before save !!","Ok, I understood","");
+			window.setVisible(true);
+			PopUp.PopDia=window;
+			btnUpdateFrameLocation.setBackground(Color.PINK);
+			try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+		}
+		else if(chckbxAutoUpdate.isSelected()==property.getBoolean("autoupdate",false) && BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false) && CaptureKey_Current.equals(CaptureKey_Prev) && DocPath_Current.equals(DocPath_Previous) && showFolderNameField_Current==showFolderNameField_Previous&& setFoldernameMandatory_Current==setFoldernameMandatory_Previous && ScreenRecording_Current.equals(ScreenRecording_Prev) && (Math.abs(Xvalue_Prev-Xlocation)==0 || Math.abs(Xvalue_Prev-Xlocation)==Xvalue_Prev) && (Math.abs(Yvalue_Prev-Ylocation)==0 || Math.abs(Yvalue_Prev-Xlocation)==Yvalue_Prev)  && ImageFormat_Current.equals(ImageFormat_Prev))
+		{
+			PopUp window = new PopUp("ERROR","error","No changes have been made !!","Ok, I understood","");
+			window.setVisible(true);
+			PopUp.PopDia=window;
+			PopUp.btnNewButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+				}
+
+			});
+			try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+		}
+		else if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location") || DocPath_Current.equals(""))
+		{
+			PopUp window = new PopUp("ERROR","error","All mandatory fields must be set before save !!","Ok, I understood","");
+			PopUp.PopDia=window;
+			window.setVisible(true);
+			if(btnUpdateFrameLocation.getText().equalsIgnoreCase("Set frame location"))
+				btnUpdateFrameLocation.setBackground(Color.PINK);
+			if(DocPath_Current.equals(""))
+				textField_DocDestFolder.setBackground(Color.PINK);
+			try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+		}
+		else if(!new File(textField_DocDestFolder.getText()).exists())
+		{
+			PopUp window = new PopUp("ERROR","error","Selected folder not exists. Please Select again","Ok, I understood","");
+			PopUp.PopDia=window;
+			window.setVisible(true);
+			textField_DocDestFolder.setBackground(Color.PINK);
+		}
+		else
+		{
+			textField_DocDestFolder.setBackground(Color.WHITE);
+			isframeupdateTouched=false;
+			property.setProperty("DocPath",DocPath_Current);
+			property.setProperty("showFolderNameField",showFolderNameField_Current);
+			property.setProperty("setFolderNameMandatory",setFoldernameMandatory_Current);
+			property.setProperty("ScreenRecording",ScreenRecording_Current);
+			property.setProperty("CaptureKey",CaptureKey_Current);
+			property.setProperty("autoupdate", chckbxAutoUpdate.isSelected());
+			try
+			{
+				if(Xlocation!=0&& Math.abs(Xlocation-Xvalue_Prev)>0)
+					property.setProperty("Xlocation",String.valueOf(Xlocation));
+				if(Ylocation!=0 &&Math.abs(Ylocation-Yvalue_Prev)>0)
+					property.setProperty("Ylocation",String.valueOf(Ylocation));
+				if(!BtnPanelState==property.getBoolean("SensorBTNPanelVisible",false))
+					property.setProperty("SensorBTNPanelVisible",BtnPanelState);
+			}
+			catch(Exception pp){
+				logError(pp,"Exception while saving frame location");
+				property.setProperty("Xlocation",String.valueOf(Xlocation));
+				property.setProperty("Ylocation",String.valueOf(Ylocation));	
+				property.setProperty("SensorBTNPanelVisible",BtnPanelState);
+			}
+			property.setProperty("ImageFormat",ImageFormat_Current);
+
+
+			PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
+			PopUp.PopDia=window;
+			window.setVisible(true);
+			PopUp.PopDia.getRootPane().setDefaultButton(PopUp.btnNewButton);
+
+
+			if(ActionGUI.settingsPanel.CancelBtn.isEnabled())
+			{
+				//try{Thread.sleep(2000);}catch(Exception e9){}
+				ActionGUI.dialog.dispose();
+				ActionGUI.leaveControl=true;
+				//try{Application.sensor.play();}catch(Exception rr){};
+				if(xv!=null && yv!=null)
+				{
+					senGUI=new SensorGUI();
+					SensorGUI.frame.setVisible(true);
+					SensorGUI.frame.setAlwaysOnTop(true);
+				}
+			}
+			else
+			{
+				try{
+					if(!ActionGUI.savePanel.chckbxSelectExistingDocument.isSelected() &&property.getBoolean("showFolderNameField",false))
+					{
+						ActionGUI.savePanel.lblParFol.setVisible(true);
+						ActionGUI.savePanel.textField_ParFol.setVisible(true);
+						ActionGUI.savePanel.textField_Filename.setColumns(16);
+					}
+					else
+					{
+						ActionGUI.savePanel.lblParFol.setVisible(false);
+						ActionGUI.savePanel.textField_ParFol.setVisible(false);
+
+						if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.isSelected())
+							ActionGUI.savePanel.textField_Filename.setColumns(16);
+						else /*if(ActionGUI.savePanel)*/
+							ActionGUI.savePanel.textField_Filename.setColumns(22);
+
+					}
+
+					if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.getText().equalsIgnoreCase("Rename selected file")&& !SavePanel.chckbxOverwriteSelectedFile.isSelected())
+						ActionGUI.savePanel.btnDone.setVisible(true);
+
+
+					if(ActionGUI.savePanel.saveLoaded && !ActionGUI.savePanel.textField_Filename.getText().replaceAll("\\s", "").equals(""))
+					{
+						ActionGUI.savePanel.btnDone.setVisible(true);
+						ActionGUI.savePanel.textField_ParFol.setBackground(Color.WHITE);
+					}
+					if(ActionGUI.savePanel.saveLoaded && ActionGUI.savePanel.lblChooseFile.isVisible())
+					{
+						ActionGUI.savePanel.lblParFol.setVisible(false);
+						ActionGUI.savePanel.textField_ParFol.setVisible(false);
+					}
+					if(ActionGUI.savePanel.saveLoaded && SavePanel.chckbxOverwriteSelectedFile.isVisible())
+					{
+						ActionGUI.savePanel.textField_Filename.setColumns(16);
+					}											
+				}catch(Exception e58){}										
+			}
+			try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e6){}
+			timer=new Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					window.dispose();
+					PopUp.control=true;
+					TabbledPanel.setSelectedIndex(0);
+					timer.stop();
+				}
+			});
+			timer.start();
+		}
+	}
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		ActionGUI.xDialog = arg0.getXOnScreen();
@@ -628,7 +640,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		ActionGUI.xxDialog = e.getX();
 		ActionGUI.xyDialog = e.getY();
 	}
-	
+
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub

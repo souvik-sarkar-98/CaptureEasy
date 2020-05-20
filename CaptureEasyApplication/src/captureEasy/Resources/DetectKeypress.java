@@ -1,4 +1,5 @@
 package captureEasy.Resources;
+
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -6,6 +7,8 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +18,6 @@ import javax.imageio.ImageIO;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-import captureEasy.Launch.Application;
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
 import captureEasy.UI.SensorGUI;
@@ -69,7 +71,6 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			{
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				try{Application.sensor.play();}catch(Exception es){};
 			}
 		}
 		else if(key==29 && e.getKeyCode() ==56 && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)
@@ -97,12 +98,69 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		}
 		else if(e.getKeyCode()==NativeKeyEvent.VC_LEFT && ActionGUI.viewPanel!=null)
 		{
-			ActionGUI.viewPanel.gotoPreviousImage();
+			if(PopUp.PopDia!=null && !PopUp.PopDia.isVisible() ) 
+			try{if(!PopUp.PopDia.isVisible() ) 
+				ActionGUI.viewPanel.gotoNextImage();
+			}catch(Exception e88){ActionGUI.viewPanel.gotoNextImage();}
 		}
 		else if(e.getKeyCode()==NativeKeyEvent.VC_RIGHT  && ActionGUI.viewPanel!=null)
 		{
-			ActionGUI.viewPanel.gotoNextImage();
+			try{if(!PopUp.PopDia.isVisible() ) 
+				ActionGUI.viewPanel.gotoNextImage();
+			}catch(Exception e88){ActionGUI.viewPanel.gotoNextImage();}
 		}
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_0 )
+		{
+			PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
+			PopUp.PopDia=p;
+			PopUp.btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					senGUI.closeApplication(true);
+				}
+
+			});
+			}
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_1 )
+		{
+			senGUI.playPauseAction();
+		}
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_2 )
+		{
+			senGUI.deleteAction();
+		}
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_3 )
+		{
+			senGUI.saveAction();	
+		}
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_4 )
+			senGUI.viewAction();	
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_5 )
+			senGUI.manageDocumentsActions();	
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_6 )
+			senGUI.settingsAction();
+		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_7 )
+			senGUI.recordAction();
+		else if(e.getKeyCode()==NativeKeyEvent.VC_ENTER && ActionGUI.dialog!=null && ActionGUI.dialog.isVisible())
+		{
+
+			String tabname=ActionGUI.TabbledPanel.getTitleAt(ActionGUI.TabbledPanel.getSelectedIndex());
+			if(tabname.contains("Settings")){}
+				//ActionGUI.settingsPanel.save();
+			else if(tabname.contains("Manage"))
+				ActionGUI.documentPanel.searchAction();
+			else if(tabname.contains("View"))
+			{
+				if(PopUp.PopDia!=null && PopUp.PopDia.isVisible() )
+					PopUp.btnNewButton.doClick();
+				else 
+					ActionGUI.viewPanel.addComment();
+			}	
+			else if(tabname.contains("Record"))
+			{
+				ActionGUI.screenRecord.saveVideo();
+			}
+		}
+		
 		
 		if(key==0)
 			key=e.getKeyCode();
@@ -175,6 +233,5 @@ class ImageSelection implements Transferable {
 			try{Thread.sleep(1000);}catch(Exception e5){}
 			setClipboardImage();
 		}
-
 	}
 }

@@ -24,7 +24,6 @@ import org.json.JSONObject;
 
 import captureEasy.UI.ActionGUI;
 import captureEasy.UI.PopUp;
-import captureEasy.UI.SensorGUI;
 import captureEasy.UI.Components.UpdatePanel;
 
 public class SoftwareUpdate extends Library {
@@ -153,7 +152,7 @@ public class SoftwareUpdate extends Library {
 					PopUp p=new PopUp("PERMISSION","info","Download Completed. Do you want to restart application now? It will take near about 20 seconds. ","Yes","No");
 					p.setVisible(true);
 					PopUp.PopDia=p;
-					p.btnNewButton.addActionListener(new ActionListener(){
+					PopUp.btnNewButton.addActionListener(new ActionListener(){
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							isInstalled=true;
@@ -248,7 +247,7 @@ public class SoftwareUpdate extends Library {
 
 			String[] command={"cmd","/c","Wscript.exe "+InstallUpdateScript+"  "+downloadedFilePath+" "+sourceJarPath+" "+tempFilePath};
 			Runtime.getRuntime().exec(command);	
-			SensorGUI.closeApplication(false); 	
+			senGUI.closeApplication(false); 	
 
 			//cscript.exe InstallUpdate.vbs > outfile.log C:\Users\USER\Desktop\Script.bat C:\Users\USER\Desktop\AllSouvik.bat C:\Users\USER\Desktop\test.properties
 
@@ -273,7 +272,7 @@ public class SoftwareUpdate extends Library {
 							do{Thread.sleep(100);}while(!ActionGUI.leaveControl || !PopUp.control);
 							PopUp p=new PopUp("INFORMATION","info","Latest Version "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"is already downloaded. To install please click Yes","Yes","No");
 							p.setVisible(true);
-							p.btnNewButton.addActionListener(new ActionListener(){
+							PopUp.btnNewButton.addActionListener(new ActionListener(){
 								@Override
 								public void actionPerformed(ActionEvent arg0) {
 									doRestart(downloadedFilePath);
@@ -287,7 +286,7 @@ public class SoftwareUpdate extends Library {
 							PopUp p=new PopUp("PERMISSION","info","Latest version publishhed. Do you want to download it now?\nVersion : "+JSONObj.getString("name")+"-"+JSONObj.getString("tag_name")+"\nImprovements: "+JSONObj.getString("body"),"Yes","No");
 							p.setVisible(true);
 							//PopUp.control=false;
-							p.btnNewButton.addActionListener(new ActionListener(){
+							PopUp.btnNewButton.addActionListener(new ActionListener(){
 
 								@Override
 								public void actionPerformed(ActionEvent arg0) {

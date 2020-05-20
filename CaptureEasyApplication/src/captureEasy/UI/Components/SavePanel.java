@@ -33,7 +33,6 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SharedResources;
 import captureEasy.UI.ActionGUI;
@@ -745,7 +744,6 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 									}
 									ActionGUI.dialog.dispose();
 									ActionGUI.leaveControl=true;
-									try{Application.sensor.play();}catch(Exception e){};
 									try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 								}
 
@@ -765,7 +763,6 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			public void actionPerformed(ActionEvent e) {
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				try{Application.sensor.play();}catch(Exception r){};
 				try{SensorGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 			}
 		});

@@ -122,7 +122,7 @@ public class RecordPanel extends Library {
 				else
 				{
 					PopUp p=new PopUp("WARNING","warning","CAUTION !! Your recording will not save. Do you still want to continue?","Yes","No");
-					p.btnNewButton.addActionListener(new ActionListener(){
+					PopUp.btnNewButton.addActionListener(new ActionListener(){
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -289,55 +289,7 @@ public class RecordPanel extends Library {
 
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						/*if(chckbxDelayStart.isVisible())
-						{
-							PopUp p=new PopUp("ERROR","error","Sorry !! you cannot SAVE because recording not yet started","Ok, I Understood","");
-							p.setVisible(true);
-							PopUp.PopDia=p;
-						}
-						else*/
-						if(lblSave.isVisible())
-						{
-							if(textField_Filename.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
-							{
-								PopUp p=new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","");
-								p.setVisible(true);
-								PopUp.PopDia=p;
-								textField_Filename.setBackground(Color.PINK);
-							}
-							else if (textField_Filename.getText().contains(Character.toString('"')) || textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\") || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
-							{
-								textField_Filename.setBackground(Color.PINK);
-								PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
-										+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
-								p.setAlwaysOnTop(true);
-								PopUp.PopDia=p;
-							}
-							else if (textField_Foldername.getText().contains(Character.toString('"')) ||  textField_Foldername.getText().contains(":") || textField_Foldername.getText().contains("*") || textField_Foldername.getText().contains("?") || textField_Foldername.getText().contains("<") || textField_Foldername.getText().contains(">") || textField_Foldername.getText().contains("|")) 
-							{
-								textField_Foldername.setBackground(Color.PINK);
-								PopUp p=new PopUp("ERROR","error", "A Folder name can not contain any of the following "
-										+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
-								p.setAlwaysOnTop(true);;
-								PopUp.PopDia=p;
-							}
-							else if(property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_Foldername.getText().replaceAll("\\s", "").equals(""))
-							{
-								PopUp p=new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","");
-								p.setVisible(true);
-								PopUp.PopDia=p;
-								textField_Foldername.setBackground(Color.PINK);
-							}
-							else
-							{
-								textField_Foldername.setBackground(Color.WHITE);
-								textField_Filename.setBackground(Color.WHITE);
-								copyToFolder(tempFolderPath+"/DoNotDelete.mp4",createSubFolders(property.getString("DocPath",""),textField_Foldername.getText())+"\\"+textField_Filename.getText()+".mp4");
-								ActionGUI.dialog.dispose();
-								ActionGUI.leaveControl=true;
-								doDelete=true;
-							}
-						}
+						saveVideo();
 					}
 				});
 				try {
@@ -465,6 +417,70 @@ public class RecordPanel extends Library {
 			textField_Filename.setColumns(22);
 		}
 		isLoaded=true;
+	}
+	public void saveVideo(){
+		/*if(chckbxDelayStart.isVisible())
+		{
+			PopUp p=new PopUp("ERROR","error","Sorry !! you cannot SAVE because recording not yet started","Ok, I Understood","");
+			p.setVisible(true);
+			PopUp.PopDia=p;
+		}
+		else*/
+		if(lblSave.isVisible())
+		{
+			if(textField_Filename.isVisible() && textField_Filename.getText().replaceAll("\\s", "").equals(""))
+			{
+				PopUp p=new PopUp("ERROR","error","Filename cannot be blank. Please enter filename","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
+				textField_Filename.setBackground(Color.PINK);
+			}
+			else if (textField_Filename.getText().contains(Character.toString('"')) || textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\") || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
+			{
+				textField_Filename.setBackground(Color.PINK);
+				PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
+						+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+				p.setAlwaysOnTop(true);
+				PopUp.PopDia=p;
+			}
+			else if (textField_Foldername.getText().contains(Character.toString('"')) ||  textField_Foldername.getText().contains(":") || textField_Foldername.getText().contains("*") || textField_Foldername.getText().contains("?") || textField_Foldername.getText().contains("<") || textField_Foldername.getText().contains(">") || textField_Foldername.getText().contains("|")) 
+			{
+				textField_Foldername.setBackground(Color.PINK);
+				PopUp p=new PopUp("ERROR","error", "A Folder name can not contain any of the following "
+						+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+				p.setAlwaysOnTop(true);;
+				PopUp.PopDia=p;
+			}
+			else if(property.getBoolean("showFolderNameField",false) && property.getBoolean("setFolderNameMandatory",false) && textField_Foldername.getText().replaceAll("\\s", "").equals(""))
+			{
+				PopUp p=new PopUp("ERROR","error","You have set parent folder name field as mandatory. Please enter folder name or goto settings and untick the checkbox to proceed further","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
+				textField_Foldername.setBackground(Color.PINK);
+			}
+			else
+			{
+				textField_Foldername.setBackground(Color.WHITE);
+				textField_Filename.setBackground(Color.WHITE);
+				copyToFolder(tempFolderPath+"/DoNotDelete.mp4",createSubFolders(property.getString("DocPath",""),textField_Foldername.getText())+"\\"+textField_Filename.getText()+".mp4");
+				ActionGUI.dialog.dispose();
+				ActionGUI.leaveControl=true;
+				doDelete=true;
+				PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
+				PopUp.PopDia=window;
+				window.setVisible(true);
+				PopUp.PopDia.getRootPane().setDefaultButton(PopUp.btnNewButton);
+				timer=new Timer(1000, new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	window.dispose();
+			        	PopUp.control=true;
+						timer.stop();
+			        }
+			      });
+				timer.start();
+			}
+		}
 	}
 	public void resumeRecording() {
 		lblRecordingInProgress.setForeground(Color.BLUE);

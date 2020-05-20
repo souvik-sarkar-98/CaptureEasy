@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.MatteBorder;
 
-import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SharedResources;
 import captureEasy.UI.ActionGUI;
@@ -138,7 +137,6 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 								{
 									ActionGUI.dialog.dispose();
 									ActionGUI.leaveControl=true;
-									try{Application.sensor.play();}catch(Exception e){};
 								}
 								Desktop.getDesktop().open(files[imgId]);
 							} catch (IOException e1) {}			
@@ -198,7 +196,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 							PopUp p=new PopUp("Confirm Delete","warning","Are you sure that you want to delete this file?","Yes","No");
 							PopUp.PopDia=p;
 							p.setVisible(true);
-							p.btnNewButton.addActionListener(new ActionListener() {
+							PopUp.btnNewButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
 									p.dispose();
 									files[imgId].delete();
@@ -304,7 +302,6 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 					{
 						ActionGUI.dialog.dispose();
 						ActionGUI.leaveControl=true;
-						try{Application.sensor.play();}catch(Exception e){};
 					}
 				}
 			});
@@ -331,24 +328,7 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					if(label_SetComment.isEnabled())
-					{
-						String populateComment=comments.get(files[imgId].getName());
-						if(populateComment==null)
-							populateComment="";
-						PopUp pp=new PopUp("Enter comment for "+files[imgId].getName(),"comment",populateComment,"Done","Cancel");
-						pp.setVisible(true);
-						PopUp.PopDia=pp;
-						pp.btnNewButton.addActionListener(new ActionListener(){
-
-							@Override
-							public void actionPerformed(ActionEvent arg0) {
-								SharedResources.comments.put(files[imgId].getName(),pp.txtrExceptionOccuredPlease.getText() );	
-								ImageLabel.setToolTipText("<html>Filename : "+files[imgId].getName()+"<br>Comment:"+comments.get(files[imgId].getName())+"<br><br>Click image to zoom</html>");
-
-							}
-						});
-					}
+					addComment();
 				}
 			});
 			label_SetComment.setSize(new Dimension(30, 30));
@@ -404,6 +384,26 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 
 		}
 		
+	}
+	public void addComment(){
+		if(label_SetComment.isEnabled())
+		{
+			String populateComment=comments.get(files[imgId].getName());
+			if(populateComment==null)
+				populateComment="";
+			PopUp pp=new PopUp("Enter comment for "+files[imgId].getName(),"comment",populateComment,"Done","Cancel");
+			pp.setVisible(true);
+			PopUp.PopDia=pp;
+			PopUp.btnNewButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					SharedResources.comments.put(files[imgId].getName(),pp.txtrExceptionOccuredPlease.getText() );	
+					ImageLabel.setToolTipText("<html>Filename : "+files[imgId].getName()+"<br>Comment:"+comments.get(files[imgId].getName())+"<br><br>Click image to zoom</html>");
+
+				}
+			});
+		}
 	}
 	@Override
 	public void mouseDragged(MouseEvent arg0) {

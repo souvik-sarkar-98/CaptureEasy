@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.MatteBorder;
 
-import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SoftwareUpdate;
 import captureEasy.UI.ActionGUI;
@@ -66,7 +65,6 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 			public void actionPerformed(ActionEvent arg0) {
 				ActionGUI.leaveControl=true;
 				ActionGUI.dialog.dispose();
-				try{Application.sensor.play();}catch(Exception e){};
 				
 			}
 		});
@@ -170,7 +168,6 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 			public void actionPerformed(ActionEvent arg0) {
 				ActionGUI.leaveControl=true;
 				ActionGUI.dialog.dispose();
-				try{Application.sensor.play();}catch(Exception e){};
 				
 			}
 		});

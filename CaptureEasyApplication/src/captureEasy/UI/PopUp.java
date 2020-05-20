@@ -41,7 +41,7 @@ public class PopUp extends JDialog{
 	int xx,xy;
 	public static boolean control=true;
 	public static boolean decision;
-	public JButton btnNewButton;
+	public static JButton btnNewButton;
 	public JButton btnNo;
 	public JTextArea txtrExceptionOccuredPlease;
 

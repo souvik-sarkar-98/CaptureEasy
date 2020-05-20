@@ -16,7 +16,6 @@ import org.jnativehook.GlobalScreen;
 
 public class Application extends Library{
 	static boolean TempNeeded=true;
-	public static SensorGUI sensor;
 	public static void main(String args[]) throws Exception
 	{
 		new Application().launch();
@@ -29,9 +28,8 @@ public class Application extends Library{
 		sp.frame.setVisible(true);
 		logProcess("Splash screen object created and setVisible as true");
 		SharedResources.init();
-		//
 		sp.lblVersion.setText("Version : "+versionInfo.getString("CurrentVersion","Base"));
-		try{Thread.sleep(500);}catch(Exception e){}
+	//	try{Thread.sleep(500);}catch(Exception e){}
 		if(!new File(createFolder(PropertyFilePath)).exists() || property.getString("DocPath","").replaceAll("\\s", "").equals(""))
 		{
 			property.setProperty("TempPath",createTemp());
@@ -79,7 +77,6 @@ public class Application extends Library{
 		new File(tempFilePath).delete();
 		new File(tempFilePath).deleteOnExit();
 
-		//new File(tempFilePath)
 		if (new File(createFolder(PropertyFilePath)).exists()/* && IsEmpty(createFolder(TempFolder))*/)
 		{
 			GlobalScreen.addNativeKeyListener(new DetectKeypress());
@@ -89,14 +86,13 @@ public class Application extends Library{
 			} catch (Exception e) {
 				PopUp p=new PopUp("ERROR","Error","Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.","Continue","Exit Application");
 				PopUp.PopDia=p;
-				p.setVisible(true);
+				PopUp.PopDia.setVisible(true);
 				logError(e,"Exception occured while registering the native hook. As a result system will not able to take screenshots using keys.");
 			}
-			sensor=new SensorGUI();
+			senGUI=new SensorGUI();
 			SensorGUI.frame.setVisible(true);
-			sensor.label_Menu.setEnabled(true);
-			sensor.sensor_panel.setEnabled(true);
-			GlobalScreen.addNativeMouseListener(sensor);
+			senGUI.label_Menu.setEnabled(true);
+			senGUI.sensor_panel.setEnabled(true);
 
 			updateUI();
 			clearFiles(20000);

@@ -28,7 +28,6 @@ import javax.swing.event.ChangeListener;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 
-import captureEasy.Launch.Application;
 import captureEasy.Resources.Library;
 import captureEasy.Resources.SoftwareUpdate;
 
@@ -46,7 +45,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	public static JFrame dialog;
 	public final JPanel contentPanel = new JPanel();
 	public String selectedTab="";
-	public JTabbedPane TabbledPanel;
+	public static JTabbedPane TabbledPanel;
 	public boolean finish=false;
 	public static final String PRE_HTML = "<html>"
 			+ "<p style=\"text-align: center; "
@@ -58,7 +57,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	public static final String POST_HTML = "</p></html>";
 	public static boolean tabLoaded=false;
 	public static SettingsPanel settingsPanel;
-	public ManageDocumentPanel documentPanel;
+	public static ManageDocumentPanel documentPanel;
 	public static ViewPanel viewPanel;
 	public static SavePanel savePanel;
 	public static RecordPanel screenRecord;
@@ -75,7 +74,6 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	//	@SuppressWarnings({ })
 	public ActionGUI(List<String> tabs)
 	{
-		try{Application.sensor.pause();}catch(Exception e){}
 		this.tabs=tabs;
 		leaveControl=false;
 		dialog=new JFrame();
@@ -317,13 +315,16 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 		else if(tabName.contains("Manage"))
 		{
+			System.out.println(documentPanel.isloaded);
 			if(!documentPanel.isloaded)
 			{
+				System.out.println(documentPanel.isloaded);
+
 				try{
 					documentPanel.loadDocumentsTab(property.getString("DocPath",""));
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_Selection);
 					documentPanel.DocumentScrollPane.add(documentPanel.panel_View);
-					documentPanel.showRootFile();
+					documentPanel.showRecent();
 					documentPanel.label_SearchBtn.requestFocusInWindow();
 					super.e=null;
 				}catch(Exception e){
@@ -412,7 +413,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			{
 				settingsPanel.btnUpdateFrameLocation.setEnabled(false);
 			}
-
+			dialog.getRootPane().setDefaultButton(settingsPanel.SaveBtn);
 			tabLoaded=true;
 		}
 		else if(tabName.contains("Update"))
