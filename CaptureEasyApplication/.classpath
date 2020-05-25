@@ -23,5 +23,9 @@
 	<classpathentry kind="lib" path="Dependencies/jcodec-0.2.3.jar"/>
 	<classpathentry kind="lib" path="Dependencies/jsr305-3.0.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/jcodec-javase-0.2.3.jar"/>
+	<classpathentry kind="lib" path="Dependencies/aspectjrt-1.6.8.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jcabi-aspects-0.22.5.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jcabi-log-0.17.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
