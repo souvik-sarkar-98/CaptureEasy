@@ -63,20 +63,18 @@ public class SensorGUI extends Library
 	protected int c;
 	public JPanel sensor_panel;
 	public static boolean clickable=true;
-	private JPanel Main_panel = new JPanel();
+	JPanel Main_panel;
 	public JPanel button_panel;
 	PopUp p;
 
 	public SensorGUI()
 	{
+		Main_panel = new JPanel();
 		SensorGUIInit();
 	}
 	public void SensorGUIInit()
 	{
-		if(property.getString("DocPath")==null)
-			closeApplication(true);
 		frame=new JFrame();
-		//frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
@@ -844,9 +842,9 @@ public class SensorGUI extends Library
 	}
 	public void closeApplication(boolean true_If_Close_false_If_Restart)
 	{
-		try{ActionGUI.dialog.dispose();
-		}catch(Exception e5){}
-		frame.dispose();
+		try{ActionGUI.dialog.dispose();}catch(Exception e5){}
+		try{frame.dispose();}catch(Exception e5){}
+
 		SharedResources.stopThread=true;
 		String comm="";int c=0;
 		File[] f=new File(property.getString("TempPath")).listFiles();

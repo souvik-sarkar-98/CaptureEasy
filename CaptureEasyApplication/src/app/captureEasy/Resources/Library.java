@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
@@ -19,7 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -49,6 +50,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import app.captureEasy.Annotations.NoLogging;
 import app.captureEasy.Annotations.Update;
+import app.captureEasy.UI.ActionGUI;
 import app.captureEasy.UI.RecordPanel;
 import app.captureEasy.UI.SavePanel;
 import app.captureEasy.UI.SensorGUI;
@@ -84,8 +86,8 @@ public class Library extends SharedResources
 		logger.info("User Message: "+usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n");
 		e.printStackTrace();
 	}
-	
-	@NoLogging
+
+	/*@NoLogging
 	public static void logProcess(String processName,String printPattern,String message)
 	{	
 		log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern",printPattern); 
@@ -98,19 +100,39 @@ public class Library extends SharedResources
 		PropertyConfigurator.configure(Log4jPropertyFilePath);
 		logger.info(message);
 		log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %m%n");
+	}*/
+	@NoLogging
+	public static void logProcess(String processName,String message)
+	{
+		logProcess(processName,"",message);
 	}
-	
+	@NoLogging
+	public static void logProcess(String processName,String frontNewLine,String message)
+	{
+		String filename=logFolderPath + "/"+processName+"-"+processID+".log";
+		try{
+			FileWriter fw=new FileWriter(filename,true);
+			fw.write(frontNewLine+timeStamp()+"  |"+message +"\n");
+			fw.flush();
+			fw.close();
+		}catch(Exception e)
+		{
+
+		}
+	}
+
+
 	@NoLogging
 	public static String timeStamp()
 	{
-		return new Timestamp(new Date().getTime()).toString().replaceAll(":", "-");
+		return "["+new SimpleDateFormat("dd MMM yyyy hh:mm:ss").format(new Date())+"]";
 	}
 
 	/*****
 	 * 
 	 * @utility= file/folder operation
 	 */
-	
+
 	public static Path moveToFolder(String src, String dest)
 	{
 		try {
@@ -120,7 +142,7 @@ public class Library extends SharedResources
 		};
 		return  Paths.get(dest);
 	}
-	
+
 	public static Path copyToFolder(String src, String dest)
 	{
 		try {
@@ -130,12 +152,12 @@ public class Library extends SharedResources
 		};
 		return  Paths.get(dest);
 	}
-	
+
 	public static String createTemp()
 	{
 		return createFolder(tempFolderPath+"\\"+new Random().nextInt(1000000000));
 	}
-	
+
 	public static String getSubFolders(String basepath,String folderName)
 	{
 		String[] monthName = {"January", "February",
@@ -222,7 +244,7 @@ public class Library extends SharedResources
 		}
 		return path;
 	}
-	
+
 	public static boolean IsEmpty(String Path) 
 	{    
 		int count=0;
@@ -253,13 +275,13 @@ public class Library extends SharedResources
 	 * @Type: Screenshot Processing Method
 	 * @name= resetClipboard()
 	 */
-	
+
 	public static void resetClipboard(String text)
 	{
 		StringSelection stringSelection = new StringSelection(text);
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents((Transferable) stringSelection, null);
 	}
-	
+
 	public static int lastFileName(String dirPath){
 		File dir = new File(dirPath);
 		File[] files = dir.listFiles();
@@ -276,7 +298,7 @@ public class Library extends SharedResources
 		return res;
 	}
 	public static int c=0;
-	
+
 	public static boolean captureScreen() {
 		String Imageformat=property.getString("ImageFormat","png").toLowerCase();
 		senGUI.frame.setLocation(10000,10000);
@@ -305,7 +327,7 @@ public class Library extends SharedResources
 	 * @utility: Word Processing Method
 	 * @name= LoadImages(String path,XWPFRun run)
 	 */
-	
+
 	public static void loadImages(String Temppath,XWPFRun run,String FileName) 
 	{
 
@@ -340,7 +362,7 @@ public class Library extends SharedResources
 
 		}
 	}
-	
+
 	public static void loadImages(String tempPath,Document document,String FileName,String msg)
 	{
 		SavePanel.lblUpdatingFiles.setText("Sorting "+msg+" files ...");
@@ -374,7 +396,7 @@ public class Library extends SharedResources
 	}
 
 
-	
+
 	public static void sortFiles(File[] files) {
 		Arrays.sort(files, new Comparator<File>() {
 			@Override
@@ -397,7 +419,7 @@ public class Library extends SharedResources
 			}
 		});
 	}
-	
+
 	public static void SaveAsPDF(String DocumentPath,String fileName,String foldername)
 	{
 		String tempPath = property.getString("TempPath");
@@ -426,7 +448,7 @@ public class Library extends SharedResources
 
 
 	}
-	
+
 	public static void SaveAsPDFFromWord(String filePath,String fileName)
 	{
 		Document document = null;
@@ -526,7 +548,7 @@ public class Library extends SharedResources
 	 * @Type: Word Processing Method
 	 * @name= createNewWord(String DocumentPath,String testName)
 	 */
-	
+
 	public static void createNewWord(String DocumentPath,String fileName,String foldername)
 	{
 		try
@@ -563,7 +585,7 @@ public class Library extends SharedResources
 	 * @Type: Word Processing Method
 	 * @name= addToExistingWord(File file)
 	 */
-	
+
 	public static void addToExistingWord(String filePath,String fileName)
 	{
 		FileOutputStream addToExistingWordOut;
@@ -621,7 +643,7 @@ public class Library extends SharedResources
 			}	
 		}
 	}
-	
+
 	public static void clearFilesTask(int interval)
 	{
 		new Thread(new Runnable(){
@@ -631,7 +653,7 @@ public class Library extends SharedResources
 				{
 					try{
 						File tempFile=new File(tempFolderPath);
-						logProcess("Process_ClearFile","%n%n[%-5p] [%d{dd MMM yyyy HH:mm:ss}] %m%n","Total tempFile count="+tempFile.listFiles().length);
+						logProcess("Process_ClearFile","\n","Total tempFile count="+tempFile.listFiles().length);
 						for(File f:tempFile.listFiles())
 						{
 							if((!f.equals(new File(property.getString("TempPath") ))&& f.isDirectory()) || (f.length()/1024)>1024)
@@ -655,10 +677,9 @@ public class Library extends SharedResources
 							else
 								logProcess("Process_ClearFile","File "+f.getName()+" skipped because this file is associated with currently running process ("+processID+"). FilePath : "+f.getAbsolutePath());
 
-							
 						}
 						File logFile=new File(logFolderPath);
-						logProcess("Process_ClearFile","%n%n[%-5p] [%d{dd MMM yyyy HH:mm:ss}] %m%n","Total logFile count="+logFile.listFiles().length);
+						logProcess("Process_ClearFile","\n","Total logFile count="+logFile.listFiles().length);
 
 						for(File f:logFile.listFiles())
 						{
@@ -697,6 +718,7 @@ public class Library extends SharedResources
 		RuntimeMXBean bean= ManagementFactory.getRuntimeMXBean();
 		return Long.valueOf(bean.getName().split("@")[0]);
 	}
+	int countPrev;
 	@Update
 	public void updateUITask()
 	{
@@ -708,12 +730,16 @@ public class Library extends SharedResources
 					try{
 						int count=new File(property.getString("TempPath")).listFiles().length;
 						SensorGUI.label_Count.setText(String.valueOf(count));
-						logProcess("Process_UpdateUI","count:"+count+"\tUI Showing:"+SensorGUI.label_Count.getText());
+						if(count!=countPrev)
+							logProcess("Process_UpdateUI","count:"+count+"\tUI Showing:"+SensorGUI.label_Count.getText());
+						countPrev=count;
 					}catch(Exception e){
 						logProcess("Process_UpdateUI","Exception occured while updating file count. Visit log folder");
 						logError(e,"error update count ");
 					}
-					try{SplashScreen.displaySplash=false;}catch(Exception e){}
+					try{
+						//if((senGUI!=null && senGUI.frame.isVisible())|| (ActionGUI.dialog!=null && ActionGUI.dialog.isVisible()))
+							SplashScreen.displaySplash=false;}catch(Exception e){}
 					try{
 						if(RecordPanel.isRecording)
 						{

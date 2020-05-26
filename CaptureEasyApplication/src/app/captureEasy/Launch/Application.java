@@ -82,7 +82,7 @@ public class Application extends Library{
 		new File(tempFilePath).delete();
 		new File(tempFilePath).deleteOnExit();
 
-		if (new File(PropertyFilePath).exists())
+		if (new File(PropertyFilePath).exists() && property.getString("DocPath")!=null)
 		{
 			GlobalScreen.addNativeKeyListener(new DetectKeypress());
 			try {

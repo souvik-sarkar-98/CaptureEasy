@@ -33,6 +33,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import app.captureEasy.Annotations.NoLogging;
 import app.captureEasy.Resources.Library;
 import app.captureEasy.UI.Components.PopUp;
 import app.captureEasy.UI.Components.TextField;
@@ -338,8 +339,9 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							window.setVisible(true);
 							PopUp.PopDia=window;
 							PopUp.PopDia.getRootPane().setDefaultButton(PopUp.btnNewButton);
-							if(!DuplicateWindow.isSelected() && DuplicateWindow.isEnabled())
+							if(!DuplicateWindow.isSelected() && DuplicateWindow.isEnabled() && property.getString("DocPath")!=null)
 							{
+								System.out.println("hii");
 								try{senGUI.frame.dispose();}catch(Exception e){e.printStackTrace();}
 							}		
 								
@@ -675,27 +677,27 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		ActionGUI.xyDialog = e.getY();
 	}
 
-	@Override
+	@Override @NoLogging
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override @NoLogging
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override @NoLogging
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override @NoLogging
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override @NoLogging
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 

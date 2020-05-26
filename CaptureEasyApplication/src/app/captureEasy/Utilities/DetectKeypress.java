@@ -35,6 +35,11 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 	@KeyStroke
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
+		if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
+			logProcess("Process_KeyPress","Key '*' Pressed. [KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+"]");
+		else
+			logProcess("Process_KeyPress","Key '"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed. [KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+"]");
+	
 		String captureKey=property.getString("CaptureKey","PrtSc");
 		if(captureKey.equalsIgnoreCase("PrtSc"))
 			captureKey="Print Screen"; 
@@ -43,7 +48,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			senGUI.frame.setLocation(10000,10000);
 			if(!captureKey.equalsIgnoreCase("ALT+Prtsc"))
 			{
-				logProcess("Process","");
+				//logProcess("Process_KeyPress","\t\tKey 'Prtsc' Pressed, this will set ");
 				ImageSelection.setClipboardImage();
 			}
 			else
@@ -62,16 +67,24 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				if(captureKey.equalsIgnoreCase("Print Screen"))
 				{
 					if(key!=56)
+					{
+						logProcess("Process_KeyPress","\t\t PrintScreen key pressed, Calling captureScreen() method");
 						captureScreen();
+						
+					}
 					else
 					{
+						logProcess("Process_KeyPress","\t\t  PrintScreen key pressed, hiding main frame");
 						senGUI.frame.setVisible(false);
 						try{Thread.sleep(250);}catch(Exception p8){}
 						senGUI.frame.setVisible(false);
 					}
 				}
 				else
+				{
+					logProcess("Process_KeyPress","\t\t PrintScreen key pressed, Calling captureScreen() method");
 					captureScreen();
+				}
 			}
 		}
 		else if(e.getKeyCode() == NativeKeyEvent.VC_ESCAPE)
@@ -86,14 +99,17 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		}
 		else if(key==29 && e.getKeyCode() ==56 && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
+			logProcess("Process_KeyPress","\t\t Ctrl+ALT key pressed, Calling captureScreen() method");
 			captureScreen();
 		}
 		else if(key==29 && e.getKeyCode() ==42 && captureKey.equalsIgnoreCase("Ctrl+Shift") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
+			logProcess("Process_KeyPress","\t\t Ctrl+Shift key pressed, Calling captureScreen() method");
 			captureScreen();
 		}
 		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==44 && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
+			logProcess("Process_KeyPress","\t\t ALT+PrtSc key pressed, Extracting data from clipboard");
 			try {
 				Thread.sleep(500);
 				Transferable content=Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
@@ -225,11 +241,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 
 		if(key==0)
 			key=e.getKeyCode();
-		if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
-			logProcess("KeyPress","'*' Pressed. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
-		else
-			logProcess("KeyPress","'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
-	}
+		}
 
 	@Override
 	@KeyStroke
@@ -242,16 +254,16 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 )
 				senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
-				logProcess("KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
+				logProcess("Process_KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
 			else
-				logProcess("KeyPress","'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. (KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+")\n");
+				logProcess("Process_KeyPress","'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. (KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+")\n");
 		}
 		else
 		{
 			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
-				logProcess("KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
+				logProcess("Process_KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
 			else
-				logProcess("KeyPress","'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
+				logProcess("Process_KeyPress","'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
 
 		}
 	}

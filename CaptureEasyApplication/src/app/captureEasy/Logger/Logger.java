@@ -31,30 +31,29 @@ public class Logger extends Library{
 	@Before("execution(* app.captureEasy..*(..)) && !@annotation(app.captureEasy.Annotations.NoLogging)")
 	public void logAllBeforeMethod(JoinPoint joinpoint)
 	{
-		logProcess("Process",getLogMessage(joinpoint,startTime));
 		String annotationMarker=Arrays.toString(getAnnotations(joinpoint));
-		if(annotationMarker.contains("KeyStroke"))
-		{
-			logProcess("Process_Keypress",getLogMessage(joinpoint,startTimeKeyStroke));
-		}
-		
+		if(annotationMarker.contains("KeyStroke")){}
 		else if(annotationMarker.contains("Update"))
 		{
-			logProcess("Process_SoftwareUpdate","%m%n%n",getLogMessage(joinpoint,startTimeUpdate));
+			logProcess("Process_SoftwareUpdate",getLogMessage(joinpoint,startTimeUpdate));
+		}
+		else
+		{
+			logProcess("Process",getLogMessage(joinpoint,startTime));
 		}
 	}
 	@AfterReturning(pointcut="execution(* app.captureEasy..*(..)) && !@annotation(app.captureEasy.Annotations.NoLogging)",returning="result")
 	public void logAllAfterMethod(JoinPoint joinpoint,Object result)
 	{
-		logProcess("Process",getLogMessage(joinpoint,startTime,result));
 		String annotationMarker=Arrays.toString(getAnnotations(joinpoint));
-		if(annotationMarker.contains("KeyStroke"))
-		{
-			logProcess("Process_Keypress",getLogMessage(joinpoint,startTimeKeyStroke,result));
-		}
+		if(annotationMarker.contains("KeyStroke")){}
 		else if(annotationMarker.contains("Update"))
 		{
-			logProcess("Process_Update",getLogMessage(joinpoint,startTimeUpdate,result));
+			logProcess("Process_SoftwareUpdate",getLogMessage(joinpoint,startTimeUpdate,result));
+		}
+		else
+		{
+			logProcess("Process",getLogMessage(joinpoint,startTime,result));
 		}
 	}	
 	
