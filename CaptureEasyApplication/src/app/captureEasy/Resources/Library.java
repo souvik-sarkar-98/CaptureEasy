@@ -471,7 +471,6 @@ public class Library extends SharedResources
 			int i=1;
 			try{
 
-				@SuppressWarnings("resource")
 				XWPFDocument docx=new XWPFDocument(new FileInputStream(filePath));
 				List<XWPFPictureData> picture=docx.getAllPictures();
 				Iterator<XWPFPictureData> iterator=picture.iterator();
@@ -483,7 +482,7 @@ public class Library extends SharedResources
 					SharedResources.progress=(int)Math.round(((Double.valueOf(i))/Double.valueOf(picture.size()))*100);
 					i++;
 				}
-
+				docx.close();
 				SharedResources.progress=0;
 				SavePanel.ProgressBar.setValue(0);
 				SavePanel.panel_Progress.repaint();

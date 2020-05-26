@@ -57,15 +57,20 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			}
 			senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 		}
+		logProcess("Process_KeyPress","line no 61 , "+String.valueOf(key==0)+String.valueOf(e.getKeyCode()==NativeKeyEvent.VC_ALT)+String.valueOf(captureKey.equalsIgnoreCase("ALT+PrtSc")));
 		if(key==0 && e.getKeyCode()==NativeKeyEvent.VC_ALT && captureKey.equalsIgnoreCase("ALT+PrtSc"))
 		{
 			senGUI.frame.setVisible(false);
 		}
+		logProcess("Process_KeyPress","line no 65 , "+String.valueOf(NativeKeyEvent.getKeyText(e.getKeyCode()).equalsIgnoreCase(captureKey)));
 		if (NativeKeyEvent.getKeyText(e.getKeyCode()).equalsIgnoreCase(captureKey)) {
+			logProcess("Process_KeyPress","line no 68 , "+String.valueOf(ActionGUI.leaveControl)+String.valueOf(!SharedResources.PauseThread));
 			if(ActionGUI.leaveControl && !SharedResources.PauseThread)
 			{
+				logProcess("Process_KeyPress","line no 71 , "+String.valueOf(captureKey.equalsIgnoreCase("Print Screen")));
 				if(captureKey.equalsIgnoreCase("Print Screen"))
 				{
+					logProcess("Process_KeyPress","line no 74 , "+String.valueOf(key!=56));
 					if(key!=56)
 					{
 						logProcess("Process_KeyPress","\t\t PrintScreen key pressed, Calling captureScreen() method");
@@ -211,7 +216,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				ActionGUI.screenRecord.saveVideo();
 			}
 		}
-		else if(key==NativeKeyEvent.VC_SHIFT && e.getKeyCode() ==NativeKeyEvent.VC_CONTROL )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F7 )
 		{
 			if(window!=null && window.d.isVisible())
 			{
@@ -237,7 +242,8 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				window.d.getRootPane().setDefaultButton(window.btnProceed);
 			}
 		}
-
+		System.out.println(ActionGUI.leaveControl);
+		logProcess("Process_KeyPress",String.valueOf(ActionGUI.leaveControl));
 
 		if(key==0)
 			key=e.getKeyCode();
