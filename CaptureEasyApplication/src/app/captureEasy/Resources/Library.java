@@ -50,7 +50,6 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import app.captureEasy.Annotations.NoLogging;
 import app.captureEasy.Annotations.Update;
-import app.captureEasy.UI.ActionGUI;
 import app.captureEasy.UI.RecordPanel;
 import app.captureEasy.UI.SavePanel;
 import app.captureEasy.UI.SensorGUI;
