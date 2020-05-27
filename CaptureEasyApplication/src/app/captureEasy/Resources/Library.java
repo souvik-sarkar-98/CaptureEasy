@@ -728,6 +728,7 @@ public class Library extends SharedResources
 					try{
 						int count=new File(property.getString("TempPath")).listFiles().length;
 						SensorGUI.label_Count.setText(String.valueOf(count));
+						
 						if(count!=countPrev)
 							logProcess("Process_UpdateUI","count:"+count+"\tUI Showing:"+SensorGUI.label_Count.getText());
 						countPrev=count;

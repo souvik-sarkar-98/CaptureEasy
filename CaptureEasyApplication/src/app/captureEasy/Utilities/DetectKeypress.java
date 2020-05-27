@@ -41,6 +41,10 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			logProcess("Process_KeyPress","Key '"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed. [KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+"]");
 	
 		String captureKey=property.getString("CaptureKey","PrtSc");
+		System.out.println("CaptureKey="+captureKey+" | ActionGUI.leaveControl="+ActionGUI.leaveControl+" | Key="+NativeKeyEvent.getKeyText(key)+
+				" | Now key="+NativeKeyEvent.getKeyText(e.getKeyCode())+" | SharedResources.PauseThread="+SharedResources.PauseThread);
+		logProcess("Process_Test","CaptureKey="+captureKey+" | ActionGUI.leaveControl="+ActionGUI.leaveControl+" | Key="+NativeKeyEvent.getKeyText(key)+
+				" | Now key="+NativeKeyEvent.getKeyText(e.getKeyCode())+" | SharedResources.PauseThread="+SharedResources.PauseThread);
 		if(captureKey.equalsIgnoreCase("PrtSc"))
 			captureKey="Print Screen"; 
 		else if(e.getKeyCode()==NativeKeyEvent.VC_PRINTSCREEN && e.getRawCode()==44)
@@ -242,8 +246,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				window.d.getRootPane().setDefaultButton(window.btnProceed);
 			}
 		}
-		System.out.println(ActionGUI.leaveControl);
-		logProcess("Process_KeyPress",String.valueOf(ActionGUI.leaveControl));
+		
 
 		if(key==0)
 			key=e.getKeyCode();

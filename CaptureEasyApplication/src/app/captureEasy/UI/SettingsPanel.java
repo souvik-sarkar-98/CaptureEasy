@@ -325,9 +325,9 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							s.frame.dispose();
 							btnUpdateFrameLocation.setText("Update frame location");
 							SensorGUI.clickable=true;
-							SensorGUI.label_Count.setVisible(false);
+							SensorGUI.label_Count.setVisible(true);
 							if(senGUI!=null)
-								DuplicateWindow.setEnabled(true);
+								DuplicateWindow.setEnabled(false);
 
 						}
 						else
