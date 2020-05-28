@@ -13,6 +13,7 @@ import app.captureEasy.Resources.Library;
 import app.captureEasy.Resources.SharedResources;
 import app.captureEasy.UI.Components.PopUp;
 import app.captureEasy.UI.Components.ToastMsg;
+import app.captureEasy.Utilities.FocusTraversalOnArray;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,6 +40,7 @@ import javax.swing.Timer;
 import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Component;
 
 public class SensorGUI extends Library 
 {
@@ -66,7 +68,7 @@ public class SensorGUI extends Library
 	JPanel Main_panel;
 	public JPanel button_panel;
 	PopUp p;
-
+	long timeout=0;
 	public SensorGUI()
 	{
 		Main_panel = new JPanel();
@@ -75,6 +77,7 @@ public class SensorGUI extends Library
 	public void SensorGUIInit()
 	{
 		frame=new JFrame();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
@@ -214,7 +217,7 @@ public class SensorGUI extends Library
 
 					}
 				});
-				p.panel_button.add(restart);
+				//p.panel_button.add(restart);
 				try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
 			}
 		});
@@ -464,6 +467,7 @@ public class SensorGUI extends Library
 				label_Record.setBackground(new Color(0,0,0,0));
 		try{
 			label_Record.setIcon(new ImageIcon(ImageIO.read(new File(recordIcon)).getScaledInstance(50,50, java.awt.Image.SCALE_SMOOTH)));
+			frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{label_Menu, lebel_Power, Label_Pause, label_Document, label_View, label_Save, label_delete, label_Settings, label_Record}));
 		} catch (IOException e) {
 			label_Record.setText("Record");
 			logError(e,"Exception in Icon loading: Image "+recordIcon+" Not Available");
@@ -566,7 +570,17 @@ public class SensorGUI extends Library
 					private static final long serialVersionUID = 1L;
 					public void terminationLogic() throws InterruptedException
 					{
-						try{do{
+						try{
+							timer=new Timer(10000,e->{
+								if(tm.w.isVisible())
+								{
+									tm.setText("TimeOut...");
+									tm.terminateAfter(2000);
+								}
+								timer.stop();
+							});
+							timer.start();
+							do{
 							Thread.sleep(100);
 						}while(!ActionGUI.dialog.isVisible());}catch(Exception e){}
 					}
@@ -577,9 +591,6 @@ public class SensorGUI extends Library
 					tm.setEndLocation(label_Menu.getLocationOnScreen().x,label_Menu.getLocationOnScreen().y);
 
 				tm.showToast();
-				//tm.setText("Exception occured!! Please try Again.");
-				
-
 				List<String> tabs=new ArrayList<String>();
 				tabs.add("Save");
 				tabs.add("View");
@@ -629,6 +640,15 @@ public class SensorGUI extends Library
 					private static final long serialVersionUID = 1L;
 					public void terminationLogic() throws InterruptedException
 					{
+						timer=new Timer(10000,e->{
+							if(tm.w.isVisible())
+							{
+								tm.setText("TimeOut...");
+								tm.terminateAfter(2000);
+							}
+							timer.stop();
+						});
+						timer.start();
 						do{
 							Thread.sleep(100);
 							}while(!ActionGUI.dialog.isVisible());	
@@ -665,6 +685,15 @@ public class SensorGUI extends Library
 				private static final long serialVersionUID = 1L;
 				public void terminationLogic() throws InterruptedException
 				{
+					timer=new Timer(10000,e->{
+						if(tm.w.isVisible())
+						{
+							tm.setText("TimeOut...");
+							tm.terminateAfter(2000);
+						}
+						timer.stop();
+					});
+					timer.start();
 					do{
 					Thread.sleep(100);
 					}while(!ActionGUI.dialog.isVisible());	
@@ -708,6 +737,15 @@ public class SensorGUI extends Library
 				private static final long serialVersionUID = 1L;
 				public void terminationLogic() throws InterruptedException
 				{
+					timer=new Timer(10000,e->{
+						if(tm.w.isVisible())
+						{
+							tm.setText("TimeOut...");
+							tm.terminateAfter(2000);
+						}
+						timer.stop();
+					});
+					timer.start();
 					do{
 					Thread.sleep(100);
 					}while(!ActionGUI.dialog.isVisible());	
@@ -743,6 +781,15 @@ public class SensorGUI extends Library
 				private static final long serialVersionUID = 1L;
 				public void terminationLogic() throws InterruptedException
 				{
+					timer=new Timer(10000,e->{
+						if(tm.w.isVisible())
+						{
+							tm.setText("TimeOut...");
+							tm.terminateAfter(2000);
+						}
+						timer.stop();
+					});
+					timer.start();
 					do{
 					Thread.sleep(100);
 					}while(!ActionGUI.dialog.isVisible());	
@@ -804,6 +851,13 @@ public class SensorGUI extends Library
 	}
 	public void autoRestart()
 	{
+
+		timer=new Timer(5000,e->{
+
+			timer.stop();
+		});
+		timer.start();
+
 		try{ActionGUI.dialog.dispose();
 		}catch(Exception e5){}
 		frame.dispose();
@@ -830,12 +884,6 @@ public class SensorGUI extends Library
 			GlobalScreen.unregisterNativeHook();
 		} catch (NativeHookException e1) {
 			e1.printStackTrace();
-		}
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		new Application().launch();
 

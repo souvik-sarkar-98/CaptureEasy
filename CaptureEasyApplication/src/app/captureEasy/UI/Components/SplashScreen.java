@@ -4,6 +4,7 @@ import org.jnativehook.mouse.SwingMouseAdapter;
 
 import app.captureEasy.Annotations.NoLogging;
 import app.captureEasy.Resources.Library;
+import app.captureEasy.UI.ActionGUI;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -24,7 +25,7 @@ import java.awt.Font;
 public class SplashScreen extends Library{
 
 	public JDialog frame;
-	public static boolean displaySplash=true;
+	//public static boolean displaySplash=true;
 	/**
 	 * Create the application.
 	 */
@@ -37,7 +38,7 @@ public class SplashScreen extends Library{
 			@Override
 			public void run() {
 				try {
-					while(displaySplash)
+					do
 					{
 						if(count==0)
 						{
@@ -60,7 +61,8 @@ public class SplashScreen extends Library{
 							count=0;
 						}
 						Thread.sleep(250);
-					}
+
+					}while(terminate());
 				} catch (InterruptedException | IOException e) {
 				}
 				frame.dispose();
@@ -68,6 +70,16 @@ public class SplashScreen extends Library{
 
 		}).start();
 
+	}
+	@NoLogging
+	boolean terminate()
+	{
+		if(senGUI!=null && senGUI.frame.isVisible())
+			return false;
+		else if(ActionGUI.dialog!=null && ActionGUI.dialog.isVisible())
+			return false;
+		else 
+			return true;
 	}
 	int xx,xy;
 	public JLabel lblLogo1;

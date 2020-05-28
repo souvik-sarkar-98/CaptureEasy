@@ -18,6 +18,7 @@ import app.captureEasy.Utilities.DetectKeypress;
 
 public class Application extends Library{
 	static boolean TempNeeded=true;
+	public static boolean isFirstTime=false;
 	@NoLogging
 	public static void main(String args[]) throws Exception
 	{
@@ -34,7 +35,7 @@ public class Application extends Library{
 		SplashScreen sp=new SplashScreen();
 		sp.frame.setVisible(true);
 		sp.lblVersion.setText("Version : "+versionInfo.getString("CurrentVersion","Base"));
-		if(!new File(PropertyFilePath).exists() || property.getString("DocPath","").replaceAll("\\s", "").equals(""))
+		if(!new File(PropertyFilePath).exists() || property.getString("DocPath")==null)
 		{
 			property.setProperty("TempPath",createTemp());
 			File tempFile=new File(tempFilePath);
@@ -47,8 +48,7 @@ public class Application extends Library{
 						property.setProperty("TempPath", tempProp.getProperty("TempPath"));
 				} catch (IOException e) {}
 			}
-
-			SplashScreen.displaySplash=false;
+			isFirstTime=true;
 			List<String> tabs=new ArrayList<String>();
 			tabs.add("Settings");
 			new ActionGUI(tabs);
@@ -58,8 +58,8 @@ public class Application extends Library{
 			ActionGUI.tagDrop=false;
 			ActionGUI.settingsPanel.comboBox_CaptureKey.setSelectedIndex(0);
 			ActionGUI.settingsPanel.comboBox_ImageFormat.setSelectedIndex(0);
-			ActionGUI.settingsPanel.DuplicateWindow.setEnabled(false);
-			do{try {Thread.sleep(100);} catch (InterruptedException e) {}}while(!ActionGUI.leaveControl);	
+			do{try {Thread.sleep(100);} catch (InterruptedException e) {}}while(!ActionGUI.leaveControl);
+			isFirstTime=false;
 		}
 		else if (new File(PropertyFilePath).exists() &&  !IsEmpty(property.getString("TempPath","")))
 		{
@@ -97,7 +97,8 @@ public class Application extends Library{
 			senGUI.frame.setVisible(true);
 			senGUI.label_Menu.setEnabled(true);
 			senGUI.sensor_panel.setEnabled(true);
-
+			senGUI.frame.getRootPane().setDefaultButton(senGUI.label_Menu);
+			
 			updateUITask();
 			clearFilesTask(20000);
 			new SoftwareUpdate().autoUpdateTask();

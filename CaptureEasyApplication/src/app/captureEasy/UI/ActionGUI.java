@@ -25,7 +25,6 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.log4j.Logger;
 import org.json.JSONException;
 
 import app.captureEasy.Annotations.NoLogging;
@@ -35,7 +34,6 @@ import app.captureEasy.UI.Components.ToastMsg;
 
 public class ActionGUI extends Library  implements ChangeListener,MouseListener,MouseMotionListener
 {
-	public static Logger logger = Logger.getLogger(ActionGUI.class);
 
 	public static JFrame dialog;
 	public final JPanel contentPanel = new JPanel();
@@ -230,9 +228,9 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				private static final long serialVersionUID = 1L;
 				public void terminationLogic() throws InterruptedException
 				{
-					do{tm.setText("Loading...");
-					Thread.sleep(500);
-					tm.setText("Please wait...");}while(!ActionGUI.tabLoaded);
+					do{
+					Thread.sleep(100);
+					}while(!ActionGUI.tabLoaded);
 				}
 			};
 			tm.setLocation(dialog.getBounds().x+430/2+75,dialog.getBounds().y+315/2);

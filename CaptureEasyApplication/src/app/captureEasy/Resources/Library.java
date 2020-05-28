@@ -32,7 +32,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.PropertyConfigurator;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.BreakType;
@@ -54,7 +53,6 @@ import app.captureEasy.UI.RecordPanel;
 import app.captureEasy.UI.SavePanel;
 import app.captureEasy.UI.SensorGUI;
 import app.captureEasy.UI.Components.PopUp;
-import app.captureEasy.UI.Components.SplashScreen;
 
 
 public class Library extends SharedResources
@@ -71,9 +69,7 @@ public class Library extends SharedResources
 	@NoLogging
 	public static void logError(Exception e,String usermessage)
 	{
-		System.setProperty("logfilename", createFolder(logFolderPath) + "/Error-"+LocalDate.now().toString()+".log");
-		log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %m%n");
-		PropertyConfigurator.configure(Log4jPropertyFilePath);		String exceptionClass="\n\nException Class : "+e.getClass().getName()+"\n";
+		String exceptionClass="\n\nException Class : "+e.getClass().getName()+"\n";
 		String exceptionMessage="Exception Message : "+e.getMessage()+"\n";
 		String exceptionCause="Exception Cause : "+e.getCause();
 		String stack="\n\nStackTrace:";
@@ -82,24 +78,18 @@ public class Library extends SharedResources
 		{
 			stack=stack+"\n\t"+s;
 		}
-		logger.info("User Message: "+usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n");
+		String filename=logFolderPath + "/Error-"+LocalDate.now().toString()+".log";
+		try{
+			FileWriter fw=new FileWriter(filename,true);
+			fw.write(timeStamp()+"  User Message: "+usermessage+exceptionClass+exceptionMessage+exceptionCause+stack+"\n\n" );
+			fw.flush();
+			fw.close();
+		}catch(Exception e4){}
 		e.printStackTrace();
 	}
 
-	/*@NoLogging
-	public static void logProcess(String processName,String printPattern,String message)
-	{	
-		log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern",printPattern); 
-		logProcess(processName,message);
-	}
-	@NoLogging
-	public static void logProcess(String processName,String message)
-	{	
-		System.setProperty("logfilename", logFolderPath + "/"+processName+"-"+processID+".log");
-		PropertyConfigurator.configure(Log4jPropertyFilePath);
-		logger.info(message);
-		log4j.setProperty("log4j.appender.FileAppender.layout.ConversionPattern", "[%-5p] [%d{dd MMM yyyy HH:mm:ss}]  %m%n");
-	}*/
+	
+	
 	@NoLogging
 	public static void logProcess(String processName,String message)
 	{
@@ -693,7 +683,10 @@ public class Library extends SharedResources
 							else if(f.getName().toLowerCase().contains(String.valueOf(processID))){
 								logProcess("Process_ClearFile","Log File "+f.getName()+" skipped because this file is associated with currently running process ("+processID+"). FilePath : "+f.getAbsolutePath());
 							}
-							else if(f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase())){}
+							else if(f.getName().toLowerCase().contains(LocalDate.now().toString().toLowerCase())){
+								logProcess("Process_ClearFile","Log File "+f.getName()+" skipped. FilePath : "+f.getAbsolutePath());
+
+							}
 							else
 							{
 								try{FileUtils.forceDelete(f);
@@ -736,9 +729,7 @@ public class Library extends SharedResources
 						logProcess("Process_UpdateUI","Exception occured while updating file count. Visit log folder");
 						logError(e,"error update count ");
 					}
-					try{
-						//if((senGUI!=null && senGUI.frame.isVisible())|| (ActionGUI.dialog!=null && ActionGUI.dialog.isVisible()))
-							SplashScreen.displaySplash=false;}catch(Exception e){}
+					
 					try{
 						if(RecordPanel.isRecording)
 						{

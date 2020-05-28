@@ -14,7 +14,7 @@ public class ToastMsg extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JWindow w;
+	public JWindow w;
 	JPanel p=null;
 	String msg;
 	int x,y,width;

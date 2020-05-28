@@ -14,7 +14,6 @@ import java.util.Properties;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
 import app.captureEasy.Annotations.NoLogging;
 import app.captureEasy.Resources.Library;
 import app.captureEasy.Resources.PathsNKeys;
@@ -26,13 +25,12 @@ import app.captureEasy.UI.Components.ToastMsg;
 public class SharedResources extends PathsNKeys {
 
 	public static Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-	public static Logger logger = Logger.getLogger(SharedResources.class);
 	public static boolean PauseThread=false,stopThread=false,duplicateAvailable=false;
 	public static int progress=0;
 	public static Map<String,String> comments=new HashMap<>();
 	public static PropertiesConfiguration property ;
 	public static PropertiesConfiguration versionInfo ;
-	public static PropertiesConfiguration log4j ;
+	//public static PropertiesConfiguration log4j ;
 	public Exception e=null;
 	public static SensorGUI senGUI;
 	public ToastMsg tm;
@@ -95,7 +93,7 @@ public class SharedResources extends PathsNKeys {
 			p.setVisible(true);
 			PopUp.PopDia=p;
 		}
-		try {
+		/*try {
 
 			new File(Log4jPropertyFilePath).createNewFile();
 			log4j = new PropertiesConfiguration(Log4jPropertyFilePath);
@@ -114,7 +112,7 @@ public class SharedResources extends PathsNKeys {
 			PopUp p=new PopUp("ERROR","error","FAILED!\nUnable to initialize log4j propery ."+e.getClass().getSimpleName()+" Occured.","Okay","");
 			p.setVisible(true);
 			PopUp.PopDia=p;
-		}
+		}*/
 		if(versionInfo.getString("ApplicationPath")==null)
 		{
 			File[] App= new File(System.getProperty("user.dir")).listFiles();

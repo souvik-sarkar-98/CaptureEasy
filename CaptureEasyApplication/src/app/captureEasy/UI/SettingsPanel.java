@@ -34,6 +34,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import app.captureEasy.Annotations.NoLogging;
+import app.captureEasy.Launch.Application;
 import app.captureEasy.Resources.Library;
 import app.captureEasy.UI.Components.PopUp;
 import app.captureEasy.UI.Components.TextField;
@@ -263,9 +264,14 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 				SettingsPane_FramePanel.setLayout(null);
 				{
 					DuplicateWindow = new JCheckBox("Duplicate window");
+					DuplicateWindow.setEnabled(false);
 					DuplicateWindow.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							if(DuplicateWindow.isSelected())
+							DuplicateWindow.setEnabled(false);
+							DuplicateWindow.setSelected(false);
+							PopUp p=new PopUp("Info","info","Sorry! this facility not available","Okay","Close");
+							PopUp.PopDia=p;
+							/*if(DuplicateWindow.isSelected())
 							{
 								lblLocationx.setText("Location :");
 								chckbxAutoUpdate.setEnabled(false);
@@ -290,7 +296,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 								chckbxAutoUpdate.setEnabled(true);
 								btnUpdateFrameLocation.setText("Update frame location");
 								lblLocationx.setText("Location : ( "+senGUI.x+" , "+senGUI.y+" )");
-							}
+							}*/
 						}
 					});
 					DuplicateWindow.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -325,11 +331,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							s.frame.dispose();
 							btnUpdateFrameLocation.setText("Update frame location");
 							SensorGUI.clickable=true;
-							SensorGUI.label_Count.setVisible(true);
-							if(senGUI!=null)
-								DuplicateWindow.setEnabled(false);
-
-						}
+							}
 						else
 						{
 							isframeupdateTouched=true;
@@ -339,22 +341,14 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							window.setVisible(true);
 							PopUp.PopDia=window;
 							PopUp.PopDia.getRootPane().setDefaultButton(PopUp.btnNewButton);
-							if(!DuplicateWindow.isSelected() && DuplicateWindow.isEnabled() && property.getString("DocPath")!=null)
+							if(property.getString("DocPath")!=null)
 							{
-								System.out.println("hii");
 								try{senGUI.frame.dispose();}catch(Exception e){e.printStackTrace();}
 							}		
 								
 							s=new SensorGUI();
 							s.frame.setVisible(true);
-							if(DuplicateWindow.isSelected())
-							{
-								s.sensor_panel.setBackground(Color.BLUE);
-							}
-							DuplicateWindow.setEnabled(false);
 							s.frame.setVisible(true);
-							SensorGUI.label_Count.setVisible(false);
-							try{s.frame.setAlwaysOnTop(true);}catch(Exception e5){}
 							s.sensor_panel.setToolTipText("Drag this window to your preferred location.");
 							s.lebel_Power.setToolTipText("");
 							s.Label_Pause.setToolTipText("");
@@ -435,6 +429,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							ActionGUI.leaveControl=true;
 							if(isframeupdateTouched)
 							{
+								
 								senGUI=new SensorGUI();
 								senGUI.frame.setVisible(true);
 								senGUI.frame.setAlwaysOnTop(true);
@@ -562,7 +557,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		else
 		{
 			textField_DocDestFolder.setBackground(Color.WHITE);
-			isframeupdateTouched=false;
 			property.setProperty("DocPath",DocPath_Current);
 			property.setProperty("showFolderNameField",showFolderNameField_Current);
 			property.setProperty("setFolderNameMandatory",setFoldernameMandatory_Current);
@@ -595,15 +589,13 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 
 			if(ActionGUI.settingsPanel.CancelBtn.isEnabled())
 			{
-				//try{Thread.sleep(2000);}catch(Exception e9){}
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				//try{Application.sensor.play();}catch(Exception rr){};
-				if(xv!=null && yv!=null )
+				System.out.println(isframeupdateTouched);
+				if(isframeupdateTouched && !Application.isFirstTime)
 				{
-					//senGUI=new SensorGUI();
-					//senGUI.frame.setAlwaysOnTop(true);
 					try{
+						senGUI=new SensorGUI();
 					senGUI.frame.setVisible(true);
 					senGUI.frame.setLocation(Xlocation,Ylocation);
 					}catch(Exception e){}
@@ -630,6 +622,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							ActionGUI.savePanel.textField_Filename.setColumns(22);
 
 					}
+					isframeupdateTouched=false;
 
 					if(ActionGUI.savePanel.rdbtnSavePDF.isSelected() && SavePanel.chckbxOverwriteSelectedFile.getText().equalsIgnoreCase("Rename selected file")&& !SavePanel.chckbxOverwriteSelectedFile.isSelected())
 						ActionGUI.savePanel.btnDone.setVisible(true);
