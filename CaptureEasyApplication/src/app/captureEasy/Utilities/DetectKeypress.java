@@ -26,12 +26,9 @@ import app.captureEasy.UI.ActionGUI;
 import app.captureEasy.UI.RecordPanel;
 import app.captureEasy.UI.ViewPanel;
 import app.captureEasy.UI.Components.PopUp;
-import app.captureEasy.UI.Components.ToastMsg;
-import app.captureEasy.Utilities.GenerateID;
 
 public class DetectKeypress extends Library implements NativeKeyListener  {
 	int key=0;
-	GenerateID window=null;
 	@KeyStroke
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
@@ -79,7 +76,6 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 					{
 						logProcess("Process_KeyPress","\t\t PrintScreen key pressed, Calling captureScreen() method");
 						captureScreen();
-						
 					}
 					else
 					{
@@ -222,29 +218,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		}
 		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F7 )
 		{
-			if(window!=null && window.d.isVisible())
-			{
-				window.d.setAlwaysOnTop(true);
-			}
-			else
-			{
-				tm=new ToastMsg("Launching.... Please wait...")
-				{ 
-					private static final long serialVersionUID = 1L;
-					public void terminationLogic() throws InterruptedException
-					{
-						try{do{
-							Thread.sleep(100);
-						}while(!window.d.isVisible());}catch(Exception e){}	
-					}
-				};
-				tm.setLocation(screensize.width / 2, screensize.height / 2 );
-				tm.showToast();
-				window = new GenerateID();
-				window.d.setVisible(true);
-				window.textField_1.requestFocusInWindow();
-				window.d.getRootPane().setDefaultButton(window.btnProceed);
-			}
+			IDTool();
 		}
 		
 

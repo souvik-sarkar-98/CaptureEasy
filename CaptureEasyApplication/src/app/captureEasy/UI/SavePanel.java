@@ -338,6 +338,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					lblEnterFilename.setVisible(false);
 					textField_Filename.setVisible(false);
 					textField_Filename.setText("");
+					btnChooseFile.setToolTipText("Choose file");
 				}
 				else 
 				{
@@ -346,6 +347,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 					if (!file.renameTo(file) && !renameFlag) 
 					{
 						btnChooseFile.setBackground(Color.YELLOW);
+						btnChooseFile.setToolTipText(file.getAbsolutePath()+" (File in use)");
 						ActionGUI.dialog.setAlwaysOnTop(false);
 						popup=new PopUp("WARNING","warning","Selected file '"+file.getName()+"' "
 								+ "is open for editing. To overwrite please close the file and select again. Otherwise enter filename to create a copy.",
@@ -370,15 +372,9 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						chckbxOverwriteSelectedFile.setSelected(true);
 						chckbxOverwriteSelectedFile.setEnabled(true);
 						btnChooseFile.setBackground(Color.GREEN);
+						btnChooseFile.setToolTipText(file.getAbsolutePath());
 						panel_Input.setBounds(28, 150, 365, 70);
-						if(property.getBoolean("ArrangeSSDatewise",false))/*****need to check*/////
-						{
-							textField_Filename.setColumns(22);
-						}
-						else
-						{
-							textField_Filename.setColumns(16);
-						}
+						
 						lblEnterFilename.setVisible(false);
 						textField_Filename.setVisible(false);
 						textField_Filename.setText("");
@@ -645,11 +641,11 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						PopUp.PopDia=p;
 						textField_Filename.setBackground(Color.PINK);
 					}
-					else if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
+					else if (newFileName.contains(Character.toString('"')) /*|| newFileName.contains("/") || newFileName.contains("\\")*/ || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 					{
 						textField_Filename.setBackground(Color.PINK);
 						PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
-								+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+								+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
 						p.setAlwaysOnTop(true);
 						PopUp.PopDia=p;
 					}
@@ -817,7 +813,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		try{
 			newFileName = textField_Filename.getText();
 			String folder=textField_ParFol.getText();
-			if (newFileName.contains(Character.toString('"')) || newFileName.contains("/") || newFileName.contains("\\") || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
+			if (newFileName.contains(Character.toString('"')) /*|| newFileName.contains("/") || newFileName.contains("\\")*/ || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 			{
 				btnDone.setVisible(false);
 				textField_Filename.setBackground(Color.PINK);
@@ -825,7 +821,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
 				{
 					popup =new PopUp("ERROR","error", "A file name can not contain any of the following "
-							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+							+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
 					popup.setAlwaysOnTop(true);
 					PopUp.PopDia=popup;
 				}

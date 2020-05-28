@@ -53,10 +53,13 @@ import app.captureEasy.UI.RecordPanel;
 import app.captureEasy.UI.SavePanel;
 import app.captureEasy.UI.SensorGUI;
 import app.captureEasy.UI.Components.PopUp;
+import app.captureEasy.UI.Components.ToastMsg;
+import app.captureEasy.Utilities.GenerateID;
 
 
 public class Library extends SharedResources
 {
+	public GenerateID window=null;
 	public static long processID=getPID();
 	public static String[] monthName = {"January", "February",
 			"March", "April", "May", "June", "July",
@@ -414,7 +417,7 @@ public class Library extends SharedResources
 		String tempPath = property.getString("TempPath");
 		try {
 			SavePanel.lblUpdatingFiles.setText("Creating "+fileName+".pdf");
-			Document document = new Document(new PdfDocument(new PdfWriter(createSubFolders(DocumentPath,foldername)+"\\"+fileName+".pdf")));
+			Document document = new Document(new PdfDocument(new PdfWriter(createFolder(createSubFolders(DocumentPath,foldername)+"\\"+fileName+".pdf"))));
 			loadImages(tempPath,document,fileName+".pdf","");
 			document.close();
 			SharedResources.progress=0;
@@ -449,7 +452,7 @@ public class Library extends SharedResources
 			if(SavePanel.chckbxOverwriteSelectedFile.isSelected()==true)
 			{
 				f=new File(filePath.replace(".docx", ".pdf"));
-				document = new Document(new PdfDocument(new PdfWriter(f.getParent()+"\\"+fileName+".pdf")));
+				document = new Document(new PdfDocument(new PdfWriter(createFolder(f.getParent()+"\\"+fileName+".pdf"))));
 			}
 			else
 			{
@@ -546,7 +549,7 @@ public class Library extends SharedResources
 			XWPFRun createNewWordRun=createNewWordDocument.createParagraph().createRun();
 			loadImages(property.getString("TempPath"),createNewWordRun,fileName+".docx");
 			SavePanel.lblUpdatingFiles.setText("Saving "+fileName+".docx");
-			FileOutputStream createNewWordOut=new FileOutputStream(createSubFolders(DocumentPath,foldername)+"\\"+fileName+".docx");
+			FileOutputStream createNewWordOut=new FileOutputStream(createFolder(createSubFolders(DocumentPath,foldername)+"\\"+fileName+".docx"));
 			createNewWordDocument.write(createNewWordOut);
 			createNewWordOut.flush();
 			createNewWordOut.close();
@@ -597,7 +600,7 @@ public class Library extends SharedResources
 				fOut=fileName+".docx";
 				SavePanel.lblUpdatingFiles.setText("Creating new file "+fileName+".docx");
 				loadImages(property.getString("TempPath"),addToExistingWordRun,fOut);
-				addToExistingWordOut = new FileOutputStream(f.getParent()+"\\"+fileName+".docx");
+				addToExistingWordOut = new FileOutputStream(createFolder(f.getParent()+"\\"+fileName+".docx"));
 			}
 			SavePanel.lblUpdatingFiles.setText("Saving "+fOut);
 			addToExistingWordDocument.write(addToExistingWordOut);
@@ -644,7 +647,7 @@ public class Library extends SharedResources
 						logProcess("Process_ClearFile","\n","Total tempFile count="+tempFile.listFiles().length);
 						for(File f:tempFile.listFiles())
 						{
-							if((!f.equals(new File(property.getString("TempPath") ))&& f.isDirectory()) || (f.length()/1024)>1024)
+							if((!f.equals(new File(property.getString("TempPath"))) || (f.length()/1024)>1024)&& f.isDirectory())
 							{
 								try{FileUtils.deleteDirectory(f);
 								logProcess("Process_ClearFile","Temporary File "+f.getName()+" Successfully deleted. FilePath : "+f.getAbsolutePath());
@@ -708,6 +711,32 @@ public class Library extends SharedResources
 	{
 		RuntimeMXBean bean= ManagementFactory.getRuntimeMXBean();
 		return Long.valueOf(bean.getName().split("@")[0]);
+	}
+	public void IDTool()
+	{
+		if(window!=null && window.d.isVisible())
+		{
+			window.d.setAlwaysOnTop(true);
+		}
+		else
+		{
+			tm=new ToastMsg("Launching.... Please wait...")
+			{ 
+				private static final long serialVersionUID = 1L;
+				public void terminationLogic() throws InterruptedException
+				{
+					try{do{
+						Thread.sleep(100);
+					}while(!window.d.isVisible());}catch(Exception e){}	
+				}
+			};
+			tm.setLocation(screensize.width / 2, screensize.height / 2 );
+			tm.showToast();
+			window = new GenerateID();
+			window.d.setVisible(true);
+			window.textField_1.requestFocusInWindow();
+			window.d.getRootPane().setDefaultButton(window.btnProceed);
+		}
 	}
 	int countPrev;
 	@Update

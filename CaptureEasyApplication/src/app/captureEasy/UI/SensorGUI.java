@@ -41,6 +41,9 @@ import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Component;
+import javax.swing.JMenuItem;
+import java.awt.event.MouseAdapter;
+import javax.swing.UIManager;
 
 public class SensorGUI extends Library 
 {
@@ -409,10 +412,58 @@ public class SensorGUI extends Library
 		label_Menu.setToolTipText("Click here to expand");
 		try{
 			label_Menu.setIcon(new ImageIcon(ImageIO.read(new File(menuIcon)).getScaledInstance(size.width,size.height, java.awt.Image.SCALE_SMOOTH)));
-
 		} catch (IOException e) {
 			label_Menu.setText("Menu");logError(e,"Exception in Icon loading: Image "+menuIcon+" Not Available");
 		}
+		
+		popupMenu_1 = new JPopupMenu();
+		popupMenu_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		popupMenu_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		popupMenu_1.setBackground(Color.WHITE);
+		addPopup(label_Menu, popupMenu_1);
+		
+		mntmExpand = new JMenuItem();
+		mntmExpand.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(label_Menu.isEnabled()){
+					if( button_panel.isVisible())
+					{
+						frame.setSize(new Dimension(54, 110));
+						Main_panel.setSize(new Dimension(54, 110));
+						button_panel.setVisible(false);
+						label_Menu.setToolTipText("Click here to expand");
+					}
+					else
+					{
+						frame.setSize(new Dimension(54, 560));
+						Main_panel.setSize(new Dimension(54, 560));
+						button_panel.setVisible(true);
+						label_Menu.setToolTipText("Click here to collapse");
+					}
+				}
+			}
+		});
+		mntmExpand.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mntmExpand.setBackground(UIManager.getColor("CheckBox.background"));
+		popupMenu_1.add(mntmExpand);
+		
+		mntmLaunchIdTool = new JMenuItem("Launch ID Tool");
+		mntmLaunchIdTool.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				IDTool();
+			}
+		});
+		mntmLaunchIdTool.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mntmLaunchIdTool.setBackground(Color.WHITE);
+		popupMenu_1.add(mntmLaunchIdTool);
+		
+		mntmViewConsole = new JMenuItem("View Console");
+		mntmViewConsole.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		mntmViewConsole.setFont(new Font("Tahoma", Font.BOLD, 16));
+		popupMenu_1.add(mntmViewConsole);
 
 		/*frame.setSize(new Dimension(54, 500));
 		Main_panel.setSize(new Dimension(54, 500));
@@ -488,6 +539,10 @@ public class SensorGUI extends Library
 
 	String toolText;
 	public  JButton label_Record;
+	private JPopupMenu popupMenu_1;
+	private JMenuItem mntmLaunchIdTool;
+	private JMenuItem mntmExpand;
+	private JMenuItem mntmViewConsole;
 	public void deleteAction(){
 		if(ActionGUI.leaveControl)
 		{
@@ -762,7 +817,6 @@ public class SensorGUI extends Library
 			tabs.add("Settings");
 			tabs.add("Update");
 			new ActionGUI(tabs);
-			try{ActionGUI.settingsPanel.DuplicateWindow.setEnabled(true);}catch(Exception e){}
 			ActionGUI.dialog.setVisible(true);	
 		}
 		else
@@ -830,7 +884,8 @@ public class SensorGUI extends Library
 				label_Menu.setEnabled(false);
 				Label_Pause.setIcon(new ImageIcon(ImageIO.read(new File(playIcon)).getScaledInstance(size.width,size.height, java.awt.Image.SCALE_SMOOTH)));
 				Label_Pause.setToolTipText("Click Here to Resume");
-				label_Menu.setToolTipText("");;
+				label_Menu.setToolTipText("");
+				mntmExpand.setEnabled(false);
 				SharedResources.PauseThread=true;
 			}catch (IOException e3) {Label_Pause.setText("Play");logError(e3,"Exception in Icon loading: Image "+playIcon+" Not Available");}
 		}
@@ -841,6 +896,8 @@ public class SensorGUI extends Library
 				label_Menu.setToolTipText(toolText);;
 				Label_Pause.setIcon(new ImageIcon(ImageIO.read(new File(pauseIcon)).getScaledInstance(size.width,size.height, java.awt.Image.SCALE_SMOOTH)));
 				Label_Pause.setToolTipText("Click Here to Pause");
+				mntmExpand.setEnabled(true);
+
 				SharedResources.PauseThread=false;
 
 			}catch (IOException e3) {
@@ -931,4 +988,29 @@ public class SensorGUI extends Library
 	}
 
 
+	private void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					if(button_panel.isVisible())
+						mntmExpand.setText("Collapse");
+					else
+						mntmExpand.setText("Expand");
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					if(button_panel.isVisible())
+						mntmExpand.setText("Collapse");
+					else
+						mntmExpand.setText("Expand");
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }

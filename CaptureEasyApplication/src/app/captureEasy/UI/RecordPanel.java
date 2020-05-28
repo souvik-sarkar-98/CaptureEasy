@@ -438,11 +438,11 @@ public class RecordPanel extends Library {
 				PopUp.PopDia=p;
 				textField_Filename.setBackground(Color.PINK);
 			}
-			else if (textField_Filename.getText().contains(Character.toString('"')) || textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\") || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
+			else if (textField_Filename.getText().contains(Character.toString('"')) /*|| textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\")*/ || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
 			{
 				textField_Filename.setBackground(Color.PINK);
 				PopUp p=new PopUp("ERROR","error", "A file name can not contain any of the following "
-						+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+						+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
 				p.setAlwaysOnTop(true);
 				PopUp.PopDia=p;
 			}
@@ -465,7 +465,7 @@ public class RecordPanel extends Library {
 			{
 				textField_Foldername.setBackground(Color.WHITE);
 				textField_Filename.setBackground(Color.WHITE);
-				copyToFolder(tempFolderPath+"/DoNotDelete.mp4",createSubFolders(property.getString("DocPath",""),textField_Foldername.getText())+"\\"+textField_Filename.getText()+".mp4");
+				copyToFolder(tempFolderPath+"/DoNotDelete.mp4",createFolder(createSubFolders(property.getString("DocPath",""),textField_Foldername.getText())+"\\"+textField_Filename.getText()+".mp4"));
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
 				doDelete=true;
@@ -574,13 +574,13 @@ public class RecordPanel extends Library {
 	{
 		try{
 			String folder=textField_Foldername.getText();
-			if (textField_Filename.getText().contains(Character.toString('"')) || textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\") || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
+			if (textField_Filename.getText().contains(Character.toString('"')) /*|| textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\")*/ || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
 			{
 				textField_Filename.setBackground(Color.PINK);
 				if(ActionType.equalsIgnoreCase("Insert") && PopUp.control)
 				{
 					PopUp popup =new PopUp("ERROR","error", "A file name can not contain any of the following "
-							+ "characters: \\ / : * ? " + Character.toString('"') + " < > | ","Ok, I understood","");
+							+ "characters: * : ? " + Character.toString('"') + " < > | ","Ok, I understood","");
 					popup.setAlwaysOnTop(true);
 					PopUp.PopDia=popup;
 				}

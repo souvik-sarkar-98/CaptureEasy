@@ -48,7 +48,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JPanel SettingsPane_DocFolderPanel;
 	public TextField textField_DocDestFolder;
 	public JPanel SettingsPane_FramePanel;
-	public JCheckBox DuplicateWindow;
+	public JCheckBox showConsole;
 	public JButton btnUpdateFrameLocation;
 	public static JLabel lblLocationx;
 	public JButton SaveBtn;
@@ -87,9 +87,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsScrollPane.addMouseListener(this);
 		SettingsScrollPane.addMouseMotionListener(this);
 		try {
-			loadSettingsTab();
+		//	loadSettingsTab();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -263,12 +262,11 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 				SettingsPane.add(SettingsPane_FramePanel);
 				SettingsPane_FramePanel.setLayout(null);
 				{
-					DuplicateWindow = new JCheckBox("Duplicate window");
-					DuplicateWindow.setEnabled(false);
-					DuplicateWindow.addActionListener(new ActionListener() {
+					showConsole = new JCheckBox("Show console");
+					showConsole.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							DuplicateWindow.setEnabled(false);
-							DuplicateWindow.setSelected(false);
+							showConsole.setEnabled(false);
+							showConsole.setSelected(false);
 							PopUp p=new PopUp("Info","info","Sorry! this facility not available","Okay","Close");
 							PopUp.PopDia=p;
 							/*if(DuplicateWindow.isSelected())
@@ -299,9 +297,9 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 							}*/
 						}
 					});
-					DuplicateWindow.setFont(new Font("Tahoma", Font.BOLD, 16));
-					DuplicateWindow.setBounds(10, 9, 180, 25);
-					SettingsPane_FramePanel.add(DuplicateWindow);
+					showConsole.setFont(new Font("Tahoma", Font.BOLD, 16));
+					showConsole.setBounds(30, 9, 138, 25);
+					SettingsPane_FramePanel.add(showConsole);
 				}
 
 				chckbxAutoUpdate = new JCheckBox("Auto Update");
