@@ -1,5 +1,7 @@
 package app.captureEasy.Resources;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -38,7 +40,7 @@ import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFPictureData;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-
+import org.jnativehook.GlobalScreen;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -63,8 +65,7 @@ public class Library extends SharedResources
 	public static long processID=getPID();
 	public static String[] monthName = {"January", "February",
 			"March", "April", "May", "June", "July",
-			"August", "September", "October", "November",
-	"December"};
+			"August", "September", "October", "November","December"};
 	/****
 	 * 
 	 * @utility= logging
@@ -91,8 +92,8 @@ public class Library extends SharedResources
 		e.printStackTrace();
 	}
 
-	
-	
+
+
 	@NoLogging
 	public static void logProcess(String processName,String message)
 	{
@@ -634,10 +635,12 @@ public class Library extends SharedResources
 			}	
 		}
 	}
-
+	static Point locationPrev=null;
+	static boolean notShowing=true;
 	public static void clearFilesTask(int interval)
 	{
 		new Thread(new Runnable(){
+
 			@Override
 			public void run() {
 				while (!stopThread)
@@ -700,6 +703,39 @@ public class Library extends SharedResources
 								}
 							}
 						}
+						ToastMsg toast = null;
+						Point locationCurrent=MouseInfo.getPointerInfo().getLocation();
+						if(locationCurrent.equals(locationPrev))
+						{
+							System.out.println("System is IDLE...");
+							if(notShowing)
+							{
+								System.out.println("inside System is IDLE...");
+
+								toast=new ToastMsg("System is IDLE...")
+								{ 
+									private static final long serialVersionUID = 1L;
+									@NoLogging
+									public void terminationLogic() throws InterruptedException
+									{
+										do{
+											notShowing=false;
+											if(!MouseInfo.getPointerInfo().getLocation().equals(locationPrev))
+											{
+												try{GlobalScreen.registerNativeHook();}catch(Exception e){}
+												notShowing=true;
+											}
+										}while(!notShowing);
+									}
+								};
+
+								toast.setEndLocation(senGUI.sensor_panel.getLocationOnScreen().x,senGUI.sensor_panel.getLocationOnScreen().y);
+
+								toast.showToast();
+								GlobalScreen.unregisterNativeHook();
+							}
+						}
+						locationPrev= locationCurrent;
 						Thread.sleep(interval);
 					}catch(Exception w){w.printStackTrace();}
 				}
@@ -750,7 +786,7 @@ public class Library extends SharedResources
 					try{
 						int count=new File(property.getString("TempPath")).listFiles().length;
 						SensorGUI.label_Count.setText(String.valueOf(count));
-						
+
 						if(count!=countPrev)
 							logProcess("Process_UpdateUI","count:"+count+"\tUI Showing:"+SensorGUI.label_Count.getText());
 						countPrev=count;
@@ -758,7 +794,7 @@ public class Library extends SharedResources
 						logProcess("Process_UpdateUI","Exception occured while updating file count. Visit log folder");
 						logError(e,"error update count ");
 					}
-					
+
 					try{
 						if(RecordPanel.isRecording)
 						{
