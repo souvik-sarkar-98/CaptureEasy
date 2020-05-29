@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.jnativehook.mouse.SwingMouseAdapter;
 
+import app.captureEasy.Annotations.NoLogging;
 import app.captureEasy.Resources.Library;
 import app.captureEasy.Resources.SharedResources;
 import app.captureEasy.UI.Components.PopUp;
@@ -409,39 +410,39 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 			});
 		}
 	}
-	@Override
+	@Override @NoLogging
 	public void mouseDragged(MouseEvent arg0) {
 		ActionGUI.xDialog = arg0.getXOnScreen();
 		ActionGUI.yDialog = arg0.getYOnScreen();
 		ActionGUI.dialog.setLocation(ActionGUI.xDialog - ActionGUI.xxDialog, ActionGUI.yDialog - ActionGUI.xyDialog); 		
 	}
 
-	@Override
+	@Override @NoLogging
 	public void mousePressed(MouseEvent e) {
 		ActionGUI.xxDialog = e.getX();
 		ActionGUI.xyDialog = e.getY();
 	}
-	@Override
+	@Override@NoLogging
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override@NoLogging
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override@NoLogging
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override@NoLogging
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	@Override@NoLogging
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 

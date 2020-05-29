@@ -66,7 +66,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public JCheckBox chckbxSetFoldernameMandatory;
 	public JRadioButton DocumentDestination;
 	public JPanel SettingsScrollPane;
-	public boolean loadSettingsTab=false,isframeupdateTouched=false;
+	public boolean loadSettingsTab=false;
+	public static boolean isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
 	public JCheckBox chckbxAutoUpdate;
 	String[] captureKey={"PrtSc","ALT+Prtsc","Ctrl+ALT","Ctrl+Shift","F7","F8","F9"};
@@ -265,9 +266,9 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 					showConsole = new JCheckBox("Show console");
 					showConsole.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							showConsole.setEnabled(false);
+							///showConsole.setEnabled(false);
 							showConsole.setSelected(false);
-							PopUp p=new PopUp("Info","info","Sorry! this facility not available","Okay","Close");
+							PopUp p=new PopUp("Info","info","Sorry! this facility not available","Close","");
 							PopUp.PopDia=p;
 							/*if(DuplicateWindow.isSelected())
 							{
@@ -589,7 +590,6 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			{
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				System.out.println(isframeupdateTouched);
 				if(isframeupdateTouched && !Application.isFirstTime)
 				{
 					try{

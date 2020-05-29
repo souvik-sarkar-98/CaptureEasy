@@ -24,11 +24,12 @@ import app.captureEasy.Resources.Library;
 import app.captureEasy.Resources.SharedResources;
 import app.captureEasy.UI.ActionGUI;
 import app.captureEasy.UI.RecordPanel;
+import app.captureEasy.UI.SettingsPanel;
 import app.captureEasy.UI.ViewPanel;
 import app.captureEasy.UI.Components.PopUp;
 
 public class DetectKeypress extends Library implements NativeKeyListener  {
-	int key=0;
+	public static int key=0;
 	@KeyStroke
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
@@ -172,7 +173,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			senGUI.settingsAction();
 		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_7 )
 			senGUI.recordAction();
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_C )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F8 )
 		{
 			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
@@ -232,9 +233,9 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		if(key==e.getKeyCode())
 		{
 			key=0;
-			if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false)
+			if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched)
 				senGUI.frame.setVisible(true);
-			if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 )
+			if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched)
 				senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
 				logProcess("Process_KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");

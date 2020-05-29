@@ -57,6 +57,7 @@ import app.captureEasy.UI.SavePanel;
 import app.captureEasy.UI.SensorGUI;
 import app.captureEasy.UI.Components.PopUp;
 import app.captureEasy.UI.Components.ToastMsg;
+import app.captureEasy.Utilities.DetectKeypress;
 import app.captureEasy.Utilities.GenerateID;
 
 
@@ -711,6 +712,7 @@ public class Library extends SharedResources
 							//
 							if(notShowing)
 							{
+								PauseThread=true;
 								Timestamp tstamp=new Timestamp(new Date().getTime());
 								toast=new ToastMsg("System is IDLE...")
 								{ 
@@ -723,7 +725,9 @@ public class Library extends SharedResources
 											if(!MouseInfo.getPointerInfo().getLocation().equals(locationPrev))
 											{
 												try{GlobalScreen.registerNativeHook();}catch(Exception e){}
+												DetectKeypress.key=0;
 												notShowing=true;
+												PauseThread=false;
 											}
 										}while(!notShowing);
 										logProcess("Process_IDLETime","System was idle from "+tstamp+" to "+new Timestamp(new Date().getTime()));

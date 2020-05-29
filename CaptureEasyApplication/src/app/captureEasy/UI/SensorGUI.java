@@ -13,6 +13,7 @@ import app.captureEasy.Resources.Library;
 import app.captureEasy.Resources.SharedResources;
 import app.captureEasy.UI.Components.PopUp;
 import app.captureEasy.UI.Components.ToastMsg;
+import app.captureEasy.Utilities.DetectKeypress;
 import app.captureEasy.Utilities.FocusTraversalOnArray;
 
 import java.awt.Color;
@@ -460,10 +461,54 @@ public class SensorGUI extends Library
 		mntmViewConsole = new JMenuItem("View Console");
 		mntmViewConsole.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PopUp p=new PopUp("Info","info","Sorry! this facility not available","Close","");
+				PopUp.PopDia=p;
 			}
 		});
 		mntmViewConsole.setFont(new Font("Tahoma", Font.BOLD, 16));
 		popupMenu_1.add(mntmViewConsole);
+		
+		mntmAddComment = new JMenuItem("Add Comment");
+		mntmAddComment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ViewPanel.files=new File(property.getString("TempPath")).listFiles();
+				sortFiles(ViewPanel.files);
+				String populateComment=comments.get(ViewPanel.files[ViewPanel.files.length-1].getName());
+				if(populateComment==null)
+					populateComment="";
+				PopUp pp=new PopUp("Enter comment for "+ViewPanel.files[ViewPanel.files.length-1].getName(),"comment",populateComment,"Done","Cancel");
+				pp.setVisible(true);
+				PopUp.PopDia=pp;
+				PopUp.btnNewButton.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						SharedResources.comments.put(ViewPanel.files[ViewPanel.files.length-1].getName(),pp.txtrExceptionOccuredPlease.getText() );	
+						if(ViewPanel.ImageLabel!=null)
+							ViewPanel.ImageLabel.setToolTipText("<html>Filename : "+ViewPanel.files[ViewPanel.files.length-1].getName()+"<br>Comment:"+comments.get(ViewPanel.files[ViewPanel.files.length-1].getName())+"<br><br>Click image to zoom</html>");
+
+					}
+				});
+				PopUp.PopDia.getRootPane().setDefaultButton(PopUp.btnNewButton);
+
+			}
+		});
+		mntmAddComment.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mntmAddComment.setBackground(Color.WHITE);
+		popupMenu_1.add(mntmAddComment);
+		
+		mntmRefresh = new JMenuItem("Refresh");
+		mntmRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{GlobalScreen.unregisterNativeHook();
+					Thread.sleep(100);
+					GlobalScreen.registerNativeHook();
+					}catch(Exception e){}
+				DetectKeypress.key=0;
+			}
+		});
+		mntmRefresh.setFont(new Font("Tahoma", Font.BOLD, 16));
+		popupMenu_1.add(mntmRefresh);
 
 		/*frame.setSize(new Dimension(54, 500));
 		Main_panel.setSize(new Dimension(54, 500));
@@ -543,6 +588,8 @@ public class SensorGUI extends Library
 	private JMenuItem mntmLaunchIdTool;
 	private JMenuItem mntmExpand;
 	private JMenuItem mntmViewConsole;
+	private JMenuItem mntmAddComment;
+	private JMenuItem mntmRefresh;
 	public void deleteAction(){
 		if(ActionGUI.leaveControl)
 		{
