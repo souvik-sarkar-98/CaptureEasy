@@ -710,8 +710,6 @@ public class Library extends SharedResources
 							System.out.println("System is IDLE...");
 							if(notShowing)
 							{
-								System.out.println("inside System is IDLE...");
-
 								toast=new ToastMsg("System is IDLE...")
 								{ 
 									private static final long serialVersionUID = 1L;
