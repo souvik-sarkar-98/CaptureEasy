@@ -708,6 +708,7 @@ public class Library extends SharedResources
 						Point locationCurrent=MouseInfo.getPointerInfo().getLocation();
 						if(locationCurrent.equals(locationPrev))
 						{
+							//
 							if(notShowing)
 							{
 								Timestamp tstamp=new Timestamp(new Date().getTime());
