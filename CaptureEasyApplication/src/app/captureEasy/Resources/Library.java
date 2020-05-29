@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -707,9 +708,9 @@ public class Library extends SharedResources
 						Point locationCurrent=MouseInfo.getPointerInfo().getLocation();
 						if(locationCurrent.equals(locationPrev))
 						{
-							System.out.println("System is IDLE...");
 							if(notShowing)
 							{
+								Timestamp tstamp=new Timestamp(new Date().getTime());
 								toast=new ToastMsg("System is IDLE...")
 								{ 
 									private static final long serialVersionUID = 1L;
@@ -724,6 +725,8 @@ public class Library extends SharedResources
 												notShowing=true;
 											}
 										}while(!notShowing);
+										logProcess("Process_IDLETime","System was idle from "+tstamp+" to "+new Timestamp(new Date().getTime()));
+
 									}
 								};
 

@@ -100,7 +100,7 @@ public class Application extends Library{
 			senGUI.frame.getRootPane().setDefaultButton(senGUI.label_Menu);
 			
 			updateUITask();
-			clearFilesTask(20000);
+			clearFilesTask(60000);
 			new SoftwareUpdate().autoUpdateTask();
 		}
 	}
