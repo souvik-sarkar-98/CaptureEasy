@@ -446,6 +446,7 @@ public class Library extends SharedResources
 
 	public static void SaveAsPDFFromWord(String filePath,String fileName)
 	{
+		PauseThread=true;
 		Document document = null;
 		File f = null;
 		boolean exceptionFlag=false;
@@ -474,7 +475,7 @@ public class Library extends SharedResources
 					XWPFPictureData pic=iterator.next();		
 					SavePanel.lblUpdatingFiles.setText("Getting previous file "+i+"."+ pic.suggestFileExtension());
 					ImageIO.write(ImageIO.read(new ByteArrayInputStream(pic.getData())), pic.suggestFileExtension(), 
-							new File(extractedFile+"\\"+pic.getFileName().replace("image", "")));
+							new File(createFolder(extractedFile+"\\"+pic.getFileName().replace("image", ""))));
 					SharedResources.progress=(int)Math.round(((Double.valueOf(i))/Double.valueOf(picture.size()))*100);
 					i++;
 				}
@@ -534,7 +535,7 @@ public class Library extends SharedResources
 			p.setVisible(true);
 			PopUp.PopDia=p;
 		}
-
+		PauseThread=false;
 	}
 
 
@@ -647,6 +648,8 @@ public class Library extends SharedResources
 			public void run() {
 				while (!stopThread)
 				{
+					if(!PauseThread)
+					{
 					try{
 						File tempFile=new File(tempFolderPath);
 						logProcess("Process_ClearFile","\n","Total tempFile count="+tempFile.listFiles().length);
@@ -744,6 +747,7 @@ public class Library extends SharedResources
 						locationPrev= locationCurrent;
 						Thread.sleep(interval);
 					}catch(Exception w){w.printStackTrace();}
+				}
 				}
 			}
 		}).start();	

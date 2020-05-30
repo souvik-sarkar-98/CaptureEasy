@@ -647,53 +647,64 @@ public class SensorGUI extends Library
 				ActionGUI.dialog.setState(JFrame.NORMAL);
 		}
 	}
+	@SuppressWarnings("static-access")
 	public void saveAction()
 	{
 		if(ActionGUI.leaveControl )
 		{
+			super.tm =new ToastMsg("Loading..."){
+				private static final long serialVersionUID = 1L;
+				public void terminationLogic() throws InterruptedException
+				{
+					try{
+						timer=new Timer(10000,e->{
+							if(tm.w.isVisible())
+							{
+								tm.setText("TimeOut...");
+								tm.terminateAfter(2000);
+							}
+							timer.stop();
+						});
+						timer.start();
+						do{
+						Thread.sleep(100);
+					}while(!ActionGUI.dialog.isVisible());}catch(Exception e){}
+				}
+			};
+			if(button_panel.isVisible())
+				tm.setEndLocation(label_Save.getLocationOnScreen().x,label_Save.getLocationOnScreen().y);
+			else
+				tm.setEndLocation(label_Menu.getLocationOnScreen().x,label_Menu.getLocationOnScreen().y);
+			tm.showToast();
+			
 			if(IsEmpty(property.getString("TempPath")))
 			{
-				PopUp p= new PopUp("INFORMATION","Info","You have nothing to save !! ","Ok, I understood","");
-				PopUp.PopDia=p;
-				p.setVisible(true);
-				timer=new Timer(1000, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						p.dispose();
-						PopUp.control=true;
-						timer.stop();
-					}
-				});
-				timer.start();
-				try{frame.setAlwaysOnTop(true);}catch(Exception e5){}
+				
+				List<String> tabs=new ArrayList<String>();
+				tabs.add("Save");
+				tabs.add("Document");
+				tabs.add("Settings");
+				
+				new ActionGUI(tabs);
+				ActionGUI.dialog.setVisible(true);
+				ActionGUI.savePanel.rdbtnSavePDF.setSelected(true);
+				ActionGUI.savePanel.renameFlag=true;
+				ActionGUI.savePanel.lblDoYouWant.setVisible(false);
+				ActionGUI.savePanel.rdbtnYes.setVisible(false);
+				ActionGUI.savePanel.rdbtnNo.setVisible(false);
+				ActionGUI.savePanel.rdbtnSavePDF.setBounds(18, 110, 350, 25);
+				ActionGUI.savePanel.rdbtnSavePDF.doClick();
+				ActionGUI.savePanel.chckbxSelectExistingDocument.doClick();
+				ActionGUI.savePanel.rdbtnNewDoc.setEnabled(false);
+				ActionGUI.savePanel.rdbtnExDoc.setEnabled(false);
+				ActionGUI.savePanel.rdbtnSavePDF.setEnabled(true);
+				ActionGUI.savePanel.rdbtnSavePDF.setText("Convert Microsoft Word to PDF");
+				ActionGUI.savePanel.chckbxSelectExistingDocument.setVisible(false);
+
 			}
 			else
 			{
-				super.tm =new ToastMsg("Loading..."){
-					private static final long serialVersionUID = 1L;
-					public void terminationLogic() throws InterruptedException
-					{
-						try{
-							timer=new Timer(10000,e->{
-								if(tm.w.isVisible())
-								{
-									tm.setText("TimeOut...");
-									tm.terminateAfter(2000);
-								}
-								timer.stop();
-							});
-							timer.start();
-							do{
-							Thread.sleep(100);
-						}while(!ActionGUI.dialog.isVisible());}catch(Exception e){}
-					}
-				};
-				if(button_panel.isVisible())
-					tm.setEndLocation(label_Save.getLocationOnScreen().x,label_Save.getLocationOnScreen().y);
-				else
-					tm.setEndLocation(label_Menu.getLocationOnScreen().x,label_Menu.getLocationOnScreen().y);
-
-				tm.showToast();
+				
 				List<String> tabs=new ArrayList<String>();
 				tabs.add("Save");
 				tabs.add("View");

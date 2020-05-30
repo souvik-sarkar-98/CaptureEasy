@@ -64,7 +64,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	PopUp popup;
 	public String existingfilepath;
 	String newFileName;
-	private boolean renameFlag=false;
+	boolean renameFlag=false;
 	public boolean saveLoaded=false;
 
 	public static JPanel panel_Progress;
@@ -73,7 +73,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 	public JLabel lblParFol;
 	public TextField textField_ParFol;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JRadioButton rdbtnYes;
+	JRadioButton rdbtnYes;
 	public static JRadioButton rdbtnNo;
 	public JLabel lblDoYouWant;
 	public JCheckBox chckbxSelectExistingDocument;
@@ -212,10 +212,13 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 		SavePanel.add(rdbtnExDoc);
 
 		rdbtnSavePDF = new JRadioButton("Save as PDF");
+		
 		g.add(rdbtnSavePDF);
 		rdbtnSavePDF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				if(rdbtnSavePDF.getText().equalsIgnoreCase("Save as PDF"))
+				{
 				renameFlag=true;
 				chckbxSelectExistingDocument.setVisible(true);
 				chckbxSelectExistingDocument.setSelected(false);
@@ -256,7 +259,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 				btnDone.setVisible(false);
 
 
-
+				}
 			}
 		});
 		rdbtnSavePDF.setPreferredSize(new Dimension(390, 25));
@@ -385,9 +388,9 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						{
 							btnDone.setVisible(true);
 							ActionGUI.dialog.getRootPane().setDefaultButton(btnDone);
-
 							chckbxOverwriteSelectedFile.setSelected(false);
 						}
+						
 					} 
 				} 
 			}
@@ -525,9 +528,13 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 
 				if(chckbxSelectExistingDocument.isSelected())
 				{
+					if(!IsEmpty(property.getString("TempPath")))
+					{
+
 					pop=new PopUp("Information","info","Please be noted that only images will be imported inside newly created PDF. Please untick the checkbox if you don't want to proceed further.","Ok, Fine","");
 					PopUp.PopDia=pop;
 					pop.setVisible(true);
+					}
 					rdbtnNo.setBounds(360, 230, 50, 16);
 					lblDoYouWant.setBounds(15, 230, 299, 16);
 					rdbtnYes.setBounds(312, 230, 50, 16);

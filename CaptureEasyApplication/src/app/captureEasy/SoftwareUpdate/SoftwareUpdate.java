@@ -66,7 +66,7 @@ public class SoftwareUpdate extends Library {
 		if(isReachableByPing())
 		{
 			try {
-				if (this.JSONObj.getString("tag_name").equalsIgnoreCase(versionInfo.getString("CurrentVersion")))
+				if (this.JSONObj.getString("tag_name").equalsIgnoreCase(versionInfo.getString("CurrentVersion","Data not available")))
 					return false; 
 				if (getDownloadURL() == null)
 					return false; 
@@ -268,6 +268,7 @@ public class SoftwareUpdate extends Library {
 
 			@Override
 			public void run() {
+				new SoftwareUpdate();
 				while (!stopThread )
 				{
 					try{

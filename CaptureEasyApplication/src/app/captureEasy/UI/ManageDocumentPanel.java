@@ -103,11 +103,11 @@ public class ManageDocumentPanel extends Library {
 	public JPanel panel_View;
 	public TextField textField;
 	public JLabel lblCross;
-	public JLabel label_SearchBtn;
-	public JLabel label_Kebab;
-	public JLabel label_Forword;
-	public JLabel label_createFolder;
-	public JLabel label_Back;
+	public JButton label_SearchBtn;
+	public JButton label_Kebab;
+	public JButton label_Forword;
+	public JButton label_createFolder;
+	public JButton label_Back;
 	private JScrollPane ScrollPane_Table;
 	private JScrollPane scrollPane_Tree;
 	public TreeSelectionListener treeSelectionListener;
@@ -169,7 +169,12 @@ public class ManageDocumentPanel extends Library {
 		}
 
 		/*
-		loadDocumentsTab(RFile.getAbsolutePath());
+		try {
+			loadDocumentsTab(RFile.getAbsolutePath());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		DocumentScrollPane.add(panel_Selection);
 		DocumentScrollPane.add(panel_View);
 		///*/
@@ -260,7 +265,7 @@ public class ManageDocumentPanel extends Library {
 		panel_Selection.add(panel);
 		panel.setLayout(null);
 
-		label_SearchBtn = new JLabel("");
+		label_SearchBtn = new JButton("");
 		label_SearchBtn.setBackground(new Color(255, 255, 204));
 		label_SearchBtn.addMouseListener(new SwingMouseAdapter() {
 
@@ -284,41 +289,27 @@ public class ManageDocumentPanel extends Library {
 			logError(e1,"Exception in Icon loading: Image "+searchIcon+" Not Available");
 		}
 
-		label_Kebab = new JLabel("");
-		label_Kebab.addMouseListener(new SwingMouseAdapter() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-		label_Kebab.addMouseListener(new SwingMouseAdapter(){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			//public void mouseClicked()
-			{
-				
-			}
-		});
+		label_Kebab = new JButton("");
+		label_Kebab.setBorderPainted(false);
 		label_Kebab.setToolTipText("Click here to expand menu");
 		label_Kebab.setBounds(248, 9, 20, 20);
 		panel_Selection.add(label_Kebab);
 
 		try {
 			label_Kebab.setIcon(new ImageIcon(ImageIO.read(new File(kebabIcon)).getScaledInstance(20,20, java.awt.Image.SCALE_SMOOTH)));
+			
+			popupMenu_1 = new JPopupMenu();
+			addPopup(label_Kebab, popupMenu_1);
+			
+			mntmSelect = new JMenuItem("select");
+			popupMenu_1.add(mntmSelect);
 		} catch (IOException e1) {
 			logError(e1,"Exception in Icon loading: Image "+kebabIcon+" Not Available");
 
 		}
 
-		label_createFolder = new JLabel("");
+		label_createFolder = new JButton("");
+		label_createFolder.setBorderPainted(false);
 		label_createFolder.addMouseListener(new SwingMouseAdapter() {
 			/**
 			 * 
@@ -340,7 +331,8 @@ public class ManageDocumentPanel extends Library {
 
 		}
 
-		label_Back = new JLabel("");
+		label_Back = new JButton("");
+		label_Back.setBorderPainted(false);
 		label_Back.setEnabled(false);
 		label_Back.addMouseListener(new SwingMouseAdapter() {
 			/**
@@ -377,7 +369,7 @@ public class ManageDocumentPanel extends Library {
 
 		}
 		
-		label_Forword = new JLabel("");
+		label_Forword = new JButton("");
 		label_Forword.setEnabled(false);
 		label_Forword.addMouseListener(new SwingMouseAdapter() {
 			/**
@@ -618,6 +610,8 @@ public class ManageDocumentPanel extends Library {
 		return null;
 	}
 	static List<File> fileList= new ArrayList<File>();
+	private JPopupMenu popupMenu_1;
+	private JMenuItem mntmSelect;
 	public File[] search(String key)
 	{
 		List<File> result= new ArrayList<File>();
@@ -763,6 +757,23 @@ public class ManageDocumentPanel extends Library {
 		tableColumn.setPreferredWidth(width);
 		tableColumn.setMaxWidth(width);
 		tableColumn.setMinWidth(width);
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }
 
