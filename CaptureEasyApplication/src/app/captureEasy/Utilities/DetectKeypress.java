@@ -142,7 +142,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				ActionGUI.viewPanel.gotoNextImage();
 			}catch(Exception e88){ActionGUI.viewPanel.gotoNextImage();}
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_0 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_0 )
 		{
 			PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
 			PopUp.PopDia=p;
@@ -153,27 +153,27 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 
 			});
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_1 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_1 )
 		{
 			senGUI.playPauseAction();
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_2 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_2 )
 		{
 			senGUI.deleteAction();
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_3 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_3 )
 		{
 			senGUI.saveAction();	
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_4 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_4 )
 			senGUI.viewAction();	
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_5 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_5 )
 			senGUI.manageDocumentsActions();	
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_6 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_6 )
 			senGUI.settingsAction();
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_7 )
+		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_7 )
 			senGUI.recordAction();
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F8 )
+		else if(e.getKeyCode() ==NativeKeyEvent.VC_F8 )
 		{
 			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
@@ -217,12 +217,12 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				ActionGUI.screenRecord.saveVideo();
 			}
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F7 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_F7) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			IDTool();
 		}
 		
-		System.out.println(e.getModifiers());
+		//System.out.println(e.getModifiers());
 		if(key==0)
 			key=e.getKeyCode();
 		}
