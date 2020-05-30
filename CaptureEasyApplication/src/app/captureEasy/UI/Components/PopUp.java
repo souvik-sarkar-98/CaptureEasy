@@ -77,9 +77,7 @@ public class PopUp extends JDialog{
 		setBounds(screensize.width/2-300, screensize.height/2-300, 425, 225);
 		getContentPane().setLayout(null);
 		addMouseListener(new SwingMouseAdapter() {
-			/**
-			 * 
-			 */
+			
 			private static final long serialVersionUID = 1L;
 
 			@Override

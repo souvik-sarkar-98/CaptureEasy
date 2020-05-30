@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.jnativehook.NativeInputEvent;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -39,8 +40,10 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			logProcess("Process_KeyPress","Key '"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Pressed. [KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+"]");
 	
 		String captureKey=property.getString("CaptureKey","PrtSc");
-		System.out.println("CaptureKey="+captureKey+" | ActionGUI.leaveControl="+ActionGUI.leaveControl+" | Key="+NativeKeyEvent.getKeyText(key)+
+		System.out.println("CaptureKey="+captureKey+" | ActionGUI.leaveControl="+ActionGUI.leaveControl+" | modifier="+NativeInputEvent.getModifiersText(e.getModifiers()) +"   "+ NativeKeyEvent.CTRL_MASK+
 				" | Now key="+NativeKeyEvent.getKeyText(e.getKeyCode())+" | SharedResources.PauseThread="+SharedResources.PauseThread);
+		e.setModifiers(0);
+		
 		logProcess("Process_Test","CaptureKey="+captureKey+" | ActionGUI.leaveControl="+ActionGUI.leaveControl+" | Key="+NativeKeyEvent.getKeyText(key)+
 				" | Now key="+NativeKeyEvent.getKeyText(e.getKeyCode())+" | SharedResources.PauseThread="+SharedResources.PauseThread);
 		if(captureKey.equalsIgnoreCase("PrtSc"))
@@ -103,17 +106,17 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			if(window!=null)
 				window.d.dispose();
 		}
-		else if(key==29 && e.getKeyCode() ==56 && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if((e.getKeyCode() == NativeKeyEvent.VC_ALT) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0) && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			logProcess("Process_KeyPress","\t\t Ctrl+ALT key pressed, Calling captureScreen() method");
 			captureScreen();
 		}
-		else if(key==29 && e.getKeyCode() ==42 && captureKey.equalsIgnoreCase("Ctrl+Shift") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if((e.getKeyCode() == NativeKeyEvent.VC_SHIFT) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0) && captureKey.equalsIgnoreCase("Ctrl+Shift") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			logProcess("Process_KeyPress","\t\t Ctrl+Shift key pressed, Calling captureScreen() method");
 			captureScreen();
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==44 && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if((e.getKeyCode() == NativeKeyEvent.VC_PRINTSCREEN) && ((e.getModifiers() & NativeKeyEvent.ALT_MASK) != 0) &&e.getRawCode()==44 && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			logProcess("Process_KeyPress","\t\t ALT+PrtSc key pressed, Extracting data from clipboard");
 			try {
@@ -142,7 +145,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				ActionGUI.viewPanel.gotoNextImage();
 			}catch(Exception e88){ActionGUI.viewPanel.gotoNextImage();}
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_0 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_0) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
 			PopUp.PopDia=p;
@@ -153,27 +156,27 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 
 			});
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_1 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_1) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			senGUI.playPauseAction();
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_2 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_2) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			senGUI.deleteAction();
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_3 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_3) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			senGUI.saveAction();	
 		}
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_4 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_4) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.viewAction();	
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_5 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_5) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.manageDocumentsActions();	
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_6 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_6) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.settingsAction();
-		else if(key==NativeKeyEvent.VC_CONTROL && e.getKeyCode() ==NativeKeyEvent.VC_7 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_7) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.recordAction();
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F8 )
+		else if(e.getKeyCode() == NativeKeyEvent.VC_F8)
 		{
 			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
@@ -217,12 +220,16 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				ActionGUI.screenRecord.saveVideo();
 			}
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_F7 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_F7) && ((e.getModifiers() & NativeKeyEvent.ALT_MASK) != 0))
 		{
 			IDTool();
 		}
+		if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched)
+			senGUI.frame.setVisible(true);
+		if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched)
+			senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 		
-		System.out.println(e.getModifiers());
+		//System.out.println(e.getModifiers());
 		if(key==0)
 			key=e.getKeyCode();
 		}
@@ -230,7 +237,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 	@Override
 	@KeyStroke
 	public void nativeKeyReleased(NativeKeyEvent e) {
-		if(key==e.getKeyCode())
+		/*if(key==e.getKeyCode())
 		{
 			key=0;
 			if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched)
@@ -249,7 +256,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			else
 				logProcess("Process_KeyPress","'"+NativeKeyEvent.getKeyText(e.getKeyCode())+"' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
 
-		}
+		}*/
 	}
 	@Override
 	@NoLogging
