@@ -70,7 +70,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 	public static boolean isframeupdateTouched=false;
 	private JTabbedPane TabbledPanel;
 	public JCheckBox chckbxAutoUpdate;
-	String[] captureKey={"PrtSc","ALT+Prtsc","Ctrl+ALT","Ctrl+Shift","F7","F8","F9"};
+	String[] captureKey={"PrtSc","ALT+Prtsc","Ctrl+ALT","Ctrl+Shift","F7","F9"};
 	DefaultComboBoxModel<Object> keys=new  DefaultComboBoxModel<Object>(captureKey);
 	SensorGUI s;
 	public SettingsPanel(JTabbedPane TabbledPanel) 

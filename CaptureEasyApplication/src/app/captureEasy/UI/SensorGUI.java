@@ -81,6 +81,7 @@ public class SensorGUI extends Library
 	public void SensorGUIInit()
 	{
 		frame=new JFrame();
+		frame.setName("SensorGUI");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
@@ -782,6 +783,7 @@ public class SensorGUI extends Library
 	{
 		if(ActionGUI.leaveControl)
 		{
+			frame.setAlwaysOnTop(false);
 			tm=new ToastMsg("Loading...")
 			{
 				private static final long serialVersionUID = 1L;
@@ -821,6 +823,8 @@ public class SensorGUI extends Library
 			new ActionGUI(tabs);
 
 			ActionGUI.dialog.setVisible(true);
+			ActionGUI.dialog.setAlwaysOnTop(true);
+
 		}
 		else
 		{
@@ -834,6 +838,7 @@ public class SensorGUI extends Library
 		if(ActionGUI.leaveControl)
 		{
 			//when not visible then set message beside menu
+			frame.setAlwaysOnTop(false);
 			tm=new ToastMsg("Loading...")
 			{
 				private static final long serialVersionUID = 1L;
@@ -865,6 +870,7 @@ public class SensorGUI extends Library
 			tabs.add("Update");
 			new ActionGUI(tabs);
 			ActionGUI.dialog.setVisible(true);	
+			ActionGUI.dialog.setAlwaysOnTop(true);
 		}
 		else
 		{
@@ -877,6 +883,7 @@ public class SensorGUI extends Library
 
 		if(ActionGUI.leaveControl)
 		{
+			frame.setAlwaysOnTop(false);
 			tm=new ToastMsg("Loading...")
 			{
 				private static final long serialVersionUID = 1L;
@@ -910,6 +917,7 @@ public class SensorGUI extends Library
 			new ActionGUI(tabs);
 
 			ActionGUI.dialog.setVisible(true);	
+			ActionGUI.dialog.setAlwaysOnTop(true);
 		}
 		else
 		{

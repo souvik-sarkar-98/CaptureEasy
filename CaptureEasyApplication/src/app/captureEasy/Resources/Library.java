@@ -707,7 +707,7 @@ public class Library extends SharedResources
 						}
 						ToastMsg toast = null;
 						Point locationCurrent=MouseInfo.getPointerInfo().getLocation();
-						if(locationCurrent.equals(locationPrev))
+						if(locationCurrent.equals(locationPrev) && !RecordPanel.isRecording)
 						{
 							//
 							if(notShowing)

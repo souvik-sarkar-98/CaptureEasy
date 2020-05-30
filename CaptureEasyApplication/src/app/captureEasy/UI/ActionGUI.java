@@ -72,6 +72,8 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		this.tabs=tabs;
 		leaveControl=false;
 		dialog=new JFrame();
+		dialog.setName("ActionGUI");
+		//System.out.println("hiiiii   "+SwingUtilities.getWindowAncestor(dialog));
 		dialog.setSize(new Dimension(575, 350));
 		dialog.setFont(new Font("Dialog", 1, 20));
 		dialog.setAlwaysOnTop(true);
