@@ -450,6 +450,13 @@ public class RecordPanel extends Library {
 				PopUp.PopDia=p;
 				textField_Filename.setBackground(Color.PINK);
 			}
+			else if(textField_Filename.getText().endsWith("\\") || textField_Filename.getText().endsWith("/"))
+			{
+				PopUp p=new PopUp("ERROR","error","Filename cannot end with ' \\ '    or ' / ' . Please modify input.","Ok, I understood","");
+				p.setVisible(true);
+				PopUp.PopDia=p;
+				textField_Filename.setBackground(Color.PINK);
+			}
 			else if (textField_Filename.getText().contains(Character.toString('"')) /*|| textField_Filename.getText().contains("/") || textField_Filename.getText().contains("\\")*/ || textField_Filename.getText().contains(":") || textField_Filename.getText().contains("*") || textField_Filename.getText().contains("?") || textField_Filename.getText().contains("<") || textField_Filename.getText().contains(">") || textField_Filename.getText().contains("|")) 
 			{
 				textField_Filename.setBackground(Color.PINK);

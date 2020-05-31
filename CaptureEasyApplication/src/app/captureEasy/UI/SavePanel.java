@@ -648,6 +648,13 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 						PopUp.PopDia=p;
 						textField_Filename.setBackground(Color.PINK);
 					}
+					else if(textField_Filename.getText().endsWith("\\") || textField_Filename.getText().endsWith("/"))
+					{
+						PopUp p=new PopUp("ERROR","error","Filename cannot end with ' \\ '    or ' / ' . Please modify input.","Ok, I understood","");
+						p.setVisible(true);
+						PopUp.PopDia=p;
+						textField_Filename.setBackground(Color.PINK);
+					}
 					else if (newFileName.contains(Character.toString('"')) /*|| newFileName.contains("/") || newFileName.contains("\\")*/ || newFileName.contains(":") || newFileName.contains("*") || newFileName.contains("?") || newFileName.contains("<") || newFileName.contains(">") || newFileName.contains("|")) 
 					{
 						textField_Filename.setBackground(Color.PINK);
