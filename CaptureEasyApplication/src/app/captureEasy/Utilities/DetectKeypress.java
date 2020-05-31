@@ -142,7 +142,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 				ActionGUI.viewPanel.gotoNextImage();
 			}catch(Exception e88){ActionGUI.viewPanel.gotoNextImage();}
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_0 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_0) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			PopUp p=new PopUp("Confirm Exit","warning","Do you want to exit the application?\n","Yes","No");
 			PopUp.PopDia=p;
@@ -153,25 +153,25 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 
 			});
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_1 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_1) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			senGUI.playPauseAction();
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_2 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_2) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			senGUI.deleteAction();
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_3 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_3) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 		{
 			senGUI.saveAction();	
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_4 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_4) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.viewAction();	
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_5 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_5) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.manageDocumentsActions();	
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_6 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_6) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.settingsAction();
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_7 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_7) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.recordAction();
 		else if(e.getKeyCode() ==NativeKeyEvent.VC_F8 )
 		{
