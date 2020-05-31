@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 
 
+
 public class RecordPanel extends Library {
 	public JPanel RecordPanel;
 	public JPanel panel_Control;
@@ -78,7 +79,12 @@ public class RecordPanel extends Library {
 		RecordPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		RecordPanel.setBackground(Color.WHITE);
 		RecordPanel.setLayout(null);
-		//loadRecordPanel();
+		try {
+			///loadRecordPanel();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void loadRecordPanel() throws Exception
 	{
@@ -421,6 +427,10 @@ public class RecordPanel extends Library {
 			textField_Foldername.setVisible(false);
 			textField_Filename.setColumns(22);
 		}
+		//******////
+		panel_Filenames.add(textField_Filename);
+		
+
 		isLoaded=true;
 	}
 	public void saveVideo(){

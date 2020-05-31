@@ -88,7 +88,7 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 		SettingsScrollPane.addMouseListener(this);
 		SettingsScrollPane.addMouseMotionListener(this);
 		try {
-		//	loadSettingsTab();
+			loadSettingsTab();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
