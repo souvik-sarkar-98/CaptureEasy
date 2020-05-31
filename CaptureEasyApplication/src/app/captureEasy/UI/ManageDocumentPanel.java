@@ -210,6 +210,7 @@ public class ManageDocumentPanel extends Library {
 				{
 					ActionGUI.dialog.dispose();
 					ActionGUI.leaveControl=true;
+					//getParentWindow().setAlwaysOnTop(true);
 				}
 			}
 		});

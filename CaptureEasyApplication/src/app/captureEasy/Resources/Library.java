@@ -63,11 +63,21 @@ import app.captureEasy.Utilities.GenerateID;
 
 public class Library extends SharedResources
 {
+	//JFrame parentFrame=null;
 	public GenerateID window=null;
 	public static long processID=getPID();
 	public static String[] monthName = {"January", "February",
 			"March", "April", "May", "June", "July",
 			"August", "September", "October", "November","December"};
+	
+	/*public void setParentWindow(JFrame frame)
+	{
+		this.parentFrame=frame;
+	}
+	public JFrame getParentWindow()
+	{
+		return this.parentFrame;
+	}*/
 	/****
 	 * 
 	 * @utility= logging

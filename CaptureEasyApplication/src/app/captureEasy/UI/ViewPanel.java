@@ -143,6 +143,8 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 								{
 									ActionGUI.dialog.dispose();
 									ActionGUI.leaveControl=true;
+									//getParentWindow().setAlwaysOnTop(true);
+
 								}
 								Desktop.getDesktop().open(files[imgId]);
 							} catch (IOException e1) {}			
@@ -308,6 +310,8 @@ public class ViewPanel extends Library implements MouseListener,MouseMotionListe
 					{
 						ActionGUI.dialog.dispose();
 						ActionGUI.leaveControl=true;
+						//getParentWindow().setAlwaysOnTop(true);
+
 					}
 				}
 			});

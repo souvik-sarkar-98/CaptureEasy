@@ -121,9 +121,11 @@ public class RecordPanel extends Library {
 				{
 					ActionGUI.dialog.dispose();
 					ActionGUI.leaveControl=true;
+					//getParentWindow().setAlwaysOnTop(true);
 				}
 				else
 				{
+					//setParentWindow(senGUI.frame);
 					PopUp p=new PopUp("WARNING","warning","CAUTION !! Your recording will not save. Do you still want to continue?","Yes","No");
 					PopUp.btnNewButton.addActionListener(new ActionListener(){
 
@@ -469,6 +471,8 @@ public class RecordPanel extends Library {
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
 				doDelete=true;
+				//getParentWindow().setAlwaysOnTop(true);
+				//setParentWindow(senGUI.frame);
 				PopUp window = new PopUp("INFORMATION","info","Successfully Saved !!","Close","");
 				PopUp.PopDia=window;
 				window.setVisible(true);
@@ -479,6 +483,7 @@ public class RecordPanel extends Library {
 			        	window.dispose();
 			        	PopUp.control=true;
 						timer.stop();
+						//getParentWindow().setAlwaysOnTop(true);
 			        }
 			      });
 				timer.start();

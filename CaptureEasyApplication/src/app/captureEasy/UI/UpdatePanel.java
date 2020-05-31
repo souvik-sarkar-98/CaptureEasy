@@ -70,7 +70,8 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 			public void actionPerformed(ActionEvent arg0) {
 				ActionGUI.leaveControl=true;
 				ActionGUI.dialog.dispose();
-				
+				//getParentWindow().setAlwaysOnTop(true);
+
 			}
 		});
 		btnProceed.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -173,7 +174,8 @@ public class UpdatePanel extends Library implements MouseListener,MouseMotionLis
 			public void actionPerformed(ActionEvent arg0) {
 				ActionGUI.leaveControl=true;
 				ActionGUI.dialog.dispose();
-				
+				//getParentWindow().setAlwaysOnTop(true);
+
 			}
 		});
 		

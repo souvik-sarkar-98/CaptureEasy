@@ -426,14 +426,14 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 						{
 							ActionGUI.dialog.dispose();
 							ActionGUI.leaveControl=true;
+							
 							if(isframeupdateTouched)
 							{
-								
 								senGUI=new SensorGUI();
 								senGUI.frame.setVisible(true);
 								senGUI.frame.setAlwaysOnTop(true);
 							}
-							try{senGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+							//getParentWindow().setAlwaysOnTop(true);
 						}
 					}
 				});
@@ -590,6 +590,8 @@ public class SettingsPanel extends Library implements MouseListener,MouseMotionL
 			{
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
+				//getParentWindow().setAlwaysOnTop(true);
+
 				if(isframeupdateTouched && !Application.isFirstTime)
 				{
 					try{

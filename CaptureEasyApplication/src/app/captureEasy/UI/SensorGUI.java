@@ -82,7 +82,7 @@ public class SensorGUI extends Library
 	{
 		frame=new JFrame();
 		frame.setName("SensorGUI");
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
@@ -99,11 +99,15 @@ public class SensorGUI extends Library
 			}
 		});
 		frame.addWindowFocusListener(new WindowFocusListener() {	
-			public void windowGainedFocus(WindowEvent e) {	
+			public void windowGainedFocus(WindowEvent e) {
+				System.out.println("Focus gained");
+				frame.setAlwaysOnTop(true);
 			}
 
 			@Override
 			public void windowLostFocus(WindowEvent arg0) {
+				System.out.println("Focus lost");
+				frame.setAlwaysOnTop(true);
 			}
 		});
 
@@ -594,6 +598,7 @@ public class SensorGUI extends Library
 	public void deleteAction(){
 		if(ActionGUI.leaveControl)
 		{
+			////setParentWindow(frame);
 			tm=new ToastMsg("Loading...")
 			{ 
 				private static final long serialVersionUID = 1L;
@@ -612,7 +617,6 @@ public class SensorGUI extends Library
 			tm.showToast();
 			if(IsEmpty(property.getString("TempPath")))
 			{
-				
 				p=new PopUp("INFORMATION","Info","You have nothing to delete !! ","Ok, I understood","");
 				PopUp.PopDia=p;
 				p.setVisible(true);
@@ -622,6 +626,7 @@ public class SensorGUI extends Library
 						PopUp.control=true;
 						p.dispose();
 						timer.stop();
+						//getParentWindow().setAlwaysOnTop(true);
 					}
 				});
 				timer.start();
@@ -652,6 +657,7 @@ public class SensorGUI extends Library
 	{
 		if(ActionGUI.leaveControl )
 		{
+			////setParentWindow(frame);
 			super.tm =new ToastMsg("Loading..."){
 				private static final long serialVersionUID = 1L;
 				public void terminationLogic() throws InterruptedException
@@ -730,6 +736,7 @@ public class SensorGUI extends Library
 	{
 		if(ActionGUI.leaveControl)
 		{
+			////setParentWindow(frame);
 			if(IsEmpty(property.getString("TempPath")))
 			{
 				PopUp p=new PopUp("INFORMATION","Info","You have nothing to view !! ","Ok, I understood","");
@@ -794,7 +801,7 @@ public class SensorGUI extends Library
 	{
 		if(ActionGUI.leaveControl)
 		{
-			frame.setAlwaysOnTop(false);
+			////setParentWindow(frame);
 			tm=new ToastMsg("Loading...")
 			{
 				private static final long serialVersionUID = 1L;
@@ -848,8 +855,7 @@ public class SensorGUI extends Library
 	public void settingsAction(){
 		if(ActionGUI.leaveControl)
 		{
-			//when not visible then set message beside menu
-			frame.setAlwaysOnTop(false);
+			////setParentWindow(frame);
 			tm=new ToastMsg("Loading...")
 			{
 				private static final long serialVersionUID = 1L;
@@ -894,6 +900,7 @@ public class SensorGUI extends Library
 
 		if(ActionGUI.leaveControl)
 		{
+			////setParentWindow(frame);
 			frame.setAlwaysOnTop(false);
 			tm=new ToastMsg("Loading...")
 			{
@@ -1015,7 +1022,7 @@ public class SensorGUI extends Library
 	{
 		try{ActionGUI.dialog.dispose();}catch(Exception e5){}
 		try{frame.dispose();}catch(Exception e5){}
-
+		
 		SharedResources.stopThread=true;
 		String comm="";int c=0;
 		File[] f=new File(property.getString("TempPath")).listFiles();

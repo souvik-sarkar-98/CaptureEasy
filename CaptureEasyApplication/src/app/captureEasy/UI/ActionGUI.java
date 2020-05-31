@@ -69,6 +69,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 	}
 	public void ActionGUIInit(List<String> tabs)
 	{
+		//getParentWindow().setAlwaysOnTop(false);
 		this.tabs=tabs;
 		leaveControl=false;
 		dialog=new JFrame();
@@ -99,6 +100,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 			public void windowClosing(WindowEvent e)
 			{
 				ActionGUI.leaveControl=true;
+				//getParentWindow().setAlwaysOnTop(true);
 				
 			}
 		});
@@ -108,6 +110,7 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 				if(p.getNewState()==JFrame.NORMAL && RecordPanel.isRecording)
 				{
 					screenRecord.pauseRecording();
+					
 				}
 			}
 			
@@ -475,14 +478,14 @@ public class ActionGUI extends Library  implements ChangeListener,MouseListener,
 		}
 	}
 
-	@Override
+	@Override@NoLogging
 	public void mouseDragged(MouseEvent arg0) {
 		xDialog = arg0.getXOnScreen();
 		yDialog = arg0.getYOnScreen();
 		dialog.setLocation(xDialog - xxDialog, yDialog - xyDialog); 		
 	}
 
-	@Override
+	@Override@NoLogging
 	public void mousePressed(MouseEvent e) {
 		xxDialog = e.getX();
 		xyDialog = e.getY();

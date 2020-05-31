@@ -222,10 +222,15 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			IDTool();
 		}
 		
-		//System.out.println(e.getModifiers());
 		if(key==0)
 			key=e.getKeyCode();
-		}
+		
+		if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched)
+			senGUI.frame.setVisible(true);
+		if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched)
+			senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
+		
+	}
 
 	@Override
 	@KeyStroke
@@ -233,10 +238,6 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		if(key==e.getKeyCode())
 		{
 			key=0;
-			if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched)
-				senGUI.frame.setVisible(true);
-			if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched)
-				senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
 				logProcess("Process_KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
 			else

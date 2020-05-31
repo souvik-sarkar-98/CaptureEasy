@@ -753,7 +753,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 									}
 									ActionGUI.dialog.dispose();
 									ActionGUI.leaveControl=true;
-									try{senGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+									//getParentWindow().setAlwaysOnTop(true);
 								}
 
 							}).start();;
@@ -772,7 +772,7 @@ public class SavePanel extends Library implements MouseListener,MouseMotionListe
 			public void actionPerformed(ActionEvent e) {
 				ActionGUI.dialog.dispose();
 				ActionGUI.leaveControl=true;
-				try{senGUI.frame.setAlwaysOnTop(true);}catch(Exception e5){}
+				//getParentWindow().setAlwaysOnTop(true);
 			}
 		});
 		panel_Save_Buttons.add(exitbtn);
