@@ -70,7 +70,7 @@ public class PathsNKeys{
 	public final static String stopIcon=(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\stop.png");
 
 	public final static String taskbarIcon=(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\taskbar_icon.png");
-	public final static String uploadIcon=(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\upload.png");
+	public final static String uploadIcon="Resources\\lib\\Icons\\upload.png";
 	public final static String viewIcon=(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\view.png");
 	public final static String warningIcon=(System.getProperty("user.dir")+"\\Resources\\lib\\Icons\\warning.png");
 

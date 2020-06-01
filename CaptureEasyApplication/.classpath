@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="Dependencies/Apache POI Standalone Version 4.1.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/barcodes-7.0.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/font-asian-7.0.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/forms-7.0.2.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpclient-4.3.4.jar"/>
 	<classpathentry kind="lib" path="Dependencies/hyph-7.0.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/io-7.0.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/jnativehook-2.1.0.jar"/>
@@ -19,12 +27,10 @@
 	<classpathentry kind="lib" path="Dependencies/commons-configuration-1.10.jar"/>
 	<classpathentry kind="lib" path="Dependencies/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="Dependencies/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="Dependencies/jcodec-0.2.3.jar"/>
 	<classpathentry kind="lib" path="Dependencies/jsr305-3.0.2.jar"/>
-	<classpathentry kind="lib" path="Dependencies/jcodec-javase-0.2.3.jar"/>
 	<classpathentry kind="lib" path="Dependencies/aspectjrt-1.6.8.jar"/>
-	<classpathentry kind="lib" path="Dependencies/jcabi-aspects-0.22.5.jar"/>
-	<classpathentry kind="lib" path="Dependencies/jcabi-log-0.17.4.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jcodec-0.2.3.jar"/>
+	<classpathentry kind="lib" path="Dependencies/jcodec-javase-0.2.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

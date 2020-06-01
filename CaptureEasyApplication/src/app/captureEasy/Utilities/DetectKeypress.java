@@ -30,6 +30,7 @@ import app.captureEasy.UI.Components.PopUp;
 
 public class DetectKeypress extends Library implements NativeKeyListener  {
 	public static int key=0;
+	boolean isSpclAltPressed=false;
 	@KeyStroke
 	public void nativeKeyPressed(NativeKeyEvent e) 
 	{
@@ -60,8 +61,9 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 		}
 		logProcess("Process_KeyPress","line no 61 , "+String.valueOf(key==0)+String.valueOf(e.getKeyCode()==NativeKeyEvent.VC_ALT)+String.valueOf(captureKey.equalsIgnoreCase("ALT+PrtSc")));
-		if(key==0 && e.getKeyCode()==NativeKeyEvent.VC_ALT && captureKey.equalsIgnoreCase("ALT+PrtSc"))
+		if(e.getKeyCode()==NativeKeyEvent.VC_ALT && captureKey.equalsIgnoreCase("ALT+PrtSc"))
 		{
+			isSpclAltPressed=true;
 			senGUI.frame.setVisible(false);
 		}
 		logProcess("Process_KeyPress","line no 65 , "+String.valueOf(NativeKeyEvent.getKeyText(e.getKeyCode()).equalsIgnoreCase(captureKey)));
@@ -103,17 +105,17 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			if(window!=null)
 				window.d.dispose();
 		}
-		else if(key==29 && e.getKeyCode() ==56 && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if((e.getKeyCode() == NativeKeyEvent.VC_ALT) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0) && captureKey.equalsIgnoreCase("Ctrl+ALT") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			logProcess("Process_KeyPress","\t\t Ctrl+ALT key pressed, Calling captureScreen() method");
 			captureScreen();
 		}
-		else if(key==29 && e.getKeyCode() ==42 && captureKey.equalsIgnoreCase("Ctrl+Shift") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if((e.getKeyCode() == NativeKeyEvent.VC_SHIFT) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0) && captureKey.equalsIgnoreCase("Ctrl+Shift") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			logProcess("Process_KeyPress","\t\t Ctrl+Shift key pressed, Calling captureScreen() method");
 			captureScreen();
 		}
-		else if(key==NativeKeyEvent.VC_ALT && e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==44 && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
+		else if((e.getKeyCode() == NativeKeyEvent.VC_PRINTSCREEN) && ((e.getModifiers() & NativeKeyEvent.ALT_MASK) != 0) &&e.getRawCode()==44 && captureKey.equalsIgnoreCase("ALT+Prtsc") && ActionGUI.leaveControl && !SharedResources.PauseThread)
 		{
 			logProcess("Process_KeyPress","\t\t ALT+PrtSc key pressed, Extracting data from clipboard");
 			try {
@@ -173,7 +175,7 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 			senGUI.settingsAction();
 		else if((e.getKeyCode() == NativeKeyEvent.VC_7) && ((e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0))
 			senGUI.recordAction();
-		else if(e.getKeyCode() ==NativeKeyEvent.VC_F8 )
+		else if((e.getKeyCode() == NativeKeyEvent.VC_F8))
 		{
 			ViewPanel.files=new File(property.getString("TempPath")).listFiles();
 			sortFiles(ViewPanel.files);
@@ -225,9 +227,9 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 		if(key==0)
 			key=e.getKeyCode();
 		
-		if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched)
+		if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched &&!isSpclAltPressed)
 			senGUI.frame.setVisible(true);
-		if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched)
+		if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched  &&!isSpclAltPressed)
 			senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
 		
 	}
@@ -237,6 +239,12 @@ public class DetectKeypress extends Library implements NativeKeyListener  {
 	public void nativeKeyReleased(NativeKeyEvent e) {
 		if(key==e.getKeyCode())
 		{
+			if(!senGUI.frame.isVisible() && RecordPanel.isRecording==false && !SettingsPanel.isframeupdateTouched && isSpclAltPressed)
+				senGUI.frame.setVisible(true);
+			if(senGUI.frame.getLocation().x==10000 && senGUI.frame.getLocation().y==10000 && !SettingsPanel.isframeupdateTouched  && isSpclAltPressed)
+				senGUI.frame.setLocation(property.getInteger("Xlocation",screensize.width-160),property.getInteger("Ylocation",screensize.height/2+100));
+			
+			isSpclAltPressed=false;
 			key=0;
 			if(e.getKeyCode() ==NativeKeyEvent.VC_PRINTSCREEN &&e.getRawCode()==106)
 				logProcess("Process_KeyPress","'*' Released. ( KeyCode="+e.getKeyCode()+",RawCode="+e.getRawCode()+" )");
