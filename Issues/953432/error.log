@@ -1,0 +1,23 @@
+  User Message: java.io.FileNotFoundException Exception occured 
+
+Exception Class : java.io.FileNotFoundException
+Exception Message : https://github.com/souvik-sarkar-98/CaptureEasy/releases/download/V_0.6.2/CaptureEasy-V_0.6.1.jar
+Exception Cause : java.io.FileNotFoundException: https://github.com/souvik-sarkar-98/CaptureEasy/releases/download/V_0.6.2/CaptureEasy-V_0.6.1.jar
+
+StackTrace:
+	sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	java.lang.reflect.Constructor.newInstance(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection$10.run(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection$10.run(Unknown Source)
+	java.security.AccessController.doPrivileged(Native Method)
+	sun.net.www.protocol.http.HttpURLConnection.getChainedException(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	app.captureEasy.web.SoftwareUpdate.downloadUpdate(SoftwareUpdate.java:119)
+	app.captureEasy.web.SoftwareUpdate.startUpdate(SoftwareUpdate.java:331)
+	app.captureEasy.UI.ActionGUI$4$2.run(ActionGUI.java:496)
+	java.lang.Thread.run(Unknown Source)
+
