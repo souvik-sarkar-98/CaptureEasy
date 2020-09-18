@@ -1,0 +1,16 @@
+  User Message: Exception occured while navigating to next image
+
+Exception Class : javax.imageio.IIOException
+Exception Message : Can't read input file!
+Exception Cause : null
+
+StackTrace:
+	javax.imageio.ImageIO.read(Unknown Source)
+	app.captureEasy.UI.ViewPanel.gotoNextImage(ViewPanel.java:492)
+	app.captureEasy.Utilities.DetectKeypress.nativeKeyPressed(DetectKeypress.java:142)
+	org.jnativehook.GlobalScreen$EventDispatchTask.processKeyEvent(Unknown Source)
+	org.jnativehook.GlobalScreen$EventDispatchTask.run(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	java.lang.Thread.run(Unknown Source)
+
