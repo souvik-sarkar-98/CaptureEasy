@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Application ts="1614311807239" uri="http://127.0.0.1:8000/test/" launch="app.souvik.captureeasy.App">
+    <lib file="activation.jar" checksum="4137659702" size="69409"/>
+    <lib file="CaptureEasy-0.0.1-SNAPSHOT.jar" checksum="3719884062" size="6466"/>
+    <lib file="FastInfoset.jar" checksum="2712871259" size="296714"/>
+    <lib file="istack-commons-runtime.jar" checksum="4035370928" size="24727"/>
+    <lib file="javafx-base-win.jar" checksum="3897776100" size="744659" os="win"/>
+    <lib file="javafx-base.jar" checksum="4263133924" size="302"/>
+    <lib file="javafx-controls-win.jar" checksum="4123500198" size="2508818" os="win"/>
+    <lib file="javafx-controls.jar" checksum="3298510412" size="306"/>
+    <lib file="javafx-fxml-win.jar" checksum="2201726718" size="125617" os="win"/>
+    <lib file="javafx-fxml.jar" checksum="2446017062" size="302"/>
+    <lib file="javafx-graphics-win.jar" checksum="4221807044" size="5981489" os="win"/>
+    <lib file="javafx-graphics.jar" checksum="2070627778" size="306"/>
+    <lib file="jaxb-api.jar" checksum="1213036484" size="125632"/>
+    <lib file="jaxb-core.jar" checksum="4029355729" size="157585"/>
+    <lib file="jaxb-impl.jar" checksum="3768360265" size="963660"/>
+    <lib file="jaxb-runtime.jar" checksum="858541909" size="958197"/>
+    <lib file="stax-ex.jar" checksum="2169194624" size="33721"/>
+    <lib file="txw2.jar" checksum="3125021853" size="70032"/>
+    <updateText>Updating...</updateText>
+    <updateLabelStyle>-fx-font-weight: bold;</updateLabelStyle>
+    <progressBarStyle>-fx-pref-width: 200;</progressBarStyle>
+    <wrapperStyle>-fx-spacing: 10; -fx-padding: 25;</wrapperStyle>
+    <cacheDir>USERLIB/CaptureEasy</cacheDir>
+    <acceptDowngrade>false</acceptDowngrade>
+    <stopOnUpdateErrors>false</stopOnUpdateErrors>
+    <lingeringUpdateScreen>false</lingeringUpdateScreen>
+</Application>
