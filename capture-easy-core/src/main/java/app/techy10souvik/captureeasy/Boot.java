@@ -24,7 +24,6 @@ public class Boot {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		
 		try {
 			File file = Paths.get(SystemUtil.getRootFolder(), new String[] { "lock" }).toFile();
 			RandomAccessFile randomAccessFile;

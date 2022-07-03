@@ -16,7 +16,10 @@ import javax.swing.filechooser.FileSystemView;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import mslinks.ShellLink;
+import mslinks.ShellLinkException;
+import mslinks.ShellLinkHelper;
+
+//import mslinks.ShellLink;
 
 /**
  * @author Souvik Sarkar
@@ -24,8 +27,13 @@ import mslinks.ShellLink;
  * @purpose
  */
 public class SystemUtil extends org.apache.commons.lang.SystemUtils {
+	
+	/**
+	 * @purpose 
+	 * @date 03-Jul-2022
+	 */
+	
 
-	private static PropertiesConfiguration property;
 
 	public static String getRootFolder() {
 		Path rootFolder = null;
@@ -40,6 +48,7 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		if (!rootFolder.toFile().exists()) {
 			createFolder(rootFolder.toString());
 		}
+		
 		return rootFolder.toString();
 	}
 
@@ -60,13 +69,7 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		return theDir.getAbsolutePath();
 	}
 
-	public static PropertiesConfiguration property() throws ConfigurationException, IOException {
-		if (property == null) {
-			property = new PropertiesConfiguration(getPropFile());
-			property.setAutoSave(true);
-		}
-		return property;
-	}
+	
 
 	
 
@@ -141,11 +144,12 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		return docFolder.toString();
 	}
 
-	public static void createDesktopShortcut(String target, String shortcut) throws IOException {
+	public static void createDesktopShortcut(String target, String shortcut) throws IOException, ShellLinkException {
 		File home = FileSystemView.getFileSystemView().getHomeDirectory();
 		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
 		// https://github.com/DmitriiShamrikov/mslinks
-		ShellLink.createLink(target, shortcutPath);
+		ShellLinkHelper.createLink(target, shortcutPath);
+		//ShortcutFactory.createDesktopShortcut(target, shortcutPath);
 	}
 
 	

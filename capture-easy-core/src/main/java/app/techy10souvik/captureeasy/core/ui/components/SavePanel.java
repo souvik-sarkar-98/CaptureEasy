@@ -25,7 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
@@ -34,7 +33,7 @@ import javax.swing.border.MatteBorder;
 public class SavePanel  {
 
 	private static final String uploadIcon = null;
-	private JPanel savePanel;
+//	private JPanel savePanel;
 	
 	private JPanel panel;
 	public JPanel getPanel() {

@@ -15,7 +15,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 
 
-public class KeypressListener implements NativeKeyListener  {
+public class KeyboardService implements NativeKeyListener  {
 //	private static int key=0;
 //	private boolean isSpclAltPressed=false;
 //	private SystemServiceImpl systemService;
@@ -27,7 +27,7 @@ public class KeypressListener implements NativeKeyListener  {
 	 * @throws ConfigurationException 
 	 * 
 	 */
-	public KeypressListener()  {
+	public KeyboardService()  {
 		//this.systemService=new SystemServiceImpl();
 		this.cs = new CaptureService();
 	}
