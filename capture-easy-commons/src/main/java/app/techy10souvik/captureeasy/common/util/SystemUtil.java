@@ -16,8 +16,8 @@ import javax.swing.filechooser.FileSystemView;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import mslinks.ShellLinkException;
-import mslinks.ShellLinkHelper;
+//import mslinks.ShellLinkException;
+//import mslinks.ShellLinkHelper;
 
 //import mslinks.ShellLink;
 
@@ -148,7 +148,7 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		File home = FileSystemView.getFileSystemView().getHomeDirectory();
 		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
 		// https://github.com/DmitriiShamrikov/mslinks
-		ShellLinkHelper.createLink(target, shortcutPath);
+		//ShellLinkHelper.createLink(target, shortcutPath);
 		//ShortcutFactory.createDesktopShortcut(target, shortcutPath);
 	}
 
