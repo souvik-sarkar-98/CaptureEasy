@@ -13,8 +13,8 @@ import java.util.zip.ZipInputStream;
 
 import javax.swing.filechooser.FileSystemView;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import mslinks.ShellLinkException;
+import mslinks.ShellLinkHelper;
 
 //import mslinks.ShellLinkException;
 //import mslinks.ShellLinkHelper;
@@ -144,11 +144,16 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		return docFolder.toString();
 	}
 
-	public static void createDesktopShortcut(String target, String shortcut) throws IOException {
+	public static void createDesktopShortcut(String target, String shortcut)  {
 		File home = FileSystemView.getFileSystemView().getHomeDirectory();
 		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
 		// https://github.com/DmitriiShamrikov/mslinks
-		//ShellLinkHelper.createLink(target, shortcutPath);
+		try {
+			ShellLinkHelper.createLink(target, shortcutPath);
+		} catch (IOException | ShellLinkException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//ShortcutFactory.createDesktopShortcut(target, shortcutPath);
 	}
