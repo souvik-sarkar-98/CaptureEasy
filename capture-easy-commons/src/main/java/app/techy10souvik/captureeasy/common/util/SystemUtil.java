@@ -144,7 +144,7 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		return docFolder.toString();
 	}
 
-	public static void createDesktopShortcut(String target, String shortcut) throws IOException, ShellLinkException {
+	public static void createDesktopShortcut(String target, String shortcut) throws IOException {
 		File home = FileSystemView.getFileSystemView().getHomeDirectory();
 		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
 		// https://github.com/DmitriiShamrikov/mslinks
