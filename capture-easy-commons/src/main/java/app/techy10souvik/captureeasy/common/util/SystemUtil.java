@@ -149,6 +149,7 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
 		// https://github.com/DmitriiShamrikov/mslinks
 		//ShellLinkHelper.createLink(target, shortcutPath);
+		
 		//ShortcutFactory.createDesktopShortcut(target, shortcutPath);
 	}
 
