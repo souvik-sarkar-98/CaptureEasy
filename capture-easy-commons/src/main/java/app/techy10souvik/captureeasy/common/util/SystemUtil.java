@@ -43,14 +43,6 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		return rootFolder.toString();
 	}
 
-	public static String getLogFolder() {
-
-		Path logFolder = Paths.get(getRootFolder(), "logs");
-		if (!logFolder.toFile().exists()) {
-			createFolder(logFolder.toString());
-		}
-		return logFolder.toString();
-	}
 
 	public static String getPropFile() throws IOException {
 		File propfile = new File(getRootFolder(), "app.properties");
@@ -76,12 +68,7 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		return property;
 	}
 
-	public static void createDesktopShortcut(String target, String shortcut) throws IOException {
-		File home = FileSystemView.getFileSystemView().getHomeDirectory();
-		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
-		// https://github.com/DmitriiShamrikov/mslinks
-		ShellLink.createLink(target, shortcutPath);
-	}
+	
 
 	public static Dimension getScreenSize() {
 		return Toolkit.getDefaultToolkit().getScreenSize();
@@ -131,5 +118,46 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
         }
         
     }
+	
+	
+	
+
+	public static String getLogFolder() {
+
+		Path logFolder = Paths.get(getRootFolder(), "logs");
+		if (!logFolder.toFile().exists()) {
+			createFolder(logFolder.toString());
+		}
+		return logFolder.toString();
+	}
+
+	
+	
+
+	
+	
+	public static String getDocumentFolder()  {
+		Path docFolder = Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getAbsolutePath(),"Screenshots");
+		return docFolder.toString();
+	}
+
+	public static void createDesktopShortcut(String target, String shortcut) throws IOException {
+		File home = FileSystemView.getFileSystemView().getHomeDirectory();
+		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
+		// https://github.com/DmitriiShamrikov/mslinks
+		ShellLink.createLink(target, shortcutPath);
+	}
+
+	
+
+	/**
+	 * @purpose 
+	 * @date 02-Jul-2022
+	 * @return
+	 */
+	public static int getScreenshotCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

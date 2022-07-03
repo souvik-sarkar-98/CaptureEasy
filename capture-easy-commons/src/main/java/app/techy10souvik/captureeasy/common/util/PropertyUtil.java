@@ -1,4 +1,4 @@
-package app.techy10souvik.captureeasy.core.util;
+package app.techy10souvik.captureeasy.common.util;
 
 import java.awt.Point;
 import java.io.IOException;

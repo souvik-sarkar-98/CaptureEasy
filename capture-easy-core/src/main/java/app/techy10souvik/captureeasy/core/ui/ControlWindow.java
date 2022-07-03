@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,10 +26,9 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.jnativehook.mouse.SwingMouseAdapter;
 
 import app.techy10souvik.captureeasy.common.ui.AlertPopup;
+import app.techy10souvik.captureeasy.common.util.PropertyUtil;
 import app.techy10souvik.captureeasy.core.apis.CaptureEvent;
 import app.techy10souvik.captureeasy.core.services.CaptureService;
-import app.techy10souvik.captureeasy.core.util.PropertyUtil;
-import app.techy10souvik.captureeasy.core.util.SystemUtil;
 
 /**
  * @author Souvik Sarkar

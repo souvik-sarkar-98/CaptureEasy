@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.techy10souvik.captureeasy.core.apis.CaptureEvent;
-import app.techy10souvik.captureeasy.core.util.SystemUtil;
 
 
 /**

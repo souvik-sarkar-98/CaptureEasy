@@ -7,9 +7,9 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Paths;
 
+import app.techy10souvik.captureeasy.common.util.SystemUtil;
 import app.techy10souvik.captureeasy.core.App;
 import app.techy10souvik.captureeasy.core.CaptureEasy;
-import app.techy10souvik.captureeasy.core.util.SystemUtil;
 
 /**
  * @author Souvik Sarkar

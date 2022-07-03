@@ -7,16 +7,14 @@ import javax.swing.SwingUtilities;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
 
 import app.techy10souvik.captureeasy.common.ui.AlertPopup;
-import app.techy10souvik.captureeasy.core.services.KeypressListener;
+import app.techy10souvik.captureeasy.common.util.PropertyUtil;
+import app.techy10souvik.captureeasy.common.util.SystemUtil;
 import app.techy10souvik.captureeasy.core.ui.ControlWindow;
 import app.techy10souvik.captureeasy.core.ui.components.SplashScreenComponent;
-import app.techy10souvik.captureeasy.core.util.PropertyUtil;
-import app.techy10souvik.captureeasy.core.util.SystemUtil;
 
 /**
  * @author Souvik Sarkar
