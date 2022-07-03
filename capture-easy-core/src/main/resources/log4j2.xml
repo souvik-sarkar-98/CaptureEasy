@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	 <Properties>
+    </Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%d{dd MMM yyyy HH:mm:ss.SSS}] %highlight{[%-5level] %class{36} [%L] %M - %msg%xEx%n}{FATAL=red, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}" />
+
+		</Console>
+		 <RollingFile name="rollingFile" fileName="${sys:log.home}/core-process-info.html"
+               filePattern="${sys:log.home}/$${date:yyyy-MM}/core-process-info-%d{yyyy-MM-dd}.html">
+           
+            <HTMLLayout datePattern="dd MMM yyyy HH:mm:ss.SSS" charset="UTF-8" title="Process Logs" locationInfo="true" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+        </RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="trace">
+			<AppenderRef ref="Console" level="info" />
+			<AppenderRef ref="rollingFile" level="trace" />
+		</Root>
+	</Loggers>
+</Configuration>
