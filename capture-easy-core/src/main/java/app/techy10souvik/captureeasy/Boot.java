@@ -2,7 +2,9 @@ package app.techy10souvik.captureeasy;
 
 import java.nio.file.Paths;
 
+import app.techy10souvik.captureeasy.common.services.PropertyService;
 import app.techy10souvik.captureeasy.common.ui.AlertPopup;
+import app.techy10souvik.captureeasy.common.ui.SystemNativeDialog;
 import app.techy10souvik.captureeasy.common.util.PropertyUtil;
 import app.techy10souvik.captureeasy.common.util.SystemUtil;
 import app.techy10souvik.captureeasy.core.App;
@@ -28,7 +30,8 @@ public class Boot {
 	public static void main(String[] args) throws Exception {
 
 		try {
-			AppLocker.create(PropertyUtil.init().getAppLockKey()).setPath(Paths.get(SystemUtil.getRootFolder())).build()
+			PropertyService propertyService = PropertyService.getInstance();
+			AppLocker.create(propertyService.getAppLockKey()).setPath(Paths.get(SystemUtil.getRootFolder())).build()
 					.lock();
 			
 			App app = new CaptureEasy(args);
@@ -39,8 +42,8 @@ public class Boot {
 		} catch (LockingBusyException | LockingCommunicationException | LockingMessageServerException
 				| LockingFailedException ex) {
 			ex.printStackTrace();
-	 		AlertPopup.init().type(AlertPopup.WARNING).message("Sorry !! Cannot start Application. \nAn instance of this Application is already running.").button2("Close");
-
+	 		//AlertPopup.init().type(AlertPopup.WARNING).message("Sorry !! Cannot start Application. \nAn instance of this Application is already running.").button2("Close");
+			SystemNativeDialog.showError(null, "Sorry !! Cannot start Application. \nAn instance of this Application is already running.", "Warning");
 		}
 
 	}

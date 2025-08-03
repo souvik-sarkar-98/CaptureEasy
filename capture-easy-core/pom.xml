@@ -8,11 +8,10 @@
 		<groupId>app.techy10souvik.captureeasy</groupId>
 		<artifactId>capture-easy</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../</relativePath>
 	</parent>
 	<properties>
-	<pivot.version>2.0.2</pivot.version>
-</properties>
+		<pivot.version>2.0.2</pivot.version>
+	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.1stleg/jnativehook -->
 		<dependency>
@@ -35,30 +34,24 @@
 			<artifactId>app-locker</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-		<dependency>
-		<groupId>org.apache.pivot</groupId>
-		<artifactId>pivot-core</artifactId>
-		<version>${pivot.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.pivot</groupId>
-		<artifactId>pivot-wtk</artifactId>
-		<version>${pivot.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.pivot</groupId>
-		<artifactId>pivot-charts</artifactId>
-		<version>${pivot.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.pivot</groupId>
-		<artifactId>pivot-wtk-terra</artifactId>
-		<version>${pivot.version}</version>
-	</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.38</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>17</source>
+					<target>17</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>

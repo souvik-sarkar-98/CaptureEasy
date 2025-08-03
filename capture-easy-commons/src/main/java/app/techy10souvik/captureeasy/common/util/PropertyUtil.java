@@ -1,57 +1,78 @@
 package app.techy10souvik.captureeasy.common.util;
 
-import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.lang.RandomStringUtils;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 
 /**
- * @author Souvik Sarkar
- * @createdOn 02-Jul-2022
- * @purpose
+ * Utility class for creating and managing Java Properties.
  */
 public class PropertyUtil {
-	private static PropertiesConfiguration property;
 
-	public PropertyUtil() throws ConfigurationException, IOException {
-		if (property == null) {
-			property = new PropertiesConfiguration(SystemUtil.getPropFile());
-			property.setAutoSave(true);
-		}
-	}
+    /**
+     * Creates a new empty Properties object.
+     * @return a new Properties instance
+     */
+    public static Properties createProperties() {
+        return new Properties();
+    }
 
-	public static PropertyUtil init() throws Exception {
-		return new PropertyUtil();
-	}
+    /**
+     * Loads properties from a file.
+     * @param filePath the path to the properties file
+     * @return the loaded Properties object
+     * @throws IOException if an I/O error occurs
+     */
+    public static Properties loadProperties(String filePath) throws IOException {
+        Properties props = new Properties();
+        try (InputStream input = new FileInputStream(filePath)) {
+            props.load(input);
+        }
+        return props;
+    }
 
-	public String getDocumentPath() {
-		return property.getString("DocPath", SystemUtil.getDocumentFolder());
-	}
+    /**
+     * Saves properties to a file.
+     * @param props the Properties object to save
+     * @param filePath the path to the file
+     * @param comments comments to include in the file
+     * @throws IOException if an I/O error occurs
+     */
+    public static void saveProperties(Properties props, String filePath, String comments) throws IOException {
+        try (OutputStream output = new FileOutputStream(filePath)) {
+            props.store(output, comments);
+        }
+    }
 
-	public String getAppVersion() {
-		return property.getString("AppVersion", "-");
-	}
+    /**
+     * Gets a property value by key.
+     * @param props the Properties object
+     * @param key the property key
+     * @return the property value, or null if not found
+     */
+    public static String getProperty(Properties props, String key) {
+        return props.getProperty(key);
+    }
 
-	public Point getGUILocation() {
-		int dXLoc = SystemUtil.getScreenSize().width - 160;
-		int dYLoc = SystemUtil.getScreenSize().height / 2 + 100;
-		return new Point(property.getInteger("Xlocation", dXLoc), property.getInteger("Ylocation", dYLoc));
-	}
+    /**
+     * Sets a property value.
+     * @param props the Properties object
+     * @param key the property key
+     * @param value the property value
+     */
+    public static void setProperty(Properties props, String key, String value) {
+        props.setProperty(key, value);
+    }
 
-	public String getAppLockKey() {
-		if (property.getString("AppLockKey") == null) {
-			property.setProperty("AppLockKey", RandomStringUtils.random(20, true, false));
-		}
-		return property.getString("AppLockKey");
-	}
-
-	public String getTempPath() throws Exception {
-		return property.getString("TempPath");
-	}
-	
-	public void setTempPath(String path) throws Exception {
-		property.setProperty("TempPath",path);
-	}
-
+    /**
+     * Removes a property by key.
+     * @param props the Properties object
+     * @param key the property key
+     */
+    public static void removeProperty(Properties props, String key) {
+        props.remove(key);
+    }
 }

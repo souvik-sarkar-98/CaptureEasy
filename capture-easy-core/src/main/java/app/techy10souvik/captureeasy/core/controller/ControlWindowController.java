@@ -1,6 +1,10 @@
 package app.techy10souvik.captureeasy.core.controller;
 
-import app.techy10souvik.captureeasy.common.util.PropertyUtil;
+import app.techy10souvik.captureeasy.common.events.AppEvent;
+import app.techy10souvik.captureeasy.common.events.EventBus;
+import app.techy10souvik.captureeasy.common.events.EventType;
+import app.techy10souvik.captureeasy.core.eventdto.CaptureData;
+import app.techy10souvik.captureeasy.core.services.CaptureService;
 
 /**
  * @author Souvik Sarkar
@@ -9,14 +13,31 @@ import app.techy10souvik.captureeasy.common.util.PropertyUtil;
  */
 public class ControlWindowController {
 
-	private PropertyUtil propertyUtil;
+	private final CaptureService captureService;
 
 	/**
 	 * @throws Exception 
 	 * 
 	 */
-	public ControlWindowController() throws Exception {
-		this.propertyUtil=PropertyUtil.init();
+	protected ControlWindowController() throws Exception {
+		registerScreenshotCaptureEvent();
+		captureService = new CaptureService();
+	}
+
+
+	/**
+	 * Register event handlers for UI events.
+	 */
+	private void registerScreenshotCaptureEvent() {
+		EventBus.subscribe(EventType.CAPTURE_SCREENSHOT, event -> {
+            try {
+                String filePath= captureService.captureScreenshot();
+				int count = Math.toIntExact(captureService.getScreenshotCount());
+				EventBus.publish(new AppEvent<>(EventType.SCREENSHOT_CAPTURED,new CaptureData(filePath, count)));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+		});
 	}
 	
 	public void closeApplication() {
@@ -24,11 +45,11 @@ public class ControlWindowController {
 	}
 	
 	public void deleteScreenshots() throws Exception {
-		propertyUtil.getTempPath();
 	}
 	
 	public void saveDocuments(String extension) {
 		System.exit(0);
 	}
+
 
 }

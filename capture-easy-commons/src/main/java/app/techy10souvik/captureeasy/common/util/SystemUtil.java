@@ -6,15 +6,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import javax.swing.filechooser.FileSystemView;
 
-import mslinks.ShellLinkException;
-import mslinks.ShellLinkHelper;
+import org.apache.commons.lang3.SystemUtils;
+//import mslinks.ShellLinkHelper;
+
+import static org.apache.commons.lang3.SystemUtils.*;
 
 //import mslinks.ShellLinkException;
 //import mslinks.ShellLinkHelper;
@@ -26,7 +30,7 @@ import mslinks.ShellLinkHelper;
  * @createdOn 03-Jun-2022
  * @purpose
  */
-public class SystemUtil extends org.apache.commons.lang.SystemUtils {
+public class SystemUtil extends SystemUtils {
 	
 	/**
 	 * @purpose 
@@ -44,8 +48,9 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		} else if (IS_OS_LINUX) {
 			rootFolder = Paths.get(System.getProperty("user.home"), ".captureeasy");
 		}
-		
-		if (!rootFolder.toFile().exists()) {
+
+        assert rootFolder != null;
+        if (!rootFolder.toFile().exists()) {
 			createFolder(rootFolder.toString());
 		}
 		
@@ -149,24 +154,36 @@ public class SystemUtil extends org.apache.commons.lang.SystemUtils {
 		File home = FileSystemView.getFileSystemView().getHomeDirectory();
 		String shortcutPath = Paths.get(home.getAbsolutePath(), shortcut + ".lnk").toString();
 		// https://github.com/DmitriiShamrikov/mslinks
-		try {
-			ShellLinkHelper.createLink(target, shortcutPath);
-		} catch (IOException | ShellLinkException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			ShellLinkHelper.createLink(target, shortcutPath);
+//		} catch (IOException | ShellLinkException e) {
+//			e.printStackTrace();
+//		}
 		
 		//ShortcutFactory.createDesktopShortcut(target, shortcutPath);
 	}
 
-	
-
 	/**
-	 * @purpose 
-	 * @date 02-Jul-2022
-	 * @return
+	 * Counts the number of regular files in a directory using Java NIO and Streams.
+	 * This method is optimized for speed and low memory consumption.
+	 *
+	 * @param directoryPath The path to the directory.
+	 * @return The number of files in the directory, or -1 if the path is invalid or an error occurs.
 	 */
-	public static int getScreenshotCount() {
-		return 0;
+	public static long countFilesInDirectory(String directoryPath) {
+		Path dir = Paths.get(directoryPath);
+		if (!Files.exists(dir) || !Files.isDirectory(dir)) {
+			System.err.println("Invalid directory path or not a directory: " + directoryPath);
+			return -1;
+		}
+
+		try (Stream<Path> entries = Files.list(dir)) { // Use try-with-resources for automatic stream closure
+			return entries.filter(Files::isRegularFile) // Filter for regular files (not directories)
+					.count(); // Count the remaining elements in the stream
+		} catch (IOException e) {
+			System.err.println("Error listing files in directory: " + directoryPath + ". " + e.getMessage());
+			return -1;
+		}
 	}
 
 }

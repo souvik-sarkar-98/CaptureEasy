@@ -9,7 +9,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import org.apache.commons.configuration.ConfigurationException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -24,12 +23,11 @@ public class KeyboardService implements NativeKeyListener  {
 
 	/**
 	 * @throws IOException 
-	 * @throws ConfigurationException 
+	 * @throws
 	 * 
 	 */
 	public KeyboardService()  {
 		//this.systemService=new SystemServiceImpl();
-		this.cs = new CaptureService();
 	}
 
 	public void nativeKeyTyped(NativeKeyEvent nativeEvent) {

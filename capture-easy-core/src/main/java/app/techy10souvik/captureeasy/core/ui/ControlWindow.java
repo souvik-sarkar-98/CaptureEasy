@@ -22,14 +22,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
-import org.apache.commons.configuration.ConfigurationException;
+import app.techy10souvik.captureeasy.common.events.AppEvent;
+import app.techy10souvik.captureeasy.common.events.EventBus;
+import app.techy10souvik.captureeasy.common.events.EventType;
+import app.techy10souvik.captureeasy.common.services.PropertyService;
+import app.techy10souvik.captureeasy.core.enums.TriggerSource;
+import app.techy10souvik.captureeasy.core.eventdto.CaptureData;
 import org.jnativehook.mouse.SwingMouseAdapter;
 
 import app.techy10souvik.captureeasy.common.ui.AlertPopup;
-import app.techy10souvik.captureeasy.common.util.PropertyUtil;
-import app.techy10souvik.captureeasy.core.apis.CaptureEvent;
-import app.techy10souvik.captureeasy.core.controller.ControlWindowController;
-import app.techy10souvik.captureeasy.core.services.CaptureService;
 
 /**
  * @author Souvik Sarkar
@@ -67,18 +68,21 @@ public class ControlWindow {
 	private JButton settingsButton;
 	private JButton recordButton;
 	private Dimension buttonSize = new Dimension(50, 50);
+	private boolean isActionWindowOpened;
 
 	/**
-	 * @param splash
+	 * @param
 	 * @return 
 	 * @throws Exception 
 	 * @throws IOException
-	 * @throws ConfigurationException
+	 * @throws
 	 * 
 	 */
 	
-	public ControlWindow() throws Exception  {
+	private ControlWindow() throws Exception  {
 		initGUI();
+		registerMenuButtonAction();
+		registerClickPadAction();
 	}
 	
 	public static ControlWindow init() throws Exception  {
@@ -109,7 +113,7 @@ public class ControlWindow {
 			e.printStackTrace();
 		}
 		
-		frame.setLocation(PropertyUtil.init().getGUILocation());
+		frame.setLocation(PropertyService.getInstance().getGUILocation());
 		frame.setAlwaysOnTop(true);
 		frame.setBackground(new Color(0, 0, 0, 0));
 		frame.getContentPane().add(initMainPanel());
@@ -162,6 +166,7 @@ public class ControlWindow {
 		label_Count = new JLabel();
 		label_Count.setFont(new Font("Tahoma", 1, 20));
 		clickPad.add(label_Count);
+		label_Count.setText("0");
 
 		clickPad.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -286,7 +291,6 @@ public class ControlWindow {
 
 		saveButton.setBorderPainted(false);
 		saveButton.addActionListener(new ActionListener() {
-
 			public void actionPerformed(final ActionEvent arg0) {
 				// SensorGUI.this.saveAction();
 			}
@@ -387,31 +391,17 @@ public class ControlWindow {
 	 * @purpose
 	 * @date 04-Jun-2022
 	 */
-	public ControlWindow registerActions() {
+	private ControlWindow registerActions() {
+
+
+//		registerPauseButtonAction();
+//		registerPowerButtonAction();
+//		registerDeleteButtonAction();
+//		registerViewButtonAction();
+//		registerRecordButtonAction();
+//		registerSettingsButtonAction();
 		//ControlWindowController cs = new ControlWindowController();
 
-		menuButton.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent arg0) {
-				if (menuButton.isEnabled()) {
-
-					if (controlPanel.isVisible()) {
-						frame.setSize(new Dimension(54, 110));
-						mainPanel.setSize(new Dimension(54, 110));
-						controlPanel.setVisible(false);
-						menuButton.setToolTipText(
-								"<html>Click here to expand<br>OR Right click to explore Feature Menu</html>");
-
-					} else {
-						frame.setSize(new Dimension(54, 560));
-						mainPanel.setSize(new Dimension(54, 560));
-						controlPanel.setVisible(true);
-						menuButton.setToolTipText(
-								"<html>Click here to collapse<br>OR Right click to explore Feature Menu</html>");
-
-					}
-				}
-			}
-		});
 
 		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
@@ -442,19 +432,7 @@ public class ControlWindow {
 			}
 		});
 
-		clickPad.addMouseListener(new SwingMouseAdapter() {
-			public static final long serialVersionUID = 1L;
-			@Override
-			public void mouseClicked(final MouseEvent arg0) {
-//				if (ActionGUI.leaveControl && !StaticFields.PauseThread) {
-//					StaticFields.senGUI.frame.setOpacity(0.0f);
-//					SensorGUI.captureScreen();
-//					StaticFields.senGUI.frame.setOpacity(1.0f);
-//				}
-				
-			}
 
-		});
 
 		powerButton.addActionListener(new ActionListener() {
 
@@ -497,7 +475,6 @@ public class ControlWindow {
 			}
 		});
 		settingsButton.addActionListener(new ActionListener() {
-
 			public void actionPerformed(final ActionEvent arg0) {
 				// S//ensorGUI.this.settingsAction();
 		 		ActionWindow.init(ActionWindow.SAVE,ActionWindow.VIEW).show();
@@ -523,6 +500,47 @@ public class ControlWindow {
 //		});
 
 		return this;
+	}
+
+	private void registerClickPadAction() {
+		clickPad.addMouseListener(new SwingMouseAdapter() {
+			public static final long serialVersionUID = 1L;
+			@Override
+			public void mouseClicked(final MouseEvent arg0) {
+				if(!isActionWindowOpened) {
+					EventBus.publish(new AppEvent<>(EventType.CAPTURE_SCREENSHOT,TriggerSource.MOUSE_CLICK));
+				}
+			}
+		});
+		EventBus.subscribe(EventType.SCREENSHOT_CAPTURED, (AppEvent<CaptureData> captureSuccessEvent) -> {
+			label_Count.setText(""+captureSuccessEvent.getData().getCount());
+		});
+	}
+
+	private void registerMenuButtonAction() {
+		menuButton.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				if (menuButton.isEnabled()) {
+
+					if (controlPanel.isVisible()) {
+						frame.setSize(new Dimension(54, 110));
+						mainPanel.setSize(new Dimension(54, 110));
+						controlPanel.setVisible(false);
+						menuButton.setToolTipText(
+								"<html>Click here to expand<br>OR Right click to explore Feature Menu</html>");
+
+					} else {
+						frame.setSize(new Dimension(54, 560));
+						mainPanel.setSize(new Dimension(54, 560));
+						controlPanel.setVisible(true);
+						menuButton.setToolTipText(
+								"<html>Click here to collapse<br>OR Right click to explore Feature Menu</html>");
+
+					}
+				}
+			}
+		});
+
 	}
 
 //	{
