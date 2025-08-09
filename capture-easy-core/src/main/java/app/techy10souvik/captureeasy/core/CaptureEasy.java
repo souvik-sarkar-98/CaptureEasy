@@ -78,8 +78,8 @@ public class CaptureEasy implements App {
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread t, Throwable e) {
 		 		splash.setMessage(e.getClass().getSimpleName()+" : "+e.getMessage());
-		 		//AlertPopup.init().type(AlertPopup.ERROR).message(e.getClass().getSimpleName()+" : "+e.getMessage()).button2("Okay");
-				SystemNotifier.showSystemNotification("Error Occurred", "Something went wrong! Try restarting the application. [TraceId: 12222]", "ERROR");
+				log.error("Exception Occurred!!",e);
+				SystemNotifier.showSystemNotification("Error Occurred", "Something went wrong! Try restarting the application.", "ERROR");
 			}
 		});
 

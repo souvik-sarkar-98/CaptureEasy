@@ -18,7 +18,7 @@ public class BackgroundController {
         EventBus.subscribe(EventType.APP_LOADED, event -> {
             try {
                 int count = Math.toIntExact(captureService.getScreenshotCount());
-                EventBus.publish(new AppEvent<CaptureData>(EventType.SCREENSHOT_CAPTURED,new CaptureData(null, count)));
+                EventBus.publish(new AppEvent<>(EventType.UPDATE_SCREENSHOT_COUNT,count));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

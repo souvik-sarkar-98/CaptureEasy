@@ -1,4 +1,4 @@
-package app.techy10souvik.captureeasy.core.ui;
+package app.techy10souvik.captureeasy.common.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -8,13 +8,11 @@ import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.MatteBorder;
 
-import org.jnativehook.mouse.SwingMouseAdapter;
 
 public class TestOptionPane11 {
 	private int xx;
@@ -55,18 +53,18 @@ public class TestOptionPane11 {
                 dialog.setVisible(true);
                // dialog.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 
-                dialog.addMouseListener(new SwingMouseAdapter() {
-        			
-        			private static final long serialVersionUID = 1L;
-				
-
-        			@Override
-        			public void mousePressed(MouseEvent e) {
-
-        				xx = e.getX();
-        				xy = e.getY();
-        			}
-        		});
+//                dialog.addMouseListener(new SwingMouseAdapter() {
+//
+//        			private static final long serialVersionUID = 1L;
+//
+//
+//        			@Override
+//        			public void mousePressed(MouseEvent e) {
+//
+//        				xx = e.getX();
+//        				xy = e.getY();
+//        			}
+//        		});
                 dialog.addMouseMotionListener(new MouseMotionAdapter() {
         			@Override
         			public void mouseDragged(MouseEvent arg0) {

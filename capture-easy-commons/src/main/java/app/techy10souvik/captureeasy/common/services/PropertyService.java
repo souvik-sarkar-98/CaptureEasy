@@ -94,7 +94,7 @@ public class PropertyService {
     }
 
 
-    public String getTempFolder(boolean createNewFolder) {
+    private String getOrCreateTempFolder(boolean createNewFolder) {
         if(!properties.containsKey("TEMP_FOLDER") || createNewFolder){
             try {
                 addProperty("TEMP_FOLDER", SystemUtil.getTempPath().toString());
@@ -106,7 +106,11 @@ public class PropertyService {
     }
 
     public String getTempFolder() {
-        return getTempFolder(false);
+        return getOrCreateTempFolder(false);
+    }
+
+    public String generateTempFolder() {
+        return getOrCreateTempFolder(true);
     }
 
     public Point getGUILocation() {

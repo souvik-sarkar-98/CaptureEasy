@@ -26,6 +26,7 @@ import app.techy10souvik.captureeasy.common.events.AppEvent;
 import app.techy10souvik.captureeasy.common.events.EventBus;
 import app.techy10souvik.captureeasy.common.events.EventType;
 import app.techy10souvik.captureeasy.common.services.PropertyService;
+import app.techy10souvik.captureeasy.common.ui.SystemNativeDialog;
 import app.techy10souvik.captureeasy.core.enums.TriggerSource;
 import app.techy10souvik.captureeasy.core.eventdto.CaptureData;
 import org.jnativehook.mouse.SwingMouseAdapter;
@@ -81,10 +82,17 @@ public class ControlWindow {
 	
 	private ControlWindow() throws Exception  {
 		initGUI();
-		registerMenuButtonAction();
 		registerClickPadAction();
+		registerMenuButtonAction();
+		//registerPauseButtonAction();
+		registerPowerButtonAction();
+		registerDeleteButtonAction();
+		registerViewButtonAction();
+		//registerRecordButtonAction();
+		//registerSettingsButtonAction();
 	}
-	
+
+
 	public static ControlWindow init() throws Exception  {
 		return new ControlWindow();
 	}
@@ -381,125 +389,38 @@ public class ControlWindow {
 					.getScaledInstance(buttonSize.width, buttonSize.height, 4)));
 		} catch (IOException e4) {
 			powerButton.setText("Close");
-			// Library.logError(e4, "Exception in Icon initing: Image /Icons/power.png Not
-			// Available");
 		}
 		return powerButton;
 	}
 
-	/**
-	 * @purpose
-	 * @date 04-Jun-2022
-	 */
-	private ControlWindow registerActions() {
-
-
-//		registerPauseButtonAction();
-//		registerPowerButtonAction();
-//		registerDeleteButtonAction();
-//		registerViewButtonAction();
-//		registerRecordButtonAction();
-//		registerSettingsButtonAction();
-		//ControlWindowController cs = new ControlWindowController();
-
-
+	private void registerPauseButtonAction() {
 		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
-	            final String toolText = menuButton.getToolTipText();
+				final String toolText = menuButton.getToolTipText();
 				if (pauseButton.getToolTipText().equalsIgnoreCase("Click Here to Pause")) {
-	                	menuButton.setEnabled(false);
-	                    try {
-							pauseButton.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource(playIcon)).getScaledInstance(buttonSize.width, buttonSize.height, 4)));
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-	                    pauseButton.setToolTipText("Click Here to Resume");
-	                    menuButton.setToolTipText("");
-	                    //this.mntmExpand.setEnabled(false);
-	            }
-	            else {
-	                	menuButton.setEnabled(true);
-	                	menuButton.setToolTipText(toolText);
-	                    try {
-							pauseButton.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource(pauseIcon)).getScaledInstance(buttonSize.width, buttonSize.height, 4)));
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-	                    pauseButton.setToolTipText("Click Here to Pause");
-	                    //this.mntmExpand.setEnabled(true);
-	                
-	            }
-			}
-		});
-
-
-
-		powerButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(final ActionEvent e) {
-				AlertPopup.init().type(AlertPopup.WARNING).message("Do you want to exit the application?").button1("Yes", new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.exit(0);
+					menuButton.setEnabled(false);
+					try {
+						pauseButton.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource(playIcon)).getScaledInstance(buttonSize.width, buttonSize.height, 4)));
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
-				}).button2("No");
-			}
-		});
-		
-		deleteButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(final ActionEvent e) {
-				AlertPopup.init().type(AlertPopup.WARNING).message("Are you sure that you want to delete all screenshots?").button1("Yes", new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
+					pauseButton.setToolTipText("Click Here to Resume");
+					menuButton.setToolTipText("");
+					//this.mntmExpand.setEnabled(false);
+				}
+				else {
+					menuButton.setEnabled(true);
+					menuButton.setToolTipText(toolText);
+					try {
+						pauseButton.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource(pauseIcon)).getScaledInstance(buttonSize.width, buttonSize.height, 4)));
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
-				}).button2("No");
+					pauseButton.setToolTipText("Click Here to Pause");
+					//this.mntmExpand.setEnabled(true);
+				}
 			}
 		});
-
-		viewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent arg0) {
-				// SensorGUI.this.viewAction();
-//				SweetAlert s=new SweetAlert(frame,true);
-//				s.showAlert();
-//				s.setVisible(true);
-				
-				//Popup p= new Popup(frame,new JFrame(),200,200);
-			}
-		});
-		recordButton.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(final ActionEvent arg0) {
-				//SensorGUI.this.recordAction();
-			}
-		});
-		settingsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent arg0) {
-				// S//ensorGUI.this.settingsAction();
-		 		ActionWindow.init(ActionWindow.SAVE,ActionWindow.VIEW).show();
-
-			}
-		});
-
-//		clickPad.addMouseListener(new SwingMouseAdapter() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public void mouseClicked(MouseEvent mouseEvent) {
-//				cs.captureScreenshot();
-//			}
-//		});
-//		cs.addCaptureListener(new CaptureEvent() {
-//			
-//			@Override
-//			public void updateCount(int count) {
-//				label_Count.setText(""+count);
-//				
-//			}
-//		});
-
-		return this;
 	}
 
 	private void registerClickPadAction() {
@@ -508,12 +429,16 @@ public class ControlWindow {
 			@Override
 			public void mouseClicked(final MouseEvent arg0) {
 				if(!isActionWindowOpened) {
-					EventBus.publish(new AppEvent<>(EventType.CAPTURE_SCREENSHOT,TriggerSource.MOUSE_CLICK));
+					EventBus.publish(new AppEvent<>(EventType.TAKE_SCREENSHOT,TriggerSource.MOUSE_CLICK));
 				}
 			}
 		});
-		EventBus.subscribe(EventType.SCREENSHOT_CAPTURED, (AppEvent<CaptureData> captureSuccessEvent) -> {
-			label_Count.setText(""+captureSuccessEvent.getData().getCount());
+		EventBus.subscribe(EventType.TAKE_SCREENSHOT, (AppEvent<TriggerSource> captureSuccessEvent) -> {
+			frame.setOpacity(0.0f);
+		});
+		EventBus.subscribe(EventType.UPDATE_SCREENSHOT_COUNT, (AppEvent<Integer> captureSuccessEvent) -> {
+			frame.setOpacity(1.0f);
+			label_Count.setText(""+captureSuccessEvent.getData());
 		});
 	}
 
@@ -521,21 +446,18 @@ public class ControlWindow {
 		menuButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
 				if (menuButton.isEnabled()) {
-
 					if (controlPanel.isVisible()) {
 						frame.setSize(new Dimension(54, 110));
 						mainPanel.setSize(new Dimension(54, 110));
 						controlPanel.setVisible(false);
 						menuButton.setToolTipText(
 								"<html>Click here to expand<br>OR Right click to explore Feature Menu</html>");
-
 					} else {
 						frame.setSize(new Dimension(54, 560));
 						mainPanel.setSize(new Dimension(54, 560));
 						controlPanel.setVisible(true);
 						menuButton.setToolTipText(
 								"<html>Click here to collapse<br>OR Right click to explore Feature Menu</html>");
-
 					}
 				}
 			}
@@ -543,7 +465,56 @@ public class ControlWindow {
 
 	}
 
-//	{
+	private void registerPowerButtonAction() {
+		powerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent e) {
+				boolean alert= SystemNativeDialog.showConfirmation(null, "Are you sure that you want to exit the application?","Confirm");
+				if (alert){
+					EventBus.publish(new AppEvent<>(EventType.CLOSE_APP));
+				}
+			}
+		});
+	}
+
+	private void registerDeleteButtonAction() {
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent e) {
+				boolean alert= SystemNativeDialog.showConfirmation(null, "Are you sure that you want to delete all screenshots?","Warning");
+				if (alert){
+					EventBus.publish(new AppEvent<>(EventType.DELETE_SCREENSHOTS));
+				}
+			}
+		});
+	}
+
+	private void registerViewButtonAction() {
+		viewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				EventBus.publish(new AppEvent<>(EventType.SHOW_LATEST_SCREENSHOT));
+			}
+		});
+	}
+
+	private void registerRecordButtonAction() {
+		recordButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(final ActionEvent arg0) {
+				//SensorGUI.this.recordAction();
+			}
+		});
+	}
+
+	private void registerSettingsButtonAction() {
+		settingsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				// S//ensorGUI.this.settingsAction();
+				//ActionWindow.init(ActionWindow.SAVE,ActionWindow.VIEW).show();
+			}
+		});
+	}
+
+
+	//	{
 
 //        (this.label_Document = new JButton()).setBounds(1, 275, 50, 50);
 //        this.controlPanel.add(this.label_Document);

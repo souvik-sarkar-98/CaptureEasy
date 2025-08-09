@@ -55,12 +55,18 @@ public class SystemNativeDialog {
      * @return true if user selects Yes, false otherwise.
      */
     public static boolean showConfirmation(Component parentComponent, String message, String title) {
+        int optionType = switch (title.toLowerCase()){
+            case "info" -> JOptionPane.INFORMATION_MESSAGE;
+            case "warning" -> JOptionPane.WARNING_MESSAGE;
+            case "error" -> JOptionPane.ERROR_MESSAGE;
+            default -> JOptionPane.QUESTION_MESSAGE;
+        };
         int result = JOptionPane.showConfirmDialog(
                 parentComponent,
                 wrapHtml(message),
                 title,
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
+                optionType
         );
         return result == JOptionPane.YES_OPTION;
     }
@@ -72,18 +78,5 @@ public class SystemNativeDialog {
         if (message == null) return "";
         if (message.trim().startsWith("<html>")) return message;
         return "<html><body style='font-family:sans-serif;font-size:12pt;'>" + message + "</body></html>";
-    }
-
-    /**
-     * Example usage.
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            showInfo(null, "This is an <b>information</b> dialog.", "Info");
-            showWarning(null, "This is a <b>warning</b> dialog.", "Warning");
-            showError(null, "This is an <b>error</b> dialog.", "Error");
-            boolean confirmed = showConfirmation(null, "Do you want to <b>continue</b>?", "Confirm");
-            showInfo(null, "User selected: " + (confirmed ? "Yes" : "No"), "Result");
-        });
     }
 }

@@ -3,9 +3,10 @@ package app.techy10souvik.captureeasy.core.services;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import app.techy10souvik.captureeasy.common.services.PropertyService;
-import app.techy10souvik.captureeasy.common.util.PropertyUtil;
 import app.techy10souvik.captureeasy.common.util.SystemUtil;
 
 import javax.imageio.ImageIO;
@@ -36,5 +37,16 @@ public class CaptureService {
 
 	public long getScreenshotCount() {
 		return SystemUtil.countFilesInDirectory(properties.getTempFolder());
+	}
+
+	public void deleteScreenshots() throws IOException {
+		File folder = new File(properties.getTempFolder());
+		for(File file : folder.listFiles()){
+			if(file.isFile()) {
+				file.delete();
+			}
+		}
+		folder.delete();
+		properties.generateTempFolder();
 	}
 }
