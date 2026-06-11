@@ -1,20 +1,78 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>app.techy10souvik.captureeasy.installer</groupId>
-  <artifactId>capture-easy-installer</artifactId>
   <parent>
-  	<groupId>app.techy10souvik.captureeasy</groupId>
-  	<artifactId>capture-easy</artifactId>
-  	<version>0.0.1-SNAPSHOT</version>
-  	<relativePath>../pom.xml</relativePath>
+    <groupId>app.captureeasy</groupId>
+    <artifactId>capture-easy</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
+  <artifactId>capture-easy-installer</artifactId>
+
+  <properties>
+    <app.version>0.0.1</app.version>
+    <!--
+      Published to GitHub Releases alongside the core JAR.
+      Core searches for a file matching this prefix in its own directory.
+    -->
+    <updater.jar.name>CaptureEasy-Updater-${app.version}</updater.jar.name>
+  </properties>
+
   <dependencies>
-
-
-  <dependency>
-  	<groupId>app.techy10souvik.captureeasy</groupId>
-  	<artifactId>capture-easy-commons</artifactId>
-  	<version>0.0.1-SNAPSHOT</version>
-  </dependency>
+    <dependency>
+      <groupId>app.captureeasy</groupId>
+      <artifactId>capture-easy-commons</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.38</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!--
+        Produces a self-contained fat JAR: CaptureEasy-Updater-{version}.jar
+        This JAR is distributed alongside CaptureEasy-{version}.jar and
+        spawned at runtime by GlobalController after APP_LOADED.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>shade</goal></goals>
+            <configuration>
+              <finalName>${updater.jar.name}</finalName>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>app.captureeasy.installer.Program</mainClass>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

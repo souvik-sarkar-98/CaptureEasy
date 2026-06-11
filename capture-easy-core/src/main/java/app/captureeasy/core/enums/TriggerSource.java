@@ -1,0 +1,6 @@
+package app.captureeasy.core.enums;
+
+public enum TriggerSource {
+    MOUSE_CLICK,
+    KEYBOARD_EVENT,
+}

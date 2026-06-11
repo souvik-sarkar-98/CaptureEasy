@@ -2,7 +2,7 @@
 <Configuration status="WARN">
 
     <Properties>
-        <Property name="LOG_HOME">${sys:log.home}</Property>
+        <Property name="LOG_HOME">${sys:log.home:-${sys:user.home}/.captureeasy/logs}</Property>
         <Property name="PATTERN">[%d{dd MMM yyyy HH:mm:ss.SSS}] %highlight{[%-5level] %class{36} [%L] %M - %msg%xEx%n}{FATAL=red, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}</Property>
     </Properties>
 
@@ -11,13 +11,13 @@
             <PatternLayout pattern="${PATTERN}"/>
         </Console>
 
-        <!-- Core application log — written by CaptureEasy-{version}.jar -->
-        <RollingFile name="CoreFile"
-                     fileName="${LOG_HOME}/core-process-info.html"
-                     filePattern="${LOG_HOME}/$${date:yyyy-MM}/core-process-info-%d{yyyy-MM-dd}.html"
+        <!-- Updater process log — written by CaptureEasy-Updater-{version}.jar -->
+        <RollingFile name="UpdaterFile"
+                     fileName="${LOG_HOME}/updater-process-info.html"
+                     filePattern="${LOG_HOME}/$${date:yyyy-MM}/updater-process-info-%d{yyyy-MM-dd}.html"
                      immediateFlush="true">
             <HTMLLayout datePattern="dd MMM yyyy HH:mm:ss.SSS" charset="UTF-8"
-                        title="CaptureEasy — Core Process Logs" locationInfo="true"/>
+                        title="CaptureEasy — Updater Process Logs" locationInfo="true"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
@@ -27,8 +27,8 @@
 
     <Loggers>
         <Root level="trace">
-            <AppenderRef ref="Console"  level="info"/>
-            <AppenderRef ref="CoreFile" level="trace"/>
+            <AppenderRef ref="Console"     level="info"/>
+            <AppenderRef ref="UpdaterFile" level="trace"/>
         </Root>
     </Loggers>
 
