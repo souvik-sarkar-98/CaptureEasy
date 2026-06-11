@@ -8,6 +8,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +57,7 @@ class CaptureServiceTest {
     void deleteScreenshots_removesAllFiles_andRegeneratesFolder() throws Exception {
         Files.createFile(tempDir.resolve("shot1.png"));
         Files.createFile(tempDir.resolve("shot2.png"));
-        Path newTemp = tempDir.resolve("new_session");
+        Path newTemp = tempDir.getParent().resolve("new_session");
         Files.createDirectories(newTemp);
 
         when(mockProperties.getTempFolder()).thenReturn(tempDir.toString());
@@ -67,7 +68,7 @@ class CaptureServiceTest {
 
         // Original folder deleted; generateTempFolder called once
         verify(mockProperties).generateTempFolder();
-        assertFalse(Files.exists(tempDir), "Original temp folder should be deleted");
+        assertFalse(Files.exists(tempDir,LinkOption.NOFOLLOW_LINKS), "Original temp folder should be deleted");
     }
 
     @Test
