@@ -42,10 +42,10 @@ jobs:
             artifact_glob: "capture-easy-core/target/dist/*.msi"
             artifact_name: installer-windows
 
-          - os: macos-latest
-            profile: package-macos
-            artifact_glob: "capture-easy-core/target/dist/*.dmg"
-            artifact_name: installer-macos
+          # - os: macos-latest
+          #   profile: package-macos
+          #   artifact_glob: "capture-easy-core/target/dist/*.dmg"
+          #   artifact_name: installer-macos
 
           - os: ubuntu-latest
             profile: package-linux
