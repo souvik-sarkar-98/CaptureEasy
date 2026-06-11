@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
  *
  * Note: captureScreenshot() requires a real display (Robot) so it is covered only in
  * integration/manual testing. These tests focus on the file-management methods.
+ * They use a temporary directory to avoid side effects and Mockito to mock PropertyService behavior.
  */
 @ExtendWith(MockitoExtension.class)
 class CaptureServiceTest {
