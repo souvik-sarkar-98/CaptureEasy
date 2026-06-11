@@ -18,7 +18,7 @@ jobs:
    uses: nabarun-ngo/ngo-nabarun-templates/.github/workflows/Build-Test.yml@main
    with:
       platform: "java"
-      command: "mvn -B package --file pom.xml"
+      command: "-B package --file pom.xml"
       
   create_release:
     if: github.event.pull_request.merged == true
