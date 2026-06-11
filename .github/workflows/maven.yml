@@ -1,31 +1,29 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Build Artefact
-
+name: 'PR Merged: Release'
 on:
-  push:
-    branches: [ "master" ]
+  workflow_dispatch:
   pull_request:
-    branches: [ "master" ]
+    paths-ignore:
+    - '.github/**'
+    types: [opened, synchronize, reopened, closed] 
+    branches:
+    - master
+    - stage
+
+permissions:
+  contents: write      
 
 jobs:
   build:
-    runs-on: windows-latest
-    steps:
-      - name: Step 1 - Checkout master branch from Github
-        uses: actions/checkout@v3
-    
-      - name: Step 2 - Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 22
-          #distribution: 'temurin'
-          #cache: maven
-        
-      - name: Step 3 - Build with Maven
-        run: mvn -B package --file pom.xml
-  
-    
-       
-        
+   name: Build and Test Application
+   uses: nabarun-ngo/ngo-nabarun-templates/.github/workflows/Build-Test.yml@main
+   with:
+      platform: "java"
+      command: "mvn -B package --file pom.xml"
+      
+  create_release:
+    if: github.event.pull_request.merged == true
+    needs: build
+    name: Create Tag and Release
+    uses: nabarun-ngo/ngo-nabarun-templates/.github/workflows/Create-Tag-Release.yml@main
+    with:
+     source_branch: ${{ github.base_ref }}
