@@ -39,13 +39,6 @@ CaptureEasy is a lightweight application designed to simplify screenshot and evi
 
 ## 🎯 Use Cases
 
-### Test Automation
-Capture screenshots during:
-- Selenium execution
-- Playwright execution
-- Mobile automation testing
-- API test evidence generation
-
 ### Manual Testing
 - Defect reporting
 - UAT evidence collection
@@ -70,30 +63,7 @@ Capture screenshots during:
 ```bash
 java -jar CaptureEasy.jar
 ```
-
 ---
-
-## ⚙️ Configuration
-
-Example configuration:
-
-```properties
-capture.output.directory=./captures
-capture.timestamp.format=yyyyMMdd_HHmmss
-capture.image.format=png
-```
-
----
-
-## 📂 Directory Structure
-
-```text
-captures/
-└── 2026-06-11/
-    ├── screenshot_001.png
-    ├── screenshot_002.png
-    └── screenshot_003.png
-```
 
 ---
 
