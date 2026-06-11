@@ -1,0 +1,178 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CaptureEasy — Release workflow
+#
+# Triggers on a version tag push:   git tag v1.2.3 && git push origin v1.2.3
+#
+# What it builds
+# ──────────────
+#  • Windows  → CaptureEasy-{version}.msi  (native installer via jpackage + WiX)
+#  • macOS    → CaptureEasy-{version}.dmg  (native installer via jpackage)
+#  • Linux    → CaptureEasy-{version}.deb  (native installer via jpackage + dpkg)
+#  • All      → CaptureEasy-{version}.jar  (executable fat JAR — for users who
+#                                           prefer to run  java -jar directly)
+#
+# All four artifacts are attached to the GitHub Release that is created
+# automatically when all jobs succeed.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+# Single global write permission — only the release job needs it
+permissions:
+  contents: write
+
+jobs:
+
+  # ── Native installers (matrix across three OSes) ───────────────────────────
+  native:
+    name: Native installer (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            profile: package-windows
+            artifact_glob: "capture-easy-core/target/dist/*.msi"
+            artifact_name: installer-windows
+
+          - os: macos-latest
+            profile: package-macos
+            artifact_glob: "capture-easy-core/target/dist/*.dmg"
+            artifact_name: installer-macos
+
+          - os: ubuntu-latest
+            profile: package-linux
+            artifact_glob: "capture-easy-core/target/dist/*.deb"
+            artifact_name: installer-linux
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # WiX is pre-installed on windows-latest; dpkg is pre-installed on ubuntu.
+      # No extra tooling needed for macOS DMG.
+
+      - name: Extract semver from tag
+        id: version
+        shell: bash
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Set Maven project version
+        shell: bash
+        run: |
+          mvn --batch-mode versions:set \
+            -DnewVersion=${{ steps.version.outputs.VERSION }} \
+            -DgenerateBackupPoms=false
+
+      - name: Build + package (native installer)
+        shell: bash
+        run: |
+          mvn --batch-mode \
+            -pl capture-easy-commons,capture-easy-core \
+            -P${{ matrix.profile }} \
+            package -DskipTests \
+            -Dapp.version=${{ steps.version.outputs.VERSION }}
+
+      - name: Upload native installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_glob }}
+          if-no-files-found: error
+
+  # ── Executable fat JAR (plain Java option) ────────────────────────────────
+  jar:
+    name: Fat JAR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Extract semver from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Set Maven project version
+        run: |
+          mvn --batch-mode versions:set \
+            -DnewVersion=${{ steps.version.outputs.VERSION }} \
+            -DgenerateBackupPoms=false
+
+      - name: Build fat JAR
+        run: |
+          mvn --batch-mode \
+            -pl capture-easy-commons,capture-easy-core \
+            package -DskipTests \
+            -Dapp.version=${{ steps.version.outputs.VERSION }}
+          # The shade plugin names the JAR CaptureEasy-{version}.jar
+          # (no profile needed — shade always runs)
+
+      - name: Upload fat JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fat-jar
+          path: capture-easy-core/target/CaptureEasy-*.jar
+          if-no-files-found: error
+
+  # ── GitHub Release — collects all artifacts and publishes the release ───────
+  release:
+    name: Publish GitHub Release
+    needs: [native, jar]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+
+      - name: List collected artifacts
+        run: find release-assets -type f | sort
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "CaptureEasy ${{ github.ref_name }}"
+          body: |
+            ## What's new
+            <!-- Fill in release notes here or use auto-generated changelog -->
+
+            ## Downloads
+
+            | Platform | File | Notes |
+            |----------|------|-------|
+            | Windows  | `CaptureEasy-*.msi` | Installs via Windows Installer; adds Start-menu shortcut |
+            | macOS    | `CaptureEasy-*.dmg` | Open and drag to Applications |
+            | Linux    | `CaptureEasy-*.deb` | `sudo dpkg -i CaptureEasy-*.deb` |
+            | Any OS   | `CaptureEasy-*.jar` | Requires Java 17+ · `java -jar CaptureEasy-*.jar` |
+
+          files: |
+            release-assets/**/*.msi
+            release-assets/**/*.dmg
+            release-assets/**/*.deb
+            release-assets/**/*.jar
+          draft: false
+          prerelease: false
+          generate_release_notes: true
