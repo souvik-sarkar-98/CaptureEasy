@@ -57,7 +57,7 @@ class CaptureServiceTest {
     void deleteScreenshots_removesAllFiles_andRegeneratesFolder() throws Exception {
         Files.createFile(tempDir.resolve("shot1.png"));
         Files.createFile(tempDir.resolve("shot2.png"));
-        Path newTemp = tempDir.getParent().resolve("new_session");
+        Path newTemp = tempDir.getParent().resolve("new_session_"+System.currentTimeMillis());
         Files.createDirectories(newTemp);
 
         when(mockProperties.getTempFolder()).thenReturn(tempDir.toString());
